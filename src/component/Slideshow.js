@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom'
 import '../css/slideshow.css';
 import slidebarimagedata from '../Data/slidebarimagedata';
-import { GrNext } from "react-icons/gr";
-import { MdArrowBackIos } from "react-icons/md";
+// import { GrNext } from "react-icons/gr";
+// import { MdArrowBackIos } from "react-icons/md";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
@@ -12,7 +12,7 @@ import 'swiper/css/navigation';
 
 
 function Slideshow() {
-  const [value, setValue] = useState('slidebarimagedata');
+  // const [value, setValue] = useState('slidebarimagedata');
   return (
 
     <>

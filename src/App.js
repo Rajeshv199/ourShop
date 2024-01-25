@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './css/App.css';
 import Nav from './component/Nav';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -16,7 +16,6 @@ import Grocery from './Items/Grocery';
 import Tshirts from './Items/Tshirts';
 import Jeans from './Items/Jeans';
 import Kurta from './Items/Kurta';
-import Data from './Data/Data';
 import Shops from './Items/Shops';
 import Singlepage from './RedirectPage/Singlepage';
 import Yourorder from './component/Yourorder';
@@ -28,7 +27,7 @@ import AddProduct from './component/Addproduct';
 import Admin from './component/Admin';
 import Adminlogin from './component/Adminlogin';
 import Productlist from './component/Productlist';
-import Sidebar from './component/Sidebar';
+// import Sidebar from './component/Sidebar';
 import Suggestshop from './component/Suggestshop';
 
 

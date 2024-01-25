@@ -2,11 +2,11 @@ import React from 'react';
 import '../css/Profile.css'
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Yourorder from './Yourorder';
-import Wishlist from './Wishlist';
+// import Yourorder from './Yourorder';
+// import Wishlist from './Wishlist';
 import { FaRegHeart } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
-import Admin from './Admin';
+// import Admin from './Admin';
 import { LuBaggageClaim } from "react-icons/lu";
 
 
@@ -27,7 +27,7 @@ const Profile = () => {
             </div>
             <div className="profile-box">
                 <div className="profile-img">
-                    <img src="https://assets-static.invideo.io/images/large/Male_1b399a4e96.webp"></img>
+                    <img src="https://assets-static.invideo.io/images/large/Male_1b399a4e96.webp" alt="img" ></img>
                     <div className="profile-custom">
                         <h4> Hii {JSON.parse(auth).name}</h4>
 

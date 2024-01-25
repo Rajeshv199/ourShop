@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../css/home.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -13,11 +13,11 @@ const Home = () => {
 
     const [value, setValue] = useState("");
     const [valuecity, setValuecity] = useState("");
-    const [Name, setName] = React.useState('');
-    const [location, setLocation] = React.useState('');
-    const [city, setCity] = React.useState('');
-    const [image, setImage] = React.useState('');
-    const { id } = useParams();
+    // const [Name, setName] = React.useState('');
+    // const [location, setLocation] = React.useState('');
+    // const [city, setCity] = React.useState('');
+    // const [image, setImage] = React.useState('');
+    // const { id } = useParams();
     const [data, setData] = useState([]);
 
 

@@ -2,10 +2,9 @@ import React from 'react';
 // import {useSelector,useDispatch,Provider,connect} from 'react-redux'
 
 // import { FaCartShopping } from "react-icons/fa6";
-import { useParams } from 'react-router-dom'
-import { useState } from 'react';
-import Productdata from '../Data/Productdata';
-import { Store } from 'redux';
+// import { useParams } from 'react-router-dom'
+// import { useState } from 'react';
+// import { Store } from 'redux';
 import { useSelector, useDispatch } from 'react-redux'
 import { addToCart, removeFromCart, DecreaseCart } from '../redux/cartActions';
 import '../css/singlepage.css';
@@ -16,7 +15,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const Singlepage = () => {
     // const [value, setValue] = useState('')
-    const { id } = useParams();
+    // const { id } = useParams();
 
     const cartItems = useSelector((state) => state.cart.items);
     const dispatch = useDispatch();
@@ -44,6 +43,7 @@ const Singlepage = () => {
     );
     var estimatedTax = ((priceWithoutTax * 0.05).toFixed(2));
     var finalPrice = ((parseFloat(priceWithoutTax) + parseFloat(estimatedTax)).toFixed(2));
+    console.log('Final Price:', finalPrice);
 
     return (
         <>
@@ -57,7 +57,7 @@ const Singlepage = () => {
 
                     <div className="addtocartpagesingle" key={data.id}>
                         <div className="addtocart-image">
-                            <img src={data.image?.url}></img>
+                            <img src={data.image?.url} alt="img"></img>
                         </div>
                         <div>
                             {/* <p>{data.name}</p> */}

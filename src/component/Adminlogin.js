@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import '../css/adminlogin.css';
 
 
@@ -9,7 +9,7 @@ function Adminlogin() {
     const [Name, setName] = React.useState('');
     const [password, setPassword] = React.useState('');
     const navigate = useNavigate();
-    const auths = localStorage.getItem('admin');
+    // const auths = localStorage.getItem('admin');
 
 
     const handleLogin = async () => {

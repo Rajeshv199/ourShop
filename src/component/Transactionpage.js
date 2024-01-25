@@ -1,21 +1,18 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useParams} from 'react-router-dom';
+// import { useState } from 'react';
 import Productdata from '../Data/Productdata';
 import '../css/transactionpage.css';
 import { ToastContainer, toast } from 'react-toastify';
-import { useDispatch, useSelector, Provider } from "react-redux";
-import Yourorder from './Yourorder';
+import { useDispatch } from "react-redux";
+// import Yourorder from './Yourorder';
 import { addToOrder } from '../redux/orderpageActions';
 
 
 
 
-
-
-
 function Transactionpage() {
-    const [data, setData] = useState(Productdata);
+    // const [data, setData] = useState(Productdata);
 
     const dispatch = useDispatch();
 

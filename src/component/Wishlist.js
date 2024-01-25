@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import Productdata from '../Data/Productdata';
-import { Store } from 'redux';
-import { ToastContainer, toast } from 'react-toastify';
-import Heart from "react-animated-heart";
-import Data from '../Data/Data';
+// import Productdata from '../Data/Productdata';
+// import { Store } from 'redux';
+// import { ToastContainer, toast } from 'react-toastify';
+// import Heart from "react-animated-heart";
+// import Data from '../Data/Data';
 import '../css/wishlist.css';
 
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-import { addToWishlist, removeFromWishlist } from '../redux/wishlistActions';
+import { removeFromWishlist } from '../redux/wishlistActions';
 
 
 

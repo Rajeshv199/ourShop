@@ -1,12 +1,12 @@
 import React from 'react'
 import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import orderpage from '../css/orderpage.css';
+import { useParams } from 'react-router-dom';
+import  '../css/orderpage.css';
 import { FaStar } from "react-icons/fa6";
 import { ToastContainer, toast } from 'react-toastify';
 import { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch, useSelector, Provider } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from '../redux/cartActions';
 import Heart from "react-animated-heart";
 import { addToWishlist, removeFromWishlist } from "../redux/wishlistActions";
@@ -73,7 +73,7 @@ function Orderpage() {
     console.log(item)
 
 
-    if (wishlistItems[item._id] == item._id) {
+    if (wishlistItems[item._id] === item._id) {
       // Item is already in the wishlist, remove it and show a success message
       dispatch(removeFromWishlist(item))
       setWishlist((prevWishlist) => {
@@ -107,7 +107,7 @@ function Orderpage() {
 
       <div className="orderpage">
         <div className="orderpage-img">
-          <img src={selectProduct.image?.url} />
+          <img src={selectProduct.image?.url} alt="img" />
           <span className="shop-wishlist-orderpage">
 
             <Heart isClick={wishlist[selectProduct._id] || false} onClick={() => handleWishlistClick(selectProduct)} />

@@ -40,9 +40,16 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 items: state.items.filter(item => item._id !== action.payload._id),
             };
+
+        case 'LOAD_CART_DATA':
+            return {
+                ...state,
+                items: action.payload,
+            };
+
         default:
             return state;
-    }
+};
 };
 
 export default cartReducer;

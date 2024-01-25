@@ -1,22 +1,22 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/admindashboard.css';
-import Productlist from '../component/Productlist';
-import AddProduct from '../component/Addproduct';
+// import Productlist from '../component/Productlist';
+// import AddProduct from '../component/Addproduct';
 import { MdAddShoppingCart } from "react-icons/md";
 import { TbCheckupList } from "react-icons/tb";
 import { MdLogout } from "react-icons/md";
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 
 
 
 function Sidebar() {
     const navigate = useNavigate();
-    const { shopId } = useParams();
+    // const { shopId } = useParams();
     const auths = localStorage.getItem('admin');
     const adminlogout = () => {
         // Get the admin data from localStorage
-        const adminData = JSON.parse(localStorage.getItem('admin'));
+        // const adminData = JSON.parse(localStorage.getItem('admin'));
 
         // Clear only the admin-related data
         localStorage.removeItem('admin');
@@ -61,7 +61,7 @@ function Sidebar() {
                         <h4> Hii {JSON.parse(auths).Name}</h4>
                     </div>
                     <div className="admin-logo">
-                        <img src={JSON.parse(auths).image?.url} />
+                        <img src={JSON.parse(auths).image?.url} alt="img"  />
 
                     </div>
                     <div>

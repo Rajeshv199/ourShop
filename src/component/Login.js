@@ -1,18 +1,28 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+// import { useDispatch} from "react-redux";
+// import { addToCart } from '../redux/cartActions';
+// import { fetchCartDataFromServer } from '../api/Api';
+// import { useParams } from 'react-router-dom';
+
+
+
 // import Signup from './Signup';
 
 const Login = () => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const navigate = useNavigate();
+    // const dispatch = useDispatch();
+    // const { _id } = useParams();
 
-//     useEffect(() => {
-//         const handlesignup = () => {
-//             navigate("/")
-//         }
-// })
+
+    //     useEffect(() => {
+    //         const handlesignup = () => {
+    //             navigate("/")
+    //         }
+    // })
 
     const handleLogin = async () => {
         console.warn(email, password);
@@ -27,7 +37,15 @@ const Login = () => {
         result = await result.json()
         console.warn(result);
         if (result.name) {
+            // Save user data to local storage
             localStorage.setItem("user", JSON.stringify(result))
+
+            // Fetch cart data from the server based on the user's ID
+            // const cartData = await fetchCartDataFromServer(result._id);
+
+            // Dispatch the 'LOAD_CART_DATA' action to load the cart data into the Redux store
+            //  dispatch(addToCart(cartData))
+
             navigate("/")
         } else {
             alert('please enter a valid details')

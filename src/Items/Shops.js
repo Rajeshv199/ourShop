@@ -1,17 +1,17 @@
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../css/Shop.css';
-import Singlepage from '../RedirectPage/Singlepage';
+// import Singlepage from '../RedirectPage/Singlepage';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import Orderpage from '../component/Orderpage';
+// import Orderpage from '../component/Orderpage';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch, useSelector, Provider } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { addToCart } from '../redux/cartActions';
 import { addToWishlist, removeFromWishlist } from "../redux/wishlistActions";
-import { FaHeart } from "react-icons/fa";
+// import { FaHeart } from "react-icons/fa";
 import Heart from "react-animated-heart";
 import Suggestshop from '../component/Suggestshop';
 
@@ -21,7 +21,7 @@ const Shops = () => {
     // const [value, setValue] = useState([]);
     const [data, setData] = useState([]);
     // const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
     const { id } = useParams();
     const { Name } = useParams();
     const [shop, setShop] = useState([]);
@@ -35,7 +35,7 @@ const Shops = () => {
     useEffect(() => {
         const products = async () => {
 
-            const product = await fetch(`http://localhost:5000/viewproducts/${id}`, {
+            await fetch(`http://localhost:5000/viewproducts/${id}`, {
                 method: 'get',
                 headers: {
                     'Content-Type': "application/json",
@@ -53,7 +53,7 @@ const Shops = () => {
         products();
         const fetchShops = async () => {
             try {
-                const response = await fetch("http://localhost:5000/shops", {
+               await fetch("http://localhost:5000/shops", {
                     method: 'get',
                     headers: {
                         'Content-Type': "application/json",
@@ -82,7 +82,7 @@ const Shops = () => {
 
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     // console.log(value)
     const wishlistItems = useSelector(state => state.wishlist.items);
@@ -97,9 +97,9 @@ const Shops = () => {
     let selectedProduct = []
 
     if (filtrCatogery === "All") {
-        selectedProduct = data.filter(productss => productss.id == id);
+        selectedProduct = data.filter(productss => productss.id === id);
     } else {
-        selectedProduct = data.filter(productss => productss.id == id && productss.category === filtrCatogery);
+        selectedProduct = data.filter(productss => productss.id === id && productss.category === filtrCatogery);
     }
 
     console.log(selectedProduct);
@@ -128,7 +128,7 @@ const Shops = () => {
         console.log(item)
 
 
-        if (wishlistItems[item._id] == item._id) {
+        if (wishlistItems[item._id] === item._id) {
             // Item is already in the wishlist, remove it and show a success message
             dispatch(removeFromWishlist(item))
             setWishlist((prevWishlist) => {
@@ -162,9 +162,9 @@ const Shops = () => {
     //   }
 
     // Display error state
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+    // if (error) {
+    //     return <div>Error: {error}</div>;
+    // }
 
 
 
@@ -174,7 +174,7 @@ const Shops = () => {
             <div className='mycontainer'>
                 <ToastContainer />
                 <div className="shop-image-slidebar">
-                    <img src={data.image}></img>
+                    <img src={data.image} alt="img"></img>
 
                 </div>
                 <h4>{Name}</h4>
@@ -186,7 +186,7 @@ const Shops = () => {
                 <div className="shop-details-data">
                     <div className="shop-detail" >
                         <div className="shopdetail-img">
-                            <img src="https://cdn.pixabay.com/photo/2016/11/23/17/24/woman-1853936_640.jpg" ClassName="img-fluid" />
+                            <img src="https://cdn.pixabay.com/photo/2016/11/23/17/24/woman-1853936_640.jpg" ClassName="img-fluid" alt="img" />
                         </div>
                         <button onClick={() => clickfunc('fashion')}>Fashion</button>
                         {/* <Link value={"fashion"}>Fashion</Link> */}
@@ -198,7 +198,7 @@ const Shops = () => {
 
                     <div className="shop-detail" >
                         <div className="shopdetail-img">
-                            <img src="https://cdn.pixabay.com/photo/2016/03/23/08/34/woman-1274360_640.jpg" ClassName="img-fluid" />
+                            <img src="https://cdn.pixabay.com/photo/2016/03/23/08/34/woman-1274360_640.jpg" ClassName="img-fluid" alt="img" />
                         </div>
 
                         {/* <Link value={"cloths"} to="">Cloths</Link> */}
@@ -209,7 +209,7 @@ const Shops = () => {
 
                     <div className="shop-detail" >
                         <div className="shopdetail-img">
-                            <img src="https://cdn.pixabay.com/photo/2021/11/16/15/35/electronics-6801339_640.jpg" ClassName="img-fluid" />
+                            <img src="https://cdn.pixabay.com/photo/2021/11/16/15/35/electronics-6801339_640.jpg" ClassName="img-fluid" alt="img" />
                         </div>
 
                         {/* <Link value={"electronics"} to="">Electronics</Link> */}
@@ -219,7 +219,7 @@ const Shops = () => {
 
                     <div className="shop-detail" >
                         <div className="shopdetail-img">
-                            <img src="https://cdn.pixabay.com/photo/2016/11/06/02/51/all-1802150_640.jpg" ClassName="img-fluid" />
+                            <img src="https://cdn.pixabay.com/photo/2016/11/06/02/51/all-1802150_640.jpg" ClassName="img-fluid" alt="img"/>
                         </div>
 
                         {/* <Link value={"electronics"} to="">Electronics</Link> */}

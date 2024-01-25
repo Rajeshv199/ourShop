@@ -24,6 +24,10 @@ export const DecreaseCart = (product) => {
         payload: product,
     };
 };
+export const loadCartData = (product) => ({
+    type: 'LOAD_CART_DATA',
+    payload: product,
+  });
 
 
 

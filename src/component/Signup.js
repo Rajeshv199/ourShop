@@ -8,14 +8,9 @@ const SignUp = () => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const auth = localStorage.getItem('user');
-        if (auth) {
-            // navigate('/')
-        }
-    })
 
-    const collectData = async () => {
+    const collectData = async (e) => {
+        e.preventDefault();
         console.warn(name, email, password);
         // alert('Signup succesfully')
 

@@ -6,7 +6,7 @@ import { CgProfile } from "react-icons/cg";
 // import { addToCart } from "../redux/cartActions";
 // import { store } from "../redux/store";
 // import Singlepage from '../RedirectPage/Singlepage'
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // import { useState } from 'react';
 import Productdata from '../Data/Productdata';
 import { GrAid } from "react-icons/gr";
@@ -27,7 +27,9 @@ const Nav = () => {
     // const dispatch = useDispatch();
     return (
         <div className="Navbar">
-            <img alt="Logo" className='logo' src='https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg' />
+            <Link to="/">
+                <img alt="Logo" className='logo' src='https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg' />
+            </Link>
             {auth ? <ul className='nav-ul'>
                 <li className='leftHome'><Link to="/">Home</Link></li>
 
@@ -40,7 +42,8 @@ const Nav = () => {
                 <div className='add-to-cart'>
 
                     <li className='rightside'><Link to="/singlepage"><FaCartShopping />
-                        <span className="addtocart-quality">{cartItems.length}</span></Link>
+                        <span className="addtocart-quality">{cartItems?.length ?? 0}</span>
+                    </Link>
                     </li>
                 </div>
                 {window.location.href === "http://localhost:3000/createshop" ? "" :
@@ -48,13 +51,6 @@ const Nav = () => {
 
                         AddShop</Link></li>
                 }
-                {/* {window.location.href === "http://localhost:3000/createshop" ? (
-                    <li className='rightside'>
-                        <Link to="/addproduct">Addproduct</Link>
-                    </li>
-                ) : (
-                    ''
-                )} */}
                 <Item />
 
                 {auths ?

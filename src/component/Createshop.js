@@ -53,7 +53,6 @@ const Createshop = () => {
             myForm.append('location', location);
             myForm.append('city', city);
             myForm.append('password', password);
-
             myForm.append('image', image);
 
             let { data } = await axios.post("http://localhost:5000/createshops", myForm, {

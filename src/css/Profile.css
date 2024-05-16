@@ -12,64 +12,11 @@
 }
 
 
-/* .Navbar {
-    width: 100%;
-    height: 40px;
-    background-color: darkgreen;
-  
-  }
-  
-  .nav-ul {
-    padding: 0px;
-    margin: 0px;
-    width: 100%;
-  
-  
-  }
-  
-  .nav-ul li {
-    display: inline-block;
-    padding: 10px;
-    
-  
-  }
-  
-  .nav-ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 15px;
-   
-    font-weight: 600;
-    font-family: sans-serif;
-  }
-  
-  .nav-ul li a:hover {
-    color: black;
-    text-transform: capitalize;
-    font-weight: bold;
-  
-    font-family: sans-serif;
-  
-  }
-   */
-.logo {
-  height: 30px;
-  width: 40px;
-  float: left;
-  padding: 6px;
-  border-radius: 50%;
-}
+
 
 .rightside {
   float: right;
   text-align: right;
-}
-
-.leftHome {
-  float: left;
-  /* margin-left: 10%; */
-
-
 }
 
 

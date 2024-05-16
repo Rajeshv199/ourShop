@@ -1,10 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-// import { useDispatch} from "react-redux";
-// import { addToCart } from '../redux/cartActions';
-// import { fetchCartDataFromServer } from '../api/Api';
-// import { useParams } from 'react-router-dom';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import TextField from '@mui/material/TextField';
+import shop11 from "../images/shop11.png"
+import shop12 from "../images/shop12.png";
+import Nav from './Nav';
 
 
 
@@ -52,9 +55,91 @@ const Login = () => {
         }
 
     }
+
+    let imgArr = ["https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
+        "https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
+        "https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
+        "https://images.unsplash.com/photo-1506710507565-203b9f24669b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1536&q=80",
+        "https://images.unsplash.com/photo-1506710507565-203b9f24669b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1536&q=80",
+        "https://images.unsplash.com/photo-1536987333706-fc9adfb10d91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"]
+
+
+    const settings = {
+        dots: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 5,
+        slidesToScroll: 3,
+        autoplaySpeed: 500,
+    };
     return (
-        <div className="login">
-            <h1>LogIn Page</h1>
+        <div className="">
+            <Nav/>
+            <div className="shopSlick">
+                <Slider {...settings}>
+                    {imgArr.map((item, index) => (
+                        <div key={index}>
+                            <div className="slick-cloned">
+                                <div className="shopList" ><img width="100%" height="100%" src={item} alt="" /></div>
+                                <div className="shopDetails">
+                                    <div className='name'>Shop Name</div>
+                                    <div className="title">Freeshop Technologies Private Limited, CIN: U74900KA20 </div>
+                                    <div><button>Shop Now</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </Slider>
+            </div>
+            <div className='signup-container'>
+
+                <div className='signSection'>
+                    <div className='row py-5'>
+                        <div className='col-5'>
+                            <div className='shopImg'>
+                                <img src={shop12} width="100%" alt='' />
+                            </div>
+                            <div className='shopRound'>
+                                <img src={shop11} width="100%" alt='' />
+                            </div>
+                        </div>
+                        <div className='col-2'></div>
+                        <div className='col-5'>
+                            <div className='signupForm'>
+                                <h4 className='text-white'>Login to your shop</h4>
+                                <div className='f14'>Are you ready to take the next step towards successful future? look no further than circlez!</div>
+
+                               
+                                <div className="sign-input">
+                                    <TextField type='email' label="Email" variant="outlined" size="small"/>
+                                </div>
+                                <div className="sign-input">
+                                    <TextField type='password' label="Password" variant="outlined" size="small"/>
+                                </div>
+                                
+
+                                <div className='d-flex f14 justify-content-between mt-2 mx-4 px-2'>
+                                    <div><button className='border-0  colr'>Forgot password?</button></div>
+                                    <div>Create a account?<Link className='colr' to="/signup"> Sign up</Link></div>
+                                
+                                </div>
+
+                                <div >
+                                    <button className='btn btn-primary text-center w-75 my-5'>Login</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+
+            {/* <h1>LogIn Page</h1>
             <form className="login-form">
                 <div className="login-inputbox">
                     <input className='inputBox' type="text" placeholder="Enter Your Email"
@@ -67,7 +152,7 @@ const Login = () => {
                     </div>
                 </div>
 
-            </form>
+            </form> */}
         </div>
     )
 }

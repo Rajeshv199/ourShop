@@ -1,18 +1,9 @@
 .home-bg {
-  background-image: url("https://cdn.pixabay.com/photo/2016/11/30/12/29/bicycle-1872682_1280.jpg");
-  background-position: fixed;
   height: 60vh;
-  width: 100vw;
-  padding: 0;
-  margin: 0;
+  width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-attachment: fixed;
   position: relative;
-  top: -11px;
 
 
 
@@ -22,84 +13,23 @@
 .Navbar {
   width: 100%;
   height: 48px;
-  background-color: white;
+  background-color: #0C1630;
   position: sticky;
   top: 0;
+  color: #fff;
   z-index: 999;
-  box-shadow:
-    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
-    0 12.5px 10px rgba(0, 0, 0, 0.06),
-    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
-    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
-    0 100px 80px rgba(0, 0, 0, 0.12);
-
-}
-
-.nav-ul {
-  padding: 0px;
-  margin: 0px;
-  /* position: absolute; */
-  width: 100%;
-  /* position: fixed; */
-  /* top: 0%; */
-
-
-}
-
-.nav-ul li {
-  display: inline-block;
-  padding: 10px;
-
-
-}
-
-.nav-ul li a {
-  color: black;
-  text-decoration: none;
-  padding: 15px;
-
-  font-weight: lighter;
-  font-family: sans-serif;
-  text-transform: uppercase;
+  padding: 0 50px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 
-.nav-ul li a::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  background: black;
-  transition: 0.2s;
-  display: block;
-  margin: auto;
 
-  transition: 0.2s;
-  
-
-
-}
-
-.nav-ul li a:hover::after {
-  width: 4%;
- 
-  
-
-}
-
-.nav-ul li a:hover {
-  color: #4175FC;
-  text-transform: uppercase;
-
-  font-family: sans-serif;
-
-}
 
 .logo {
-  height: 30px;
+  height: 40px;
   width: 40px;
-  float: left;
   padding: 6px;
   border-radius: 50%;
 }
@@ -114,102 +44,86 @@
   color:red;
 }
 
-.leftHome {
-  float: left;
-  /* margin-left: 10%; */
-
-
-}
-
 
 
 .home-fst-line {
+  width: 55%;
   color: white;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  width: 60%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  /* border:2px solid red; */
   position: relative;
-  right: 0%;
-  bottom: 25%;
-  font-weight: lighter;
+  padding: 30px 50px;
+
+
+}
+.home-fst-line h2{
+  font-size: 50px;
+  line-height: 70px;
+}
+.home-fst-line h6{
   font-size: 24px;
+  font-weight: 400;
+  line-height: 30px;
+  text-transform: uppercase;
+}
+
+
+.home-btn button{
+  border: 1px solid #fff;
+  background-color: transparent;
+  color: #fff;
+  font-weight: 500;
+  padding: 10px 26px;
+  letter-spacing: 1px;
+  font-size: 18px;
+  background-image: linear-gradient(#1B2272 0 0);
+  background-size: 0;
+  background-repeat: no-repeat;
+  transition: .4s;
+}
+.bg-pink{
+  background-color: #FFA41C!important;
+  border: none!important;
+  background-image: linear-gradient(#FF9900 0 0)!important;
+}
+
+.btnhover:hover{
+  background-size: 100%;
+  border: 1px solid #1B2272;
+
+}
+.btnhover2:hover{
+  background-size: 100%;
+  border: 1px solid #FF9900;
 
 
 }
-
-.home-fst-line h4 {
-  color: white;
-  font-size: 16px;
-  width: 87%;
-  position: absolute;
-  top: 73%;
+.filterDrop .MuiFormControl-root{
+   width: 130px;
 }
-
-.Home-button {
-  display: flex;
-  flex-direction: row;
+.shopCart{
+  width: 360px;
+  height: 420px;
+  box-shadow: 0px 0px 4px 0px #00000040;
+  margin: 15px;
+  padding: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.shopCart:hover{
+  box-shadow: 0px 4px 12px 0px #00000080;
+}
+.shopCart .shopImg{
   width: 100%;
-  justify-content: center;
-  position: absolute;
-  top: 100%;
-  /* justify-content:space-around; */
+  height: 260px;
+}
+.shopImg img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-.home-btn-1 {
-  padding: 12px;
-  width: 50%;
-}
-
-.home-btn-2 {
-  padding: 12px;
-  width: 50%;
-}
-
-.home-btn-1 button {
-  background-color: transparent;
-  border: none;
-  padding: 15px;
-  color: white;
-  padding: 12px;
-  border: 2px solid white;
-  width: 50%;
-  font-weight: bold;
 
 
-}
 
-.home-btn-1 button:hover {
-
-  font-size: bold;
-  background-color: green;
-  font-weight: bold;
-}
-
-.home-btn-2 button {
-  background-color: green;
-  border: none;
-  padding: 15px;
-  color: white;
-  padding: 13px;
-  width: 50%;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.home-btn-2 button:hover {
-  border: 2px solid white;
-  background-color: transparent;
-  font-weight: bold;
-
-}
-
-.home-para-1 {
-  color: red;
-  font-size: 26px;
-}
 
 /* .home-main-img {
   display: grid;
@@ -324,17 +238,10 @@
 .shop-button-home:hover {
   background-color: transparent;
   color: green;
-  /* transform: translate(10px); */
   border: 2px solid green;
 }
 
-.home-option-location {
-  float: right;
-  padding: 20px;
-  bottom: 65px;
-  position: relative;
-  right: 100px;
-}
+
 .Star-menu{
  font-size: 20px;
  margin-top:10px;

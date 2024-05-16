@@ -1,13 +1,12 @@
 
 import './css/App.css';
-import Nav from './component/Nav';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './component/Home';
 import Login from './component/Login';
 import Signup from './component/Signup';
 import Footer from './component/Footer';
 import Logout from './component/Logout';
-import PrivateComponent from './component/PrivateComponent';
+// import PrivateComponent from './component/PrivateComponent';
 import Profile from './component/Profile';
 import Mobile from './Items/Mobile';
 import Desktop from './Items/Desktop';
@@ -29,6 +28,8 @@ import Adminlogin from './component/Adminlogin';
 import Productlist from './component/Productlist';
 // import Sidebar from './component/Sidebar';
 import Suggestshop from './component/Suggestshop';
+import ProductsList from './component/ProductsList';
+import DetailsProduct from './component/detailsProduct';
 
 
 
@@ -37,12 +38,12 @@ function App() {
     <div className="App">
       <BrowserRouter>
 
-        <Nav />
-
-
-
         <Routes>
-          <Route element={<PrivateComponent />}>
+          {/* <Route element={<PrivateComponent />}> */}
+
+            <Route path="/DetailsProd" element={<DetailsProduct />} />
+            <Route path="/results" element={<ProductsList />} />
+
 
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
@@ -62,22 +63,25 @@ function App() {
 
             <Route path="/transactionpage/:id" element={<Transactionpage />} />
             <Route path="/createshop" element={<Createshop />} />
-            {/* <Route path="/admin" element={<Admin />} /> */}
             <Route path="/adminlogin" element={<Adminlogin />} />
             <Route path="/productlist/:adminId" element={<Productlist />} />
             <Route path="/addproduct" element={<AddProduct />} />
             {/* <Route path="/sidebar" element={<Sidebar />} /> */}
             <Route path="/admin/*" element={<Admin />} />
-          </Route>
+
+            
+          {/* </Route> */}
 
           <Route path="/signup" element={<Signup />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/login" element={<Login />} />
 
         </Routes>
+        
+        <Footer />
       </BrowserRouter>
 
-      <Footer />
+     
     </div>
   );
 }

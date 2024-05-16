@@ -58,10 +58,12 @@ function Sidebar() {
                     <div>Admin Dashboard</div>
                     {/* <p>ID from URL: {id}</p> */}
                     <div className="admin-name">
-                        <h4> Hii {JSON.parse(auths).Name}</h4>
+                        {/* <h4> Hii {JSON.parse(auths).Name}</h4> */}
+                        <h4> Hii Demo</h4>
                     </div>
                     <div className="admin-logo">
-                        <img src={JSON.parse(auths).image?.url} alt="img"  />
+                        {/* <img src={JSON.parse(auths).image?.url} alt="img"  /> */}
+                        <img src="" alt="img"  />
 
                     </div>
                     <div>
@@ -71,11 +73,11 @@ function Sidebar() {
 
                         <Link to="/admin/addproduct"><MdAddShoppingCart />
                             Addproduct </Link><br></br><br></br>
-                        <Link to={`/admin/productlist/${JSON.parse(auths)._id}`}><TbCheckupList />
+                        {/* <Link to={`/admin/productlist/${JSON.parse(auths)._id}`}><TbCheckupList /> */}
+                        <Link to={`/admin/productlist/${1}`}><TbCheckupList />
                             ProductList</Link><br></br><br></br>
-                        <button onClick={() => deleteShop(JSON.parse(auths)._id)}>
-                            <MdLogout /> Delete Shop
-                        </button>
+                        {/* <button onClick={() => deleteShop(JSON.parse(auths)._id)}><MdLogout /> Delete Shop</button> */}
+                        <button onClick={() => deleteShop(1)}><MdLogout /> Delete Shop</button>
 
                         <Link className="admin-navbar-logout" onClick={adminlogout} to="/createshop"><MdLogout />
                             Logout</Link>

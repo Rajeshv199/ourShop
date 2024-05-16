@@ -28,7 +28,7 @@ import Adminlogin from './component/Adminlogin';
 import Productlist from './component/Productlist';
 // import Sidebar from './component/Sidebar';
 import Suggestshop from './component/Suggestshop';
-import ProductsList from './component/ProductsList';
+import DisplayProdList from './component/displayProdList';
 import DetailsProduct from './component/detailsProduct';
 
 
@@ -42,7 +42,7 @@ function App() {
           {/* <Route element={<PrivateComponent />}> */}
 
             <Route path="/DetailsProd" element={<DetailsProduct />} />
-            <Route path="/results" element={<ProductsList />} />
+            <Route path="/results" element={<DisplayProdList />} />
 
 
             <Route path="/" element={<Home />} />
@@ -64,10 +64,10 @@ function App() {
             <Route path="/transactionpage/:id" element={<Transactionpage />} />
             <Route path="/createshop" element={<Createshop />} />
             <Route path="/adminlogin" element={<Adminlogin />} />
-            <Route path="/productlist/:adminId" element={<Productlist />} />
+            <Route path="/productlist" element={<Productlist />} />
             <Route path="/addproduct" element={<AddProduct />} />
             {/* <Route path="/sidebar" element={<Sidebar />} /> */}
-            <Route path="/admin/*" element={<Admin />} />
+            {/* <Route path="/admin/*" element={<Admin />} /> */}
 
             
           {/* </Route> */}

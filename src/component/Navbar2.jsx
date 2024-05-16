@@ -31,14 +31,14 @@ const Nav = () => {
 
                 <nav className="menu-items">
                     <div className='text-dark fw-bold'>Category</div>
-                    <Link to="#">Parent Category</Link>
-                    <Link to="#">Child Category</Link>
+                    <Link to="#" onClick={toggleMenu}>Parent Category</Link>
+                    <Link to="#" onClick={toggleMenu}>Child Category</Link>
                 </nav>
                 <hr className='text-dark my-1'/>
                 <nav className="menu-items">
                     <div className='text-dark fw-bold'>Shop By Category</div>
-                    <Link to="#">Add Product</Link>
-                    <Link to="#">List Product</Link>
+                    <Link to="/addproduct" onClick={toggleMenu}>Add Product</Link>
+                    <Link to="/productlist" onClick={toggleMenu}>List Product</Link>
                 </nav>
 
             </div>

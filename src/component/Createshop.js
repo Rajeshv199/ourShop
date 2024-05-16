@@ -1,6 +1,10 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import Navbar from "./Navbar2";
+import TextField from '@mui/material/TextField';
+import shop11 from "../images/shop11.png"
+import shop12 from "../images/shop12.png";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -80,9 +84,58 @@ const Createshop = () => {
 
     return (
         <>
-            <ToastContainer />
+            <Navbar />
+            {/* <ToastContainer /> */}
 
-            <div>Createshop</div>
+            <div className='signup-container'>
+
+                <div className='signSection'>
+                    <div className='row py-5'>
+                        <div className='col-5'>
+                            <div className='shopImg'>
+                                <img src={shop12} width="100%" alt='' />
+                            </div>
+                            <div className='shopRound'>
+                                <img src={shop11} width="100%" alt='' />
+                            </div>
+                        </div>
+                        <div className='col-2'></div>
+                        <div className='col-5'>
+                            <div className='signupForm'>
+                                <h4 className='text-white'>Create Shop</h4>
+                                <div className='f14'>Are you ready to take the next step towards successful future? look no further than circlez!</div>
+
+
+                                <div className="sign-input">
+                                    <TextField type='text' label="Shop Name" variant="outlined" size="small" />
+                                </div>
+                                <div className="sign-input">
+                                    <TextField type='file'  variant="outlined" size="small" />
+                                </div>
+                                <div className="sign-input">
+                                    <TextField type='text' label="Location" variant="outlined" size="small" />
+                                </div>
+                                <div className="sign-input">
+                                    <TextField type='text' label="City" variant="outlined" size="small" />
+                                </div>
+                                <div className="sign-input">
+                                    <TextField type='text' label="Password" variant="outlined" size="small" />
+                                </div>
+
+
+                               
+
+                                <div >
+                                    <button className='btn btn-primary text-center w-75 my-5'>Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {/* <div>Createshop</div>
             <div className="createshop-form-1">
                 <form onSubmit={(e) => createshop(e)} className="createshop-form-input-1">
                     <input className="createshop-field-1" onChange={onChangeHandler} type="text" placeholder="shop name" value={Name} name='Name' /><br />
@@ -95,7 +148,7 @@ const Createshop = () => {
                     <p> Have an account?</p><li><Link to="/adminlogin">Admin Login</Link></li>
 
                 </form>
-            </div>
+            </div> */}
         </>
     );
 };

@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Select from "react-select";
-// import TextField from '@mui/material/TextField';
-// import MenuItem from '@mui/material/MenuItem';
-// import Navbar from './Nav';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Navbar from './Navbar2';
 
 const options1 = [
     { value: "Mobile", label: "Mobile" },
@@ -23,7 +23,6 @@ const options2 = [
 
 const Addproduct = () => {
     const auths = localStorage.getItem('admin');
-
 
 
     const [formData, setFormData] = React.useState({
@@ -120,9 +119,9 @@ const Addproduct = () => {
     console.log(formData);
     return (
         <div>
-            {/* <Navbar /> */}
+            <Navbar />
 
-            {/* <div className='container'>
+            <div className='container'>
                 <div className='bordr-watr rounded  my-4 pb-3'>
                     <div className='bg-water py-2 px-3 fontWeight'>Add Product</div>
                     <div className='row my-4 mx-3'>
@@ -162,19 +161,20 @@ const Addproduct = () => {
                             <div className='col-4 col-md-3 m-3 '>
                                 <TextField className='w-100' name="Current" label="Price" size="small"></TextField>
                             </div>
-                            <div className='col-4 col-md-3 m-3 '>
-                                <TextField select className='w-100' name="Current" label="Upload Image/Thumbnail"  size="small">
+                            <div className='col-4 col-md-4 m-3 '>
+                                <TextField select className='w-75' name="Current" label="Upload Image/Thumbnail"  size="small">
                                     <MenuItem value="Project ID"> city</MenuItem>
                                     <MenuItem value="Project Name">city2</MenuItem>
                                 </TextField>
                                 <div className='uploadFile'>
                                     <input type='file'/>
-                                    <button className='uplodBtn'>Browse</button>
+                                    <button >Browse</button>
                                 </div>
                             </div>
 
 
                         </div>
+
                         <div className='row my- mx-0'>
                             <div className='col-8 col-md-7 m-3 '>
                                 <TextField className='w-100' name="Current" label="About*" multiline rows={2} size="small"></TextField>
@@ -183,6 +183,7 @@ const Addproduct = () => {
                                 <TextField className='w-100' name="Current" label="Description*" multiline rows={2} size="small"></TextField>
                             </div>
                         </div>
+
                         <div className='text-end mx-5 my-2'>
                             <button className='btn btn-primary '>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20px" class="mb-1 mx-1">
@@ -196,9 +197,9 @@ const Addproduct = () => {
 
                 </div>
 
-            </div> */}
+            </div>
 
-            <div className="addproduct-form">
+            {/* <div className="addproduct-form">
                 <h1 className="addproduct-heading">add product</h1>
 
                 <div className="addproduct-input-div">
@@ -235,7 +236,7 @@ const Addproduct = () => {
                 )}
                 </div>
                 
-            </div>
+            </div> */}
         </div>
     )
 }

@@ -449,8 +449,60 @@ font-size: 30px;
   top: 0;
   opacity: 0;
 }
-
+.uploadFile button{
+  border: none;
+  padding: 8px 14px;
+  background-color: #4DBC9C;
+  color: #fff;
+  opacity: 1;
+  border-radius: 4px;
+  margin-left: 6px;
+  z-index: 999!important;
+}
 /* end  */
+
+
+/* prodductList */
+
+.custom-table{
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: none;
+  /* white-space: nowrap; */
+}
+
+.list-level{
+  position: relative;
+  width: 13%;
+  border-right: 1px solid #ffff;
+  padding: 10px;
+  font-size: 12px;
+}
+.bg-Arsenic{
+  background-color: #39434D;
+}
+.bg-ligtQuat{
+  background-color: #EEF8F8;
+  border-bottom: 1px solid #C6C6C6
+}
+.listRadio{
+  width: 4.7%;
+  border-right: 1px solid #ffff;
+  padding: 10px 0;
+}
+.listRadio div{
+  width: 16px;
+  height: 16px;
+  background: #FFFFFF;
+  border-radius: 50%;
+  margin: 0 auto;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  box-shadow: 0px 4px 4px 0px #00000040 inset;
+
+}
+/* end  */
+
 
 
 

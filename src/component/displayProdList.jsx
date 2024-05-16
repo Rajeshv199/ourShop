@@ -3,7 +3,7 @@ import Navbar2 from './Navbar2';
 import { Link } from 'react-router-dom';
 // import { Link } from 'react-router-dom'
 
-const ProductsList = () => {
+const DisplayProdList = () => {
     return (
         <div >
             <Navbar2/>
@@ -82,4 +82,4 @@ const ProductsList = () => {
         </div>
     )
 }
-export default ProductsList;
+export default DisplayProdList;

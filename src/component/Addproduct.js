@@ -148,7 +148,6 @@ const Addproduct = () => {
         setErrors(errors);
     }
 
-    console.log(errors);
 
     return (
         <div>

@@ -47,8 +47,10 @@ const Createshop = () => {
                 const response = await axiosInstance.post(`/createshops`, formData, {});
                 let data = response.data;
                 if (data.success) {
+                    let shopdata = data.shopData
                     toast.success("Added Successfully");
-                    setTimeout(() => { navigate("/") }, 1000);
+                    localStorage.setItem("admin", JSON.stringify({ id: shopdata._id, name: shopdata.Name }));
+                    setTimeout(() => { navigate("/admin/addProduct") }, 1000);
                 } else {
                     toast.error(data.message);
                 }
@@ -88,8 +90,6 @@ const Createshop = () => {
     }
 
 
-    console.log(formData);
-    // console.log(image);
     return (
         <>
             <Navbar />

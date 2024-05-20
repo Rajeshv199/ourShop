@@ -28,14 +28,12 @@ function Adminlogin() {
             try {
                 const response = await axiosInstance.post(`/adminlogin`, adminForm, {});
                 let data = response.data;
-                console.log(data);
                 if (data.Name) {
                     localStorage.setItem("admin", JSON.stringify({ id: data._id, name: data.Name }));
                     navigate("/admin/listProduct");
                 } else {
                     alert('please enter a valid details')
                 }
-                console.log(response);
 
             } catch (err) {
                 console.error('An error occurred :', err);

@@ -6,7 +6,7 @@ import Login from './component/Login';
 import Signup from './component/Signup';
 import Footer from './component/Footer';
 import Logout from './component/Logout';
-// import PrivateComponent from './component/PrivateComponent';
+import PrivateComponent from './component/PrivateComponent';
 import Profile from './component/Profile';
 import Mobile from './Items/Mobile';
 import Desktop from './Items/Desktop';
@@ -39,13 +39,10 @@ function App() {
       <BrowserRouter>
 
         <Routes>
-          {/* <Route element={<PrivateComponent />}> */}
+          <Route element={<PrivateComponent />}>
 
-            <Route path="/DetailsProd" element={<DetailsProduct />} />
-            <Route path="/results" element={<DisplayProdList />} />
-
-
-            <Route path="/" element={<Home />} />
+          
+            {/* <Route path="/" element={<Home />} /> */}
             <Route path="/profile" element={<Profile />} />
             <Route path="/mobile" element={<Mobile />} />
             <Route path="/desktop" element={<Desktop />} />
@@ -64,18 +61,19 @@ function App() {
             <Route path="/transactionpage/:id" element={<Transactionpage />} />
             <Route path="/createshop" element={<Createshop />} />
             <Route path="/adminlogin" element={<Adminlogin />} />
-            <Route path="/productlist" element={<Productlist />} />
-            <Route path="/addproduct" element={<AddProduct />} />
+            <Route path="/admin/listProduct" element={<Productlist />} />
+            <Route path="/admin/addProduct" element={<AddProduct />} />
             {/* <Route path="/sidebar" element={<Sidebar />} /> */}
             {/* <Route path="/admin/*" element={<Admin />} /> */}
 
             
-          {/* </Route> */}
-
+          </Route>
+          
+          <Route path="/:name/product-details/:id" element={<DetailsProduct />} />
+          <Route path="/:name/products" element={<DisplayProdList />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/logout" element={<Logout />} />
           <Route path="/login" element={<Login />} />
-
+          <Route path="/" element={<Home />} />
         </Routes>
         
         <Footer />

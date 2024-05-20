@@ -1,87 +1,95 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import Navbar from "./Navbar2";
+import Navbar from "./Nav";
 import TextField from '@mui/material/TextField';
 import shop11 from "../images/shop11.png"
 import shop12 from "../images/shop12.png";
+import axiosInstance from "../apiConfig/axoisSetup";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import '../../../frontend/src/createshop.css'
-import '../css/createshop.css'
-import axios from 'axios';
+import '../css/createshop.css';
 
 const Createshop = () => {
-    const auths = localStorage.getItem('admin');
 
-    const { id } = useParams();
-    console.log(id)
-
-    const [formData, setFormData] = React.useState({
-        Name: '',
-        city: '',
-        location: '',
-        password: '',
-    });
-
-    const { Name, city, location, password } = formData;
-    const [image, setImage] = React.useState('');
+    const auth = JSON.parse(localStorage.getItem('user'));
+    const [formData, setFormData] = useState({ userid: auth.id, Name: "", image: "", location: "", city: "", password: "" });
     const navigate = useNavigate();
+    const [errors, setErrors] = useState({});
 
-    const onChangeHandler = (e) => {
+    const handleChange = (e) => {
         if (e.target.name === 'image') {
             const render = new FileReader();
-
             render.onload = () => {
                 if (render.readyState === 2) {
-                    setImage(render.result)
+                    // setImage(render.result);
+                    formData.image = render.result;
                 }
             }
             render.readAsDataURL(e.target.files[0])
         } else {
             setFormData({ ...formData, [e.target.name]: e.target.value });
         }
-    };
 
-    const createshop = async (e) => {
+    }
+
+    const { id } = useParams();
+
+    const { Name, image, location, city, password } = formData;
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            if (!image) {
-                toast.error('Please select an image for the shop.');
-                return;
+        const newErrors = validateForm(formData);
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length === 0) {
+            try {
+                const response = await axiosInstance.post(`/createshops`, formData, {});
+                let data = response.data;
+                if (data.success) {
+                    toast.success("Added Successfully");
+                    setTimeout(() => { navigate("/") }, 1000);
+                } else {
+                    toast.error(data.message);
+                }
+
+            } catch (error) {
+                if (error.response) {
+                    toast.error(error.response.data.message);
+                } else if (error.request) {
+                    toast.error("No response received from the server. Please try again later.");
+                } else {
+                    toast.error("An error occurred. Please try again later.");
+                }
             }
+        } else {
 
-            const myForm = new FormData();
-            myForm.append('Name', Name);
-            myForm.append('location', location);
-            myForm.append('city', city);
-            myForm.append('password', password);
-            myForm.append('image', image);
-
-            let { data } = await axios.post("http://localhost:5000/createshops", myForm, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
-
-            //    data = await data.json()
-            console.log(data)
-            localStorage.setItem("admin", JSON.stringify(data.shopData))
-            toast.success("Added Successfully");
-            setTimeout(() => {
-                navigate("/admin")
-
-            }, 1000)
-        } catch (error) {
-            if (error.response) {
-                toast.error(error.response.data.message);
-            } else if (error.request) {
-                toast.error("No response received from the server. Please try again later.");
-            } else {
-                toast.error("An error occurred. Please try again later.");
-            }
         }
     };
 
+    const validateForm = (data) => {
+        const errors = {};
+        const {Name, image, location, city, password } = data;
+        if (!Name) { errors.Name = 'This field is required';}
+
+        if (!image) { errors.image = 'This field is required';} 
+
+        if (!location) {errors.location = 'This field is required';} 
+
+        if (!city) {errors.city = 'This field is required';} 
+
+        if (!password) {
+            errors.password = 'This field is required';
+        }else if(!(password.length>5)){
+            errors.password = "Password length must be atleast 6 characters";
+        }
+
+        return errors;
+    }
+
+
+    console.log(formData);
+    // console.log(image);
     return (
         <>
             <Navbar />
@@ -107,26 +115,32 @@ const Createshop = () => {
 
 
                                 <div className="sign-input">
-                                    <TextField type='text' label="Shop Name" variant="outlined" size="small" />
+                                    <TextField type='text' name='Name' value={Name} label="Shop Name" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.Name}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='file'  variant="outlined" size="small" />
+                                    <TextField type='file' className='inputFile' name='image' variant="outlined" accessKey='.jpg,.pmg.jpeg' size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.image}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='text' label="Location" variant="outlined" size="small" />
+                                    <TextField type='text' name='location' value={location} label="Location" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.location}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='text' label="City" variant="outlined" size="small" />
+                                    <TextField type='text' name='city' value={city} label="City" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.city}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='text' label="Password" variant="outlined" size="small" />
+                                    <TextField type='password' name='password' value={password} label="Password" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.password}</div>
                                 </div>
+                                <div className='f14 text-end mt-3 mx-4 px-2'>
+                                    <div>Have an account?<Link className='colr' to="/adminlogin"> Admin Login</Link></div>
 
-
-                               
+                                </div>
 
                                 <div >
-                                    <button className='btn btn-primary text-center w-75 my-5'>Submit</button>
+                                    <button className='btn btn-primary text-center w-75 my-5' onClick={handleSubmit}>Submit</button>
                                 </div>
                             </div>
                         </div>

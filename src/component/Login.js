@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Slider from "react-slick";
@@ -8,53 +8,65 @@ import TextField from '@mui/material/TextField';
 import shop11 from "../images/shop11.png"
 import shop12 from "../images/shop12.png";
 import Nav from './Nav';
+import axiosInstance from "../apiConfig/axoisSetup";
 
 
 
 // import Signup from './Signup';
 
 const Login = () => {
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
+
+    const [loginForm, setLoginForm] = useState({ email: "", password: "" });
     const navigate = useNavigate();
-    // const dispatch = useDispatch();
-    // const { _id } = useParams();
+    const [errors, setErrors] = useState({});
 
 
-    //     useEffect(() => {
-    //         const handlesignup = () => {
-    //             navigate("/")
-    //         }
-    // })
+    const handleChange = (e) => {
+        const { currentTarget: input } = e;
+        let loginForm1 = { ...loginForm };
+        loginForm1[input.name] = input.value
+        setLoginForm(loginForm1);
+    }
 
-    const handleLogin = async () => {
-        console.warn(email, password);
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const newErrors = validateForm(loginForm);
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length === 0) {
+            try {
+                const response = await axiosInstance.post(`/login`, loginForm, {})
+                const data = response.data;
+                if (data.name) {
+                    localStorage.setItem("user", JSON.stringify({ name: data.name, id: data._id }));
+                    navigate("/")
 
-        let result = await fetch('http://localhost:5000/login', {
-            method: 'post',
-            body: JSON.stringify({ email, password }),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-        result = await result.json()
-        console.warn(result);
-        if (result.name) {
-            // Save user data to local storage
-            localStorage.setItem("user", JSON.stringify(result))
-
-            // Fetch cart data from the server based on the user's ID
-            // const cartData = await fetchCartDataFromServer(result._id);
-
-            // Dispatch the 'LOAD_CART_DATA' action to load the cart data into the Redux store
-            //  dispatch(addToCart(cartData))
-
-            navigate("/")
+                } else {
+                    alert('Please enter a valid details');
+                }
+            } catch (err) {
+                console.error('An error occurred while updating:', err);
+            }
         } else {
-            alert('please enter a valid details')
         }
+    }
+
+    const validateForm = (data) => {
+        const errors = {};
+        const{email, password} = data;
+        if (!email) {
+            errors.email = 'This field is required';
+        } else if(!/\S+@\S+\.\S+/.test(email)){
+            errors.email = 'Email is invalid';
+        }
+        if (!password) {
+            errors.password = 'This field is required';
+        }else if(!(password.length>5)){
+            errors.password = "Password length must be atleast 6 characters";
+        }
+        return errors;
 
     }
+
 
     let imgArr = ["https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
         "https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
@@ -72,9 +84,12 @@ const Login = () => {
         slidesToScroll: 3,
         autoplaySpeed: 500,
     };
+
+    const { email, password } = loginForm;
+    console.log(errors);
     return (
         <div className="">
-            <Nav/>
+            <Nav />
             <div className="shopSlick">
                 <Slider {...settings}>
                     {imgArr.map((item, index) => (
@@ -106,26 +121,27 @@ const Login = () => {
                         <div className='col-2'></div>
                         <div className='col-5'>
                             <div className='signupForm'>
-                                <h4 className='text-white'>Login to your shop</h4>
+                                <h4 className='text-white'>Login to Your Shop</h4>
                                 <div className='f14'>Are you ready to take the next step towards successful future? look no further than circlez!</div>
 
-                               
-                                <div className="sign-input">
-                                    <TextField type='email' label="Email" variant="outlined" size="small"/>
-                                </div>
-                                <div className="sign-input">
-                                    <TextField type='password' label="Password" variant="outlined" size="small"/>
-                                </div>
-                                
 
-                                <div className='d-flex f14 justify-content-between mt-2 mx-4 px-2'>
+                                <div className="sign-input">
+                                    <TextField type='email' name="email" value={email} label="Email" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.email}</div>
+                                </div>
+                                <div className="sign-input">
+                                    <TextField type='password' name="password" value={password} label="Password" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.password}</div>
+                                </div>
+
+                                <div className='d-flex f14 justify-content-between mt-3 mx-4 px-2'>
                                     <div><button className='border-0  colr'>Forgot password?</button></div>
                                     <div>Create a account?<Link className='colr' to="/signup"> Sign up</Link></div>
-                                
+
                                 </div>
 
                                 <div >
-                                    <button className='btn btn-primary text-center w-75 my-5'>Login</button>
+                                    <button className='btn btn-primary text-center w-75 my-5' onClick={handleLogin}>Login</button>
                                 </div>
                             </div>
                         </div>

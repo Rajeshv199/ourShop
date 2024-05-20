@@ -1,9 +1,9 @@
 import React from 'react';
 
 
-const Home=()=>{
+const Logout=()=>{
     return(
         <h1>Logout Page</h1>
     )
 }
-export default Home;
+export default Logout;

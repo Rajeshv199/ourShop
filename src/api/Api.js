@@ -1,5 +1,5 @@
 
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = 'https://ourshop-api.onrender.com';
 
 export const fetchCartDataFromServer = async (_id) => {
     try {

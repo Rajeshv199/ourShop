@@ -39,7 +39,7 @@ const DetailsProduct = () => {
                     <div className='col-1' style={{maxWidth:"100px"}}>
                         {image?image.map((img,index)=>(
                         <div className='listImg' key={index} onClick={()=>setActiveImg(img.url)}>
-                                <img src={img.url} alt='' />
+                            <img src={img.url} alt='' />
                         </div>
                         )):""
                         }

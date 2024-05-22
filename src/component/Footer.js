@@ -38,14 +38,8 @@ const Footer = () => {
 
                     </div>
                 </div>
-                <div>
-                    <h4 className='text-dark'>Contact</h4>
-                    <div>Freeshop Technologies Private Limited, CIN: U74900KA2015PTC082263 06-105-B, 06-102, (138 Wu) Vaishnavi Signature, No. 78/9, Outer Ring Road, Bellandur, Varthur Hobli, Bengaluru-560103, Karnataka, India E-mail address: freeshop@gmail.com © 2015-2023 freeshop.com</div>
-                </div>
+               
             </div>
-
-    
-
         </div>
     )
 }

@@ -172,7 +172,7 @@ const Createshop = () => {
                                     <div className='error'>{errors.city}</div>
                                 </div>
                                 <div className="sign-input" >
-                                    <TextField type='password' disabled name='password' value={password} label="Password" variant="outlined" size="small" onChange={handleChange} />
+                                    <TextField type='password' disabled={state?true:false} name='password' value={password} label="Password" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.password}</div>
                                 </div>
 

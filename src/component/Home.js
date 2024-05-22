@@ -14,8 +14,8 @@ import axiosInstance from "../apiConfig/axoisSetup";
 const Home = () => {
 
     const [shopArr, setShopArr] = useState([]);
-    const [filter, setFilter] = useState({state:"",city:"",category:""});
-
+    const [filter, setFilter] = useState({ state: "", city: "", category: "" });
+    const [myCity, setMyCity] = useState('');
 
     const fetchShops = async () => {
         try {
@@ -32,12 +32,13 @@ const Home = () => {
     };
 
     useEffect(() => {
+        
 
         fetchShops();
     }, []);
 
-    const{state,city,category} = filter;
-
+    const { state, city, category } = filter;
+    console.log(myCity);
     return (
 
         <div className="container-flui">
@@ -45,9 +46,8 @@ const Home = () => {
             <div className='minHeader'>
                 <div className='d-flex m-auto justify-content-between colrblue bg-white rounded-pill' style={{ width: "30%" }}>
                     <div className='item bg-blue'>Home</div>
-                    <div className='item'>Services</div>
+                    <div className='item'>Help</div>
                     <div className='item'>About</div>
-                    <div className='item'>Blog</div>
                     <div className='item'>Reviews</div>
                 </div>
             </div>
@@ -108,15 +108,15 @@ const Home = () => {
                                     </svg>1.5k
                                 </div>
                             </div>
-                            
+
                             <div className='text-center imgItem'>
-                                <Link to={`${sh1.Name}/products`} state={{id:sh1._id,name:sh1.Name}}><button className='rounded my-2 fontWeight'>View Shop</button></Link>
+                                <Link to={`${sh1.Name}/products`} state={{ id: sh1._id, name: sh1.Name }}><button className='rounded my-2 fontWeight'>View Shop</button></Link>
                             </div>
                         </div>
                     ))}
 
                 </div>
-                
+
             </div>
 
 

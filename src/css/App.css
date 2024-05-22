@@ -22,12 +22,12 @@ body{
 
 }
 .item_edit:hover{
-  background-color: #FFE3ED;
-  color: #FF6161!important;
+  background-color: #E3F1FF;
+  color: #0080FF!important;
 
 }
 .item_edit:hover .material-symbols-outlined{
-  color: #FF6161!important;
+  color: #0080FF!important;
 
 }
 a{
@@ -92,6 +92,10 @@ font-size: 30px;
   cursor: pointer;
 }
 .minHeader .item:hover{
+  background-color: #203B81;
+  color: #fff;
+}
+.minHeader .item:hover a{
   background-color: #203B81;
   color: #fff;
 }
@@ -530,10 +534,12 @@ font-size: 30px;
 }
 .bg-Arsenic{
   background-color: #39434D;
+  border-left: 1px solid #fff;
 }
 .bg-ligtQuat{
   background-color: #EEF8F8;
-  border-bottom: 1px solid #C6C6C6
+  border-bottom: 1px solid #C6C6C6;
+  border-left: 1px solid #fff;
 }
 .listRadio{
   width: 4.7%;
@@ -566,6 +572,49 @@ font-size: 30px;
   margin-bottom: 2px;
   margin-right: 4px;
 }
+/* end  */
+
+/* profile  */
+
+.profile-card{
+  width: 60%;
+  height: auto;
+  background-color: #fff;
+  margin: 40px auto;
+  box-shadow: 0px 2px 4px 2px #0000001F;
+  border-radius: 6px;
+  overflow: hidden;
+
+}
+.leftSide{
+  padding: 0;
+  text-align: center;
+  background: linear-gradient(270.5deg, #f38866 0.44%, #ee606e 99.64%);
+  padding: 60px 0;
+
+}
+.rightSide{
+  background-color: #edeef0;
+}
+
+.addPhoto{
+
+}
+.addPhoto input[type=file]{
+  border: 1px solid rgb(219, 217, 217);
+  padding: 4px;
+}
+
+.customePup{
+  width: 28%;
+  margin-top: 150px;
+  border: none!important;
+}
+.customePup .modal-header, .customePup .modal-body{
+  border: none!important;
+  padding: 0 4px;
+}
+
 /* end  */
 
 

@@ -41,10 +41,10 @@ const DisplayProdList = () => {
                         {products[0] ? (
                             <div className='row' >
                                 {products.map((p1, index) => (
-                                    <div className='col-3 prodCart'>
+                                    <div className='col-3 prodCart' key={index}>
                                         <Link to={`/${state.name}/product-details/${p1._id}`} state={{ id: p1._id }}>
                                             <div className='prodImg'>
-                                                <img src={p1.image.url} alt='' />
+                                                <img src={p1.image[0].url} alt='' />
                                             </div>
                                             <div className='py-2 px-3'>
                                                 <div className='fontWeight my-2'>{p1.name}</div>

@@ -9,7 +9,7 @@ import axiosInstance from "../apiConfig/axoisSetup";
 
 
 function Adminlogin() {
-    const [adminForm, setAdminForm] = useState({ Name: "", password: "" });
+    const [adminForm, setAdminForm] = useState({ shopId: "", password: "" });
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     // const auths = localStorage.getItem('admin');
@@ -27,7 +27,7 @@ function Adminlogin() {
         if (Object.keys(newErrors).length === 0) {
             try {
                 const response = await axiosInstance.post(`/adminlogin`, adminForm, {});
-                let data = response.data;
+                let data = response.data.result;
                 if (data.Name) {
                     localStorage.setItem("admin", JSON.stringify({ id: data._id, name: data.Name }));
                     navigate("/admin/listProduct");
@@ -36,7 +36,9 @@ function Adminlogin() {
                 }
 
             } catch (err) {
-                console.error('An error occurred :', err);
+                const data = err.response.data;
+                alert(data.message);
+                console.error('An error occurred :', data.message);
             }
         }
 
@@ -44,8 +46,8 @@ function Adminlogin() {
 
     const validateForm = (data) => {
         const errors = {};
-        const {Name, password } = data;
-        if (!Name) { errors.Name = 'This field is required';}
+        const {shopId, password } = data;
+        if (!shopId) { errors.shopId = 'This field is required';}
 
         if (!password) {
             errors.password = 'This field is required';
@@ -55,7 +57,7 @@ function Adminlogin() {
         return errors;
     }
 
-    const { Name, password } = adminForm;
+    const { shopId, password } = adminForm;
     return (
         <>
             <Navbar />
@@ -81,8 +83,8 @@ function Adminlogin() {
 
 
                                 <div className="sign-input">
-                                    <TextField type='text' name='Name' value={Name} label="Shop Name" variant="outlined" size="small" onChange={handleChange} />
-                                    <div className='error'>{errors.Name}</div>
+                                    <TextField type='text' name='shopId' value={shopId} label="Shop ID" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.shopId}</div>
                                 </div>
                                 <div className="sign-input">
                                     <TextField type='password' name='password' value={password} label="Password" variant="outlined" size="small" onChange={handleChange} />

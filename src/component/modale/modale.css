@@ -1,0 +1,96 @@
+.modal-fullscreen-xl {
+    padding: 0 !important;
+  }
+  
+  .modal-fullscreen-xl .modal-dialog {
+    width: 80% ;
+    max-width: none ;
+    height: 100% ;
+    margin: auto;
+  }
+  
+  .modal-fullscreen-xl .modal-content {
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+  
+  .modal-fullscreen-xl .modal-body {
+    overflow-y: scroll;
+  }
+  
+  /* Media queries */
+  @media (max-width: 576px) {
+    .modal-fullscreen.xs {
+      padding: 0 !important;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .modal-fullscreen.sm {
+      padding: 0 !important;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .modal-fullscreen.md {
+      padding: 0 !important;
+    }
+  }
+  
+  @media (max-width: 1200px) {
+    .modal-fullscreen.lg {
+      padding: 0 !important;
+    }
+  }
+  
+  /* General CSS */
+  
+  .model-box .modal.fade .modal-dialog {
+    transition: transform 0.4s ease;
+    transform: translate(0, 50px);
+}
+
+.model-box .modal-content{
+    margin-left: 6%;
+}
+
+.modal-open .light-bg{
+    background: #02020263;
+}
+
+.modal-open .modal-dialog {
+    max-width: 60%;
+}
+ 
+.custom-shape-divider-top-1711021709 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-top-1711021709 svg {
+  position: relative;
+  display: block;
+  width: calc(115% + 1.3px);
+  height: 49px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-top-1711021709 .shape-fill {
+  fill: #000055 !important;
+}
+.close{
+  border: none;
+  background-color: transparent;
+  padding-right:0 ;
+}
+.close span{
+  font-size: 28px;
+  line-height: 16px;
+  
+}
+  

@@ -31,7 +31,7 @@ const SignUp = () => {
                 if (data.name && data.email && data.password) {
                     alert('Signup Successfully');
                     navigate("/");
-                    localStorage.setItem("user", JSON.stringify({ name: data.name, id: data._id }));
+                    localStorage.setItem("user", JSON.stringify({ id: data._id, name: data.name,email:data.email}));
                 } else {
                     alert("please enter a valid data")
                 }

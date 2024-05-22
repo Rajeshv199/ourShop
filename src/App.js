@@ -30,6 +30,8 @@ import Productlist from './component/Productlist';
 import Suggestshop from './component/Suggestshop';
 import DisplayProdList from './component/displayProdList';
 import DetailsProduct from './component/detailsProduct';
+import Shoplist from './component/shoplist';
+import Help from './component/help';
 
 
 
@@ -63,12 +65,14 @@ function App() {
             <Route path="/adminlogin" element={<Adminlogin />} />
             <Route path="/admin/listProduct" element={<Productlist />} />
             <Route path="/admin/addProduct" element={<AddProduct />} />
+            <Route path="/shopList" element={<Shoplist />} />
+            <Route path="/help" element={<Help />} />
             {/* <Route path="/sidebar" element={<Sidebar />} /> */}
             {/* <Route path="/admin/*" element={<Admin />} /> */}
 
             
           </Route>
-          
+
           <Route path="/:name/product-details/:id" element={<DetailsProduct />} />
           <Route path="/:name/products" element={<DisplayProdList />} />
           <Route path="/signup" element={<Signup />} />

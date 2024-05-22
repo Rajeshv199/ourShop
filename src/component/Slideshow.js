@@ -31,6 +31,13 @@ function Slideshow() {
     //   disableOnInteraction: false,
     // }
   };
+  const handleShop =()=>{
+    setTimeout(scrollCareer, 0);
+  }
+  function scrollCareer(){
+    window.scrollTo({ top: 950, behavior: 'smooth' });
+ }
+  
 
   return (
 
@@ -52,7 +59,7 @@ function Slideshow() {
             <div className='name'>Shop Name</div>
             <div className='newArr'>NEW Arrival IN</div>
             <div className="title">Women collection</div>
-            <div><button>Shop Now</button></div>
+            <div><button onClick={()=>handleShop()}>Shop Now</button></div>
           </div>
           </div>
           

@@ -35,16 +35,19 @@ const Login = () => {
         if (Object.keys(newErrors).length === 0) {
             try {
                 const response = await axiosInstance.post(`/login`, loginForm, {})
-                const data = response.data;
+                const data = response.data.result;
+                console.log(data);
                 if (data.name) {
-                    localStorage.setItem("user", JSON.stringify({ name: data.name, id: data._id }));
+                    localStorage.setItem("user", JSON.stringify({ id: data._id, name: data.name,email:data.email  }));
                     navigate("/")
 
                 } else {
                     alert('Please enter a valid details');
                 }
             } catch (err) {
-                console.error('An error occurred while updating:', err);
+                const data = err.response.data;
+                alert(data.message);
+                console.error('An error occurred :', data.message);
             }
         } else {
         }
@@ -86,7 +89,42 @@ const Login = () => {
     };
 
     const { email, password } = loginForm;
-    console.log(errors);
+
+
+
+    const users = [
+        { id: 1, purchasedProducts: [1, 2, 3],},
+        {id: 2, purchasedProducts: [2, 3, 4],},
+        {id: 3,purchasedProducts: [3, 4, 5],},
+      ];
+
+
+      const user = users.find((user) => user.id === 1);
+
+        const relatedProducts = users.filter((otherUser) => {
+        const intersection = user.purchasedProducts.filter((product) => otherUser.purchasedProducts.includes(product));
+        return intersection.length > 0;
+        }).map((user) => user.purchasedProducts).reduce((a, b) => a.concat(b), []);
+
+        console.log(relatedProducts);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return (
         <div className="">
             <Nav />

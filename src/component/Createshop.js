@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, Link,useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Navbar from "./Nav";
 import TextField from '@mui/material/TextField';
@@ -14,9 +14,10 @@ import '../css/createshop.css';
 const Createshop = () => {
 
     const auth = JSON.parse(localStorage.getItem('user'));
-    const [formData, setFormData] = useState({ userid: auth.id, Name: "", image: "", location: "", city: "", password: "" });
+    const [formData, setFormData] = useState({ userId: auth.id, Name: "", image: "", location: "", city: "", password: "" });
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
+    const { state } = useLocation();
 
     const handleChange = (e) => {
         if (e.target.name === 'image') {
@@ -48,9 +49,39 @@ const Createshop = () => {
                 let data = response.data;
                 if (data.success) {
                     let shopdata = data.shopData
-                    toast.success("Added Successfully");
+                    alert(data.message);
                     localStorage.setItem("admin", JSON.stringify({ id: shopdata._id, name: shopdata.Name }));
                     setTimeout(() => { navigate("/admin/addProduct") }, 1000);
+                } else {
+                    toast.error(data.message);
+                }
+
+            } catch (error) {
+                if (error.response) {
+                    toast.error(error.response.data.message);
+                } else if (error.request) {
+                    toast.error("No response received from the server. Please try again later.");
+                } else {
+                    toast.error("An error occurred. Please try again later.");
+                }
+            }
+        } else {
+
+        }
+    };
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        const newErrors = validateForm(formData);
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length === 0) {
+            try {
+                const response = await axiosInstance.put(`/editshop/${state._id}`, formData, {});
+                let data = response.data;
+                console.log(data);
+                if (data.success) {
+                    let shopdata = data.shopData
+                    alert(data.message);
+                    setTimeout(() => { navigate("/shopList") }, 1000);
                 } else {
                     toast.error(data.message);
                 }
@@ -80,15 +111,25 @@ const Createshop = () => {
 
         if (!city) {errors.city = 'This field is required';} 
 
-        if (!password) {
-            errors.password = 'This field is required';
-        }else if(!(password.length>5)){
-            errors.password = "Password length must be atleast 6 characters";
+        if(!state){
+            if (!password) {
+                errors.password = 'This field is required';
+            }else if(!(password.length>5)){
+                errors.password = "Password length must be atleast 6 characters";
+            }
         }
 
         return errors;
     }
 
+    useEffect(()=>{
+        if(state){
+            console.log(state);
+            let json={userId: auth.id,Name:state.Name,image:state.image.url,location:state.location,city:state.city};
+            setFormData(json);
+          
+        }
+    },[]);
 
     return (
         <>
@@ -110,7 +151,7 @@ const Createshop = () => {
                         <div className='col-2'></div>
                         <div className='col-5'>
                             <div className='signupForm'>
-                                <h4 className='text-white'>Create Shop</h4>
+                                <h4 className='text-white'>{state?"Update Shop":"Create Shop"}</h4>
                                 <div className='f14'>Are you ready to take the next step towards successful future? look no further than circlez!</div>
 
 
@@ -130,17 +171,25 @@ const Createshop = () => {
                                     <TextField type='text' name='city' value={city} label="City" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.city}</div>
                                 </div>
-                                <div className="sign-input">
-                                    <TextField type='password' name='password' value={password} label="Password" variant="outlined" size="small" onChange={handleChange} />
+                                <div className="sign-input" >
+                                    <TextField type='password' disabled name='password' value={password} label="Password" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.password}</div>
                                 </div>
-                                <div className='f14 text-end mt-3 mx-4 px-2'>
-                                    <div>Have an account?<Link className='colr' to="/adminlogin"> Admin Login</Link></div>
 
+                                <div className='f14 text-end mt-3 mx-4 px-2'>
+                                    {!state&&
+                                    <div>Have an account?<Link className='colr' to="/adminlogin"> Admin Login</Link></div>
+                                    }
                                 </div>
 
                                 <div >
-                                    <button className='btn btn-primary text-center w-75 my-5' onClick={handleSubmit}>Submit</button>
+                                {state?(
+                                    <button className='btn btn-primary text-center w-75 my-5' onClick={handleUpdate}>Update</button>
+                                ):
+                                <button className='btn btn-primary text-center w-75 my-5' onClick={handleSubmit}>Submit</button>
+                                }
+                                    
+                                    
                                 </div>
                             </div>
                         </div>

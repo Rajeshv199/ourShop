@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Select from "react-select";
@@ -10,16 +10,23 @@ import Navbar from './Navbar2';
 import axiosInstance from "../apiConfig/axoisSetup";
 
 const options1 = [
-    { value: "Mobile", label: "Mobile" },
-    { value: "Computer", label: "Computer" },
-    { value: "TV", label: "TV" },
     { value: "Electronics", label: "Electronics" },
+    { value: "Furniture", label: "Furniture" },
+    { value: "Jewelry", label: "Jewelry" },
+    { value: "Sporting goods", label: "Sporting goods" },
+    { value: "Beauty", label: "Beauty" },
+    { value: "Food and beverage", label: "Food and beverage" },
+    { value: "Household items", label: "Household items" },
 ];
 const options2 = [
+    { value: "Audio", label: "Audio" },
     { value: "All Mobile", label: "All Mobile" },
     { value: "Power Bank", label: "Power Bank" },
     { value: "Tablets", label: "Tablets" },
     { value: "Laptop", label: "Laptop" },
+    { value: "Tables", label: "Tables" },
+    { value: "Chairs", label: "Chairs" },
+    { value: "Beds", label: "Beds" },
 ];
 
 
@@ -38,53 +45,70 @@ const Addproduct = () => {
         code: '',
         brand: '',
         price: '',
-        image: '',
         about: '',
         description: '',
 
 
     });
-    const { category, subCategory, name, title, subtitle, offer, code, brand, price, image, about, description } = formData;
+    const { category, subCategory, name, title, subtitle, offer, code, brand, price, about, description } = formData;
     const [category2, setCategory] = React.useState('');
     const [subCategory2, setSubCategory] = React.useState('');
+    const [images, setImages] = useState([]);
     const [addCateg, setAddCateg] = useState(false);
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
+    const { state } = useLocation();
 
 
     const handleChange = (e) => {
         if (e.target.name === 'image') {
-            // const files = e.target.files;
-            // for (let i = 0; i < files.length; i++) {
-            //     const render = new FileReader();
-            //     render.onload = () => {
-            //         if (render.readyState === 2) {
-            //             formData.image.push(render.result);
-            //         }
-            //     }
-            //     render.readAsDataURL(e.target.files[i])
-            // }
 
-            const render = new FileReader();
-            render.onload = () => {
-                if (render.readyState === 2) {
-                    formData.image = render.result;
-                }
+            const files = Array.from(e.target.files);
+            if (files.length > 5) {
+                toast.error('Please select a maximum of 5 images.');
+                return;
             }
-            render.readAsDataURL(e.target.files[0])
+            setImages([]);
+            files.forEach((file) => {
+                // setPreivewImg(files)
+                // validate file size 
+                // if (file.size > 150 * 1024) { // 100 KB
+                //     toast.error(`File ${file.name} exceeds the maximum size of 100kb.`);
+                //     return;
+                // }
+                const reader = new FileReader();
+
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        setImages((old) => [...old, reader.result]);
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+            
         } else {
 
             setFormData({ ...formData, [e.target.name]: e.target.value });
         }
     };
 
-    const createShop = async (e) => {
+    const createProduct = async (e) => {
         e.preventDefault();
         const newErrors = validateForm(formData);
         setErrors(newErrors);
+
+        const myForm = new FormData();
+        Object.entries(formData).forEach(([key, value]) => {
+            myForm.append(key, value);
+        });
+        images.forEach((image) => {
+            myForm.append("image", image);
+        });
+
         if (Object.keys(newErrors).length === 0) {
             try {
-                const response = await axiosInstance.post(`/createproduct`, formData, {});
+
+                const response = await axiosInstance.post(`/createproduct`, myForm, {});
                 let data = response.data;
 
                 if (data.success) {
@@ -106,9 +130,38 @@ const Addproduct = () => {
         }
     };
 
+    const updateProduct = async (e) => {
+        e.preventDefault();
+        const newErrors = validateForm(formData);
+        setErrors(newErrors);
+        let prod = state.data;
+        if (Object.keys(newErrors).length === 0) {
+            try {
+                const response = await axiosInstance.put(`/updateProductDetails/${prod._id}`, formData, {});
+                let data = response.data;
+
+                if (data.success) {
+                    toast.success("Update Successfully");
+                    setTimeout(() => { navigate("/admin/listProduct") }, 1000)
+                } else {
+                    toast.error(data.message);
+                }
+
+            } catch (error) {
+                if (error.response) {
+                    toast.error(error.response.data.message);
+                } else if (error.request) {
+                    toast.error("No response received from the server. Please try again later.");
+                } else {
+                    toast.error("An error occurred. Please try again later.");
+                }
+            }
+        }
+    };
+
     const validateForm = (data) => {
         const errors = {};
-        const { category, subCategory, name, title, subtitle, offer, code, brand, price, image, about, } = formData;
+        const { category, subCategory, name, title, subtitle, offer, code, brand, price, about, } = formData;
         if (!category) { errors.category = 'This field is required'; }
 
         if (!subCategory) { errors.subCategory = 'This field is required'; }
@@ -119,7 +172,7 @@ const Addproduct = () => {
         if (!code) { errors.code = 'This field is required'; }
         if (!brand) { errors.brand = 'This field is required'; }
         if (!price) { errors.price = 'This field is required'; }
-        if (!image) { errors.image = 'This field is required'; }
+        if (!images) { errors.image = 'This field is required'; }
         if (!about) { errors.about = 'This field is required'; }
         if (!description) { errors.description = 'This field is required'; }
         return errors;
@@ -148,6 +201,15 @@ const Addproduct = () => {
         setErrors(errors);
     }
 
+    useEffect(() => {
+        if (state) {
+            const { data } = state;
+            setFormData(data)
+            setCategory({ value: data.category, label: data.category });
+            setSubCategory({ value: data.subCategory, label: data.subCategory })
+            setAddCateg(true);
+        }
+    }, []);
 
     return (
         <div>
@@ -222,21 +284,26 @@ const Addproduct = () => {
 
                             <div className='row my- mx-0'>
                                 <div className='col-8 col-md-7 m-3 '>
-                                    <TextField className='w-100' name="about" value={about} label="About*" multiline rows={2} size="small" onChange={handleChange}></TextField>
+                                    <TextField className='w-100' name="about" value={about} label="About*" multiline rows={3} size="small" onChange={handleChange}></TextField>
                                     <div className='error2'>{errors.about}</div>
                                 </div>
                                 <div className='col-8 col-md-7 m-3 '>
-                                    <TextField className='w-100' name="description" value={description} label="Description*" multiline rows={2} size="small" onChange={handleChange}></TextField>
+                                    <TextField className='w-100' name="description" value={description} label="Description*" multiline rows={3} size="small" onChange={handleChange}></TextField>
                                     <div className='error2'>{errors.description}</div>
                                 </div>
                             </div>
 
                             <div className='text-end mx-5 my-2'>
-                                <button className='btn btn-primary' onClick={createShop}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20px" class="mb-1 mx-1">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                    </svg>
-                                    Add Product</button>
+                                {state ? (
+                                    <button className='btn btn-primary' onClick={updateProduct}>Update Product</button>
+                                ) : (
+                                    <button className='btn btn-primary' onClick={createProduct}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20px" class="mb-1 mx-1">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        Add Product</button>
+                                )}
+
                             </div>
                         </div>
                     }

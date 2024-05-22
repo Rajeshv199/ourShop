@@ -36,15 +36,12 @@ const DetailsProduct = () => {
             <Navbar />
             <div className='m-auto' style={{width:"90%"}}>
                 <div className='row my-3 mx-0'>
-                    <div className='col-1'>
+                    <div className='col-1' style={{maxWidth:"100px"}}>
                         {image?image.map((img,index)=>(
                         <div className='listImg' key={index} onClick={()=>setActiveImg(img.url)}>
                                 <img src={img.url} alt='' />
                         </div>
-                        )):
-                        <div className='listImg'>
-                            <img src='https://t3.ftcdn.net/jpg/02/68/55/60/360_F_268556012_c1WBaKFN5rjRxR2eyV33znK4qnYeKZjm.jpg' alt='' />
-                        </div>
+                        )):""
                         }
                         
                     </div>

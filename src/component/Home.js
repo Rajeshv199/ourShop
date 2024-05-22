@@ -43,14 +43,7 @@ const Home = () => {
 
         <div className="container-flui">
             <Nav />
-            <div className='minHeader'>
-                <div className='d-flex m-auto justify-content-between colrblue bg-white rounded-pill' style={{ width: "30%" }}>
-                    <div className='item bg-blue'>Home</div>
-                    <div className='item'>Help</div>
-                    <div className='item'>About</div>
-                    <div className='item'>Reviews</div>
-                </div>
-            </div>
+            
             <div>
                 <Slideshow />
             </div>

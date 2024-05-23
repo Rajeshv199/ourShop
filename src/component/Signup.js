@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate,useLocation } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -14,6 +14,7 @@ const SignUp = () => {
     const [signUpForm, setSignUpForm] = useState({ name: "", email: "", password: "", confrmPassword: "" });
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
+    const { state } = useLocation();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -71,12 +72,12 @@ const SignUp = () => {
 
     }
 
-    let imgArr = ["https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
-        "https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
-        "https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
-        "https://images.unsplash.com/photo-1506710507565-203b9f24669b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1536&q=80",
-        "https://images.unsplash.com/photo-1506710507565-203b9f24669b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1536&q=80",
-        "https://images.unsplash.com/photo-1536987333706-fc9adfb10d91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"]
+    let imgArr = ["https://images.unsplash.com/photo-1570857502809-08184874388e?q=80&w=1478&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1526745925052-dd824d27b9ab?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1567958451986-2de427a4a0be?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://plus.unsplash.com/premium_photo-1661964205360-b0621b5a9366?q=80&w=1438&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1617286647344-95c86d56748a?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"]
 
     const settings = {
         dots: false,
@@ -91,12 +92,20 @@ const SignUp = () => {
         }
     };
 
-    const { name, email, password, confrmPassword } = signUpForm;
+    useEffect(() => {
+        if(state){
+            const{user} = state;
+            console.log(user);
+            setSignUpForm(user);
+        }
+    })
 
+    const { name, email, password, confrmPassword } = signUpForm;
 
     return (
         <div className="">
             <Nav />
+            {!state &&
             <div className="shopSlick">
                 <Slider {...settings}>
                     {imgArr.map((item, index) => (
@@ -106,13 +115,14 @@ const SignUp = () => {
                                 <div className="shopDetails">
                                     <div className='name'>Shop Name</div>
                                     <div className="title">Freeshop Technologies Private Limited, CIN: U74900KA20 </div>
-                                    <div><button>Shop Now</button></div>
+                                    <div className='mt-3'><button>Shop Now</button></div>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </Slider>
             </div>
+            }
 
             <div className='signup-container'>
 
@@ -129,30 +139,36 @@ const SignUp = () => {
                         <div className='col-2'></div>
                         <div className='col-5'>
                             <div className='signupForm'>
-                                <h4 className='text-white'>Join us today👋</h4>
+                                <h4 className='text-white'>{state?"Edit Profile":"Join us today👋"}</h4>
                                 <div className='f14'>Are you ready to take the next step towards successful future? look no further than circlez!</div>
 
                                 <div className="sign-input">
-                                    <TextField type='text' label="Name" name="name" value={name} variant="outlined" size="small" onChange={handleChange} />
+                                    <TextField type='text' label="Name *" name="name" value={name} variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.name}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='email' label="Email" name="email" value={email} variant="outlined" size="small" onChange={handleChange} />
+                                    <TextField type='email' label="Email *" name="email" value={email} variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.email}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='password' label="Password" name="password" value={password} variant="outlined" size="small" onChange={handleChange} />
+                                    <TextField type='password' className={state?'input-disble':""} disabled={state?true:false} label="Password *" name="password" value={password} variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.password}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='password' label="Confirm Password" name='confrmPassword' value={confrmPassword} variant="outlined" size="small" onChange={handleChange} />
+                                    <TextField type='password' className={state?'input-disble':""} disabled={state?true:false} label="Confirm Password *" name='confrmPassword' value={confrmPassword} variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.confrmPassword}</div>
                                 </div>
 
+                                {!state&&
                                 <div className='f14 text-end mt-3 mx-4 px-2'>Already have an account? <Link className='colr' to="/login">Login</Link></div>
-
+                                }
                                 <div>
-                                    <button className='btn btn-primary text-center w-75 my-4' onClick={handleSubmit}>Sign Up</button>
+                                    {state?(
+                                        <button className='btn btn-primary text-center w-75 my-4'>Update</button>
+                                    ):(
+                                        <button className='btn btn-primary text-center w-75 my-4' onClick={handleSubmit}>Sign Up</button>
+                                    )}
+                                    
                                 </div>
                             </div>
                         </div>

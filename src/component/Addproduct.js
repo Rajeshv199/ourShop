@@ -240,35 +240,35 @@ const Addproduct = () => {
 
                             <div className='row mx-0'>
                                 <div className='col-4 col-md-3 m-3 '>
-                                    <TextField className='w-100' name="name" value={name} label="Product Name*" size="small" onChange={handleChange}></TextField>
+                                    <TextField className='w-100' name="name" value={name} label="Product Name  *" size="small" onChange={handleChange}></TextField>
                                     <div className='error2'>{errors.name}</div>
                                 </div>
                                 <div className='col-4 col-md-3 m-3 '>
-                                    <TextField className='w-100' name="title" value={title} label="Title*" size="small" onChange={handleChange}></TextField>
+                                    <TextField className='w-100' name="title" value={title} label="Title *" size="small" onChange={handleChange}></TextField>
                                     <div className='error2'>{errors.name}</div>
                                 </div>
                                 <div className='col-4 col-md-3 m-3 '>
-                                    <TextField className='w-100' name="subtitle" value={subtitle} label="Subtitle*" size="small" onChange={handleChange}></TextField>
+                                    <TextField className='w-100' name="subtitle" value={subtitle} label="Subtitle *" size="small" onChange={handleChange}></TextField>
                                     <div className='error2'>{errors.subtitle}</div>
                                 </div>
                                 <div className='col-4 col-md-3 m-3 '>
-                                    <TextField className='w-100' name="offer" value={offer} label="Offer" size="small" onChange={handleChange}></TextField>
+                                    <TextField className='w-100' name="offer" value={offer} label="Offer *" size="small" onChange={handleChange}></TextField>
                                     <div className='error2'>{errors.offer}</div>
                                 </div>
                                 <div className='col-4 col-md-3 m-3 '>
-                                    <TextField className='w-100' name="code" value={code} label="Code" size="small" onChange={handleChange}></TextField>
+                                    <TextField className='w-100' name="code" value={code} label="Code *" size="small" onChange={handleChange}></TextField>
                                     <div className='error2'>{errors.code}</div>
                                 </div>
                                 <div className='col-4 col-md-3 m-3 '>
-                                    <TextField className='w-100' name="brand" value={brand} label="Brand" size="small" onChange={handleChange}></TextField>
+                                    <TextField className='w-100' name="brand" value={brand} label="Brand *" size="small" onChange={handleChange}></TextField>
                                     <div className='error2'>{errors.brand}</div>
                                 </div>
                                 <div className='col-4 col-md-3 m-3 '>
-                                    <TextField type='number' className='w-100' name="price" value={price} label="Price" size="small" onChange={handleChange}></TextField>
+                                    <TextField type='number' className='w-100' name="price" value={price} label="Price *" size="small" onChange={handleChange}></TextField>
                                     <div className='error2'>{errors.price}</div>
                                 </div>
                                 <div className='col-4 col-md-4 m-3 '>
-                                    <TextField select className='w-75' name="Current" label="Upload Image/Thumbnail" size="small" onChange={handleChange}>
+                                    <TextField select className='w-75' name="Current" label="Upload Image/Thumbnail *" size="small" onChange={handleChange}>
                                         <MenuItem value="Project ID"> Image</MenuItem>
                                         <MenuItem value="Project Name">Image2</MenuItem>
                                     </TextField>
@@ -284,11 +284,11 @@ const Addproduct = () => {
 
                             <div className='row my- mx-0'>
                                 <div className='col-8 col-md-7 m-3 '>
-                                    <TextField className='w-100' name="about" value={about} label="About*" multiline rows={3} size="small" onChange={handleChange}></TextField>
+                                    <TextField className='w-100' name="about" value={about} label="About *" multiline rows={3} size="small" onChange={handleChange}></TextField>
                                     <div className='error2'>{errors.about}</div>
                                 </div>
                                 <div className='col-8 col-md-7 m-3 '>
-                                    <TextField className='w-100' name="description" value={description} label="Description*" multiline rows={3} size="small" onChange={handleChange}></TextField>
+                                    <TextField className='w-100' name="description" value={description} label="Description *" multiline rows={3} size="small" onChange={handleChange}></TextField>
                                     <div className='error2'>{errors.description}</div>
                                 </div>
                             </div>

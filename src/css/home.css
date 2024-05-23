@@ -52,8 +52,14 @@
   position: relative;
   padding: 30px 50px;
 
-
 }
+@media only screen and (max-width: 1300px) {
+  .home-fst-line {
+    width: 80%;
+  }
+  
+}
+
 .home-fst-line h2{
   font-size: 50px;
   line-height: 70px;
@@ -65,6 +71,9 @@
   text-transform: uppercase;
 }
 
+.home-btn{
+  margin-top: 7%;
+}
 
 .home-btn button{
   border: 1px solid #fff;

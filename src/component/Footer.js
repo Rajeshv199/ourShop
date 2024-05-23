@@ -8,13 +8,12 @@ const Footer = () => {
                 <div className='d-flex justify-content-between'>
                     <div style={{width:"28%"}}>
                         <h4 className='text-dark'>Shop Non-Stop on freeshop</h4>
-                        <div className='text-center'>Trusted by more than 1 Crore Indians Cash on Delivery | Free Delivery</div>
+                        <div className='text-center'>Trusted by over 10 million Indians for their shopping needs.</div>
                     </div>
                     <div className='d-flex'>
                         <div className='fontWeight mx-4'>
                             <div className='my-1'>About</div>
                             <div className='my-1'>Home</div>
-                            <div className='my-1'>Contact Us</div>
                             <div className='my-1'>FQA</div>
                             <div className='my-1'>Legal and Policies</div>
                         </div>
@@ -38,8 +37,14 @@ const Footer = () => {
 
                     </div>
                 </div>
-               
+                <div>
+                    <h4 className='text-dark'>Contact</h4>
+                    <div>123 Market Street, E-commerce City, State of Shopping,749829</div>
+                </div>
             </div>
+
+    
+
         </div>
     )
 }

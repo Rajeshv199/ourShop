@@ -156,7 +156,7 @@ const Createshop = () => {
 
 
                                 <div className="sign-input">
-                                    <TextField type='text' name='Name' value={Name} label="Shop Name" variant="outlined" size="small" onChange={handleChange} />
+                                    <TextField type='text' name='Name' value={Name} label="Shop Name *" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.Name}</div>
                                 </div>
                                 <div className="sign-input">
@@ -164,15 +164,15 @@ const Createshop = () => {
                                     <div className='error'>{errors.image}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='text' name='location' value={location} label="Location" variant="outlined" size="small" onChange={handleChange} />
+                                    <TextField type='text' name='location' value={location} label="Location *" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.location}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='text' name='city' value={city} label="City" variant="outlined" size="small" onChange={handleChange} />
+                                    <TextField type='text' name='city' value={city} label="City *" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.city}</div>
                                 </div>
                                 <div className="sign-input" >
-                                    <TextField type='password' disabled={state?true:false} name='password' value={password} label="Password" variant="outlined" size="small" onChange={handleChange} />
+                                    <TextField type='password' className={state?'input-disble':""} disabled={state?true:false} name='password' value={password} label="Password *" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.password}</div>
                                 </div>
 

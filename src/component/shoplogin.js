@@ -78,20 +78,20 @@ function Adminlogin() {
                         <div className='col-2'></div>
                         <div className='col-5'>
                             <div className='signupForm'>
-                                <h4 className='text-white'>Login to Admin</h4>
+                                <h4 className='text-white'>Login to Shop</h4>
                                 <div className='f14'>Are you ready to take the next step towards successful future? look no further than circlez!</div>
 
 
                                 <div className="sign-input">
-                                    <TextField type='text' name='shopId' value={shopId} label="Shop ID" variant="outlined" size="small" onChange={handleChange} />
+                                    <TextField type='text' name='shopId' value={shopId} label="Shop ID *" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.shopId}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='password' name='password' value={password} label="Password" variant="outlined" size="small" onChange={handleChange} />
+                                    <TextField type='password' name='password' value={password} label="Password *" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.password}</div>
                                 </div>
                                 <div className='d-flex f14 justify-content-between mt-3 mx-4 px-2'>
-                                    <div><button className='border-0  colr'>Forgot password?</button></div>
+                                    <div><Link to="/forgotPassword" className='colr'>Forgot password?</Link></div>
                                     <div>Create a account?<Link className='colr' to="/createshop"> Create</Link></div>
 
                                 </div>

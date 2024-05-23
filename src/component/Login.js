@@ -17,8 +17,11 @@ import axiosInstance from "../apiConfig/axoisSetup";
 const Login = () => {
 
     const [loginForm, setLoginForm] = useState({ email: "", password: "" });
+    const [forgotPassForm, setforgotPassForm] = useState({email: "", newPassword: "", confrmPassword: "" });
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
+    const [forgotPass, setForgotPass] = useState(false);
+
 
 
     const handleChange = (e) => {
@@ -53,6 +56,7 @@ const Login = () => {
         }
     }
 
+    
     const validateForm = (data) => {
         const errors = {};
         const{email, password} = data;
@@ -88,9 +92,7 @@ const Login = () => {
         autoplaySpeed: 500,
     };
 
-    const { email, password } = loginForm;
-
-
+    // const { email, password } = loginForm;
 
     const users = [
         { id: 1, purchasedProducts: [1, 2, 3],},
@@ -105,25 +107,7 @@ const Login = () => {
         const intersection = user.purchasedProducts.filter((product) => otherUser.purchasedProducts.includes(product));
         return intersection.length > 0;
         }).map((user) => user.purchasedProducts).reduce((a, b) => a.concat(b), []);
-
-        console.log(relatedProducts);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        const{email, newPassword, confrmPassword} = forgotPassForm;
 
     return (
         <div className="">
@@ -157,32 +141,59 @@ const Login = () => {
                             </div>
                         </div>
                         <div className='col-2'></div>
+                        {!forgotPass?(
                         <div className='col-5'>
                             <div className='signupForm'>
-                                <h4 className='text-white'>Login to Your Shop</h4>
+                                <h4 className='text-white'>Login</h4>
                                 <div className='f14'>Are you ready to take the next step towards successful future? look no further than circlez!</div>
 
-
                                 <div className="sign-input">
-                                    <TextField type='email' name="email" value={email} label="Email" variant="outlined" size="small" onChange={handleChange} />
+                                    <TextField type='email' name="email" value={loginForm.email} label="Email *" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.email}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='password' name="password" value={password} label="Password" variant="outlined" size="small" onChange={handleChange} />
+                                    <TextField type='password' name="password" value={loginForm.password} label="Password *" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.password}</div>
                                 </div>
-
+                                {!forgotPass&&
                                 <div className='d-flex f14 justify-content-between mt-3 mx-4 px-2'>
-                                    <div><button className='border-0  colr'>Forgot password?</button></div>
+                                    <div><button className='border-0  colr' onClick={()=>setForgotPass(true)}>Forgot password?</button></div>
                                     <div>Create a account?<Link className='colr' to="/signup"> Sign up</Link></div>
-
                                 </div>
+                                }
 
                                 <div >
                                     <button className='btn btn-primary text-center w-75 my-5' onClick={handleLogin}>Login</button>
                                 </div>
                             </div>
                         </div>
+                        ):(
+                            <div className='col-5'>
+                            <div className='signupForm'>
+                                <h4 className='text-white'>Forgot Password</h4>
+                                <div className='f14'>Are you ready to take the next step towards successful future? look no further than circlez!</div>
+
+                                <div className="sign-input">
+                                    <TextField type='email' name="email" value={email} label="Email *" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.email}</div>
+                                </div>
+                                <div className="sign-input">
+                                    <TextField type='password' name="newPassword" value={newPassword} label="New Password *" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.newPassword}</div>
+                                </div>
+                                <div className="sign-input">
+                                    <TextField type='password' name="confrmPassword" value={confrmPassword} label="Confrm Password *" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.confrmPassword}</div>
+                                </div>
+                                
+
+                                <div >
+                                    <button className='btn btn-primary text-center w-75 my-5'>Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                        )}
+                        
                     </div>
                 </div>
 
@@ -193,20 +204,6 @@ const Login = () => {
 
 
 
-            {/* <h1>LogIn Page</h1>
-            <form className="login-form">
-                <div className="login-inputbox">
-                    <input className='inputBox' type="text" placeholder="Enter Your Email"
-                        onChange={(e) => setEmail(e.target.value)} value={email} />
-                    <input className='inputBox' type="password" placeholder="Enter Your Password"
-                        onChange={(e) => setPassword(e.target.value)} value={password} />
-                    <button onClick={handleLogin} className="appButton" type="button">Login</button>
-                    <div className="login-redirectpage">
-                        <p> Have an account?</p><li><Link to="/signup">Signup</Link></li>
-                    </div>
-                </div>
-
-            </form> */}
         </div>
     )
 }

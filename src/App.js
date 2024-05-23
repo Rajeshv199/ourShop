@@ -24,7 +24,7 @@ import Transactionpage from './component/Transactionpage';
 import Createshop from './component/Createshop';
 import AddProduct from './component/Addproduct';
 import Admin from './component/Admin';
-import Adminlogin from './component/Adminlogin';
+import Shoplogin from './component/shoplogin';
 import Productlist from './component/Productlist';
 // import Sidebar from './component/Sidebar';
 import Suggestshop from './component/Suggestshop';
@@ -32,6 +32,8 @@ import DisplayProdList from './component/displayProdList';
 import DetailsProduct from './component/detailsProduct';
 import Shoplist from './component/shoplist';
 import Help from './component/help';
+import ChangePassword from './component/changePassword';
+import ForgotPassword from './component/forgotPassword';
 
 
 
@@ -62,11 +64,13 @@ function App() {
 
             <Route path="/transactionpage/:id" element={<Transactionpage />} />
             <Route path="/createshop" element={<Createshop />} />
-            <Route path="/adminlogin" element={<Adminlogin />} />
+            <Route path="/adminlogin" element={<Shoplogin />} />
             <Route path="/admin/listProduct" element={<Productlist />} />
             <Route path="/admin/addProduct" element={<AddProduct />} />
             <Route path="/shopList" element={<Shoplist />} />
             <Route path="/help" element={<Help />} />
+            <Route path="/updatePassword" element={<ChangePassword />} />
+            <Route path="/forgotPassword" element={<ForgotPassword />} />
             {/* <Route path="/sidebar" element={<Sidebar />} /> */}
             {/* <Route path="/admin/*" element={<Admin />} /> */}
 

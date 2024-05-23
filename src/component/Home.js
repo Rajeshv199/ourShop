@@ -48,12 +48,10 @@ const Home = () => {
                 <Slideshow />
             </div>
             <div className=" home-bg" style={{ backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(https://s3-alpha-sig.figma.com/img/8974/920d/87312d922f53c47157f3dfb29248d743?Expires=1716768000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UmJCFCWsQimFqa1ESpvs6ImcAtDs24G1pkN~IAw~W55FTT7dmZOPMOlIl63egdqnULz1JPgSb4VoaMxF3bjB7KfhQ8IrIJeKfDZ6wLgCxkSZkIUDXTwJ77vlNo1NsiK1ID4Y7A2aslRUMl3xVt8N-qkDFk6XzjaUNPjD2v5dNq-vLPnPdYvLeypq1nRCBg3yT84rH86R2sBePjCdeKVLKbTOeSvgcVFwSwsJUh5m9BzqmQ1fxML2lw-xTt3g3bqq4gyD7-ggxijpf-X9meqqS8H1-7EMB5EO4rN51b-iP4Lr47N2nAzFZzE-7XpdwWH7yf4gp8-U5Lvg2521xY2kxw__)" }}>
-
-
                 <div className="home-fst-line">
                     <h2>Start your Online Business with Zero Investment ...</h2>
                     <h6>On-demand delivery from every restaurant and store in your city. They are massive in the India.</h6>
-                    <div className="d-flex mt-4">
+                    <div className="d-flex mt-">
                         <div className="home-btn mr-4">
                             <Link to="#"><button className='btnhover' type="button"> Know More</button></Link>
                         </div>

@@ -13,7 +13,6 @@ import { addToCart } from '../redux/cartActions';
 import { addToWishlist, removeFromWishlist } from "../redux/wishlistActions";
 // import { FaHeart } from "react-icons/fa";
 import Heart from "react-animated-heart";
-import Suggestshop from '../component/Suggestshop';
 
 
 
@@ -191,9 +190,6 @@ const Shops = () => {
                         <button onClick={() => clickfunc('fashion')}>Fashion</button>
                         {/* <Link value={"fashion"}>Fashion</Link> */}
 
-
-
-
                     </div>
 
                     <div className="shop-detail" >
@@ -276,7 +272,6 @@ const Shops = () => {
                             </div>
                         </div>
                     ))}
-                    <Suggestshop />
 
 
                 </div>

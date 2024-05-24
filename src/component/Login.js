@@ -17,7 +17,7 @@ import axiosInstance from "../apiConfig/axoisSetup";
 const Login = () => {
 
     const [loginForm, setLoginForm] = useState({ email: "", password: "" });
-    const [forgotPassForm, setforgotPassForm] = useState({email: "", newPassword: "", confrmPassword: "" });
+    const [forgotPassForm, setforgotPassForm] = useState({email: "", newPassword: "", confirmNewPassword: "" });
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const [forgotPass, setForgotPass] = useState(false);
@@ -25,10 +25,11 @@ const Login = () => {
 
 
     const handleChange = (e) => {
-        const { currentTarget: input } = e;
-        let loginForm1 = { ...loginForm };
-        loginForm1[input.name] = input.value
-        setLoginForm(loginForm1);
+        const { name, value } = e.target;
+        setLoginForm({...loginForm,[name]:value});
+        if(forgotPass){
+            setforgotPassForm({...forgotPassForm,[name]:value});
+        }
     }
 
     const handleLogin = async (e) => {
@@ -39,10 +40,9 @@ const Login = () => {
             try {
                 const response = await axiosInstance.post(`/login`, loginForm, {})
                 const data = response.data.result;
-                console.log(data);
                 if (data.name) {
                     localStorage.setItem("user", JSON.stringify({ id: data._id, name: data.name,email:data.email  }));
-                    navigate("/")
+                    navigate("/");
 
                 } else {
                     alert('Please enter a valid details');
@@ -55,6 +55,29 @@ const Login = () => {
         } else {
         }
     }
+
+    const handleForgotPass = async (e) => {
+        e.preventDefault();
+        const newErrors = validateForm2(forgotPassForm);
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length === 0) {
+            try {
+                const response = await axiosInstance.post(`/user/forgot-password`, forgotPassForm, {});
+                const data = response.data.result;
+                if (data.name) {
+                    
+                } else {
+                    alert('Please enter a valid details');
+                }
+            } catch (err) {
+                const data = err.response.data;
+                alert(data.message);
+                console.error('An error occurred :', data.message);
+            }
+        } else {
+        }
+    }
+   
 
     
     const validateForm = (data) => {
@@ -69,6 +92,27 @@ const Login = () => {
             errors.password = 'This field is required';
         }else if(!(password.length>5)){
             errors.password = "Password length must be atleast 6 characters";
+        }
+        return errors;
+
+    }
+    const validateForm2 = (data) => {
+        const errors = {};
+        const{email, newPassword,confirmNewPassword} = data;
+        if (!email) {
+            errors.email = 'This field is required';
+        } else if(!/\S+@\S+\.\S+/.test(email)){
+            errors.email = 'Email is invalid';
+        }
+        if (!newPassword) {
+            errors.newPassword = 'This field is required';
+        }else if(!(newPassword.length>5)){
+            errors.newPassword = "Password length must be atleast 6 characters";
+        }
+        if (!confirmNewPassword) {
+            errors.confirmNewPassword = 'This field is required';
+        }else if(newPassword!==confirmNewPassword){
+            errors.confirmNewPassword ="Passwords did not match";
         }
         return errors;
 
@@ -107,7 +151,7 @@ const Login = () => {
         const intersection = user.purchasedProducts.filter((product) => otherUser.purchasedProducts.includes(product));
         return intersection.length > 0;
         }).map((user) => user.purchasedProducts).reduce((a, b) => a.concat(b), []);
-        const{email, newPassword, confrmPassword} = forgotPassForm;
+        const{email, newPassword, confirmNewPassword} = forgotPassForm;
 
     return (
         <div className="">
@@ -182,13 +226,13 @@ const Login = () => {
                                     <div className='error'>{errors.newPassword}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='password' name="confrmPassword" value={confrmPassword} label="Confrm Password *" variant="outlined" size="small" onChange={handleChange} />
-                                    <div className='error'>{errors.confrmPassword}</div>
+                                    <TextField type='password' name="confirmNewPassword" value={confirmNewPassword} label="Confrm Password *" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.confirmNewPassword}</div>
                                 </div>
                                 
 
                                 <div >
-                                    <button className='btn btn-primary text-center w-75 my-5'>Submit</button>
+                                    <button className='btn btn-primary text-center w-75 my-5' onClick={handleForgotPass}>Submit</button>
                                 </div>
                             </div>
                         </div>

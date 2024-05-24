@@ -14,7 +14,7 @@ import '../css/createshop.css';
 const Createshop = () => {
 
     const auth = JSON.parse(localStorage.getItem('user'));
-    const [formData, setFormData] = useState({ userId: auth.id, Name: "", image: "", location: "", city: "", password: "" });
+    const [formData, setFormData] = useState({ userId: auth.id, Name: "", image: "",pincode:"", location: "", city: "", password: "" });
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const { state } = useLocation();
@@ -37,7 +37,7 @@ const Createshop = () => {
 
     const { id } = useParams();
 
-    const { Name, image, location, city, password } = formData;
+    const { Name, image,pincode, location, city, password } = formData;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,7 +51,7 @@ const Createshop = () => {
                     let shopdata = data.shopData
                     alert(data.message);
                     localStorage.setItem("admin", JSON.stringify({ id: shopdata._id, name: shopdata.Name }));
-                    setTimeout(() => { navigate("/admin/addProduct") }, 1000);
+                    setTimeout(() => { navigate("/shopList") }, 1000);
                 } else {
                     toast.error(data.message);
                 }
@@ -77,9 +77,7 @@ const Createshop = () => {
             try {
                 const response = await axiosInstance.put(`/editshop/${state._id}`, formData, {});
                 let data = response.data;
-                console.log(data);
                 if (data.success) {
-                    let shopdata = data.shopData
                     alert(data.message);
                     setTimeout(() => { navigate("/shopList") }, 1000);
                 } else {
@@ -102,14 +100,21 @@ const Createshop = () => {
 
     const validateForm = (data) => {
         const errors = {};
-        const {Name, image, location, city, password } = data;
-        if (!Name) { errors.Name = 'This field is required';}
+        const {Name, image, location, city,pincode, password } = data;
+        if (!Name) {errors.Name = 'This field is required';}
+        else if(!(/^[a-zA-Z]+$/.test(Name))){
+            errors.Name = 'Enter a valid Name';
+        }
 
         if (!image) { errors.image = 'This field is required';} 
 
         if (!location) {errors.location = 'This field is required';} 
 
-        if (!city) {errors.city = 'This field is required';} 
+        if (!city) {errors.city = 'This field is required';}
+        if (!pincode) {errors.pincode = 'This field is required';} 
+        else if(!/^[0-9]+$/.test(pincode)){
+            errors.pincode = 'Enter a valid Pincode';
+        }
 
         if(!state){
             if (!password) {
@@ -124,8 +129,7 @@ const Createshop = () => {
 
     useEffect(()=>{
         if(state){
-            console.log(state);
-            let json={userId: auth.id,Name:state.Name,image:state.image.url,location:state.location,city:state.city};
+            let json={userId: auth.id,Name:state.Name,image:state.image.url,location:state.location,city:state.city,pincode:state.pincode};
             setFormData(json);
           
         }
@@ -171,6 +175,10 @@ const Createshop = () => {
                                     <TextField type='text' name='city' value={city} label="City *" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.city}</div>
                                 </div>
+                                <div className="sign-input">
+                                    <TextField type='text' name='pincode' value={pincode} label="Pin code *" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.pincode}</div>
+                                </div>
                                 <div className="sign-input" >
                                     <TextField type='password' className={state?'input-disble':""} disabled={state?true:false} name='password' value={password} label="Password *" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.password}</div>
@@ -178,7 +186,7 @@ const Createshop = () => {
 
                                 <div className='f14 text-end mt-3 mx-4 px-2'>
                                     {!state&&
-                                    <div>Have an account?<Link className='colr' to="/adminlogin"> Admin Login</Link></div>
+                                    <div>Have an account?<Link className='colr' to="/adminlogin"> Shop Login</Link></div>
                                     }
                                 </div>
 

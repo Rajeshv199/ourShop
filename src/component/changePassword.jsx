@@ -12,10 +12,10 @@ import axiosInstance from "../apiConfig/axoisSetup";
 
 const ChangePassword = () => {
 
-    const [changePass, setChangePass] = useState({ oldPassword: "", newPassword: "",confrmPassword:"" });
+    const [changePass, setChangePass] = useState({ oldPassword: "", newPassword: "",confirmNewPassword:"" });
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
-
+    const user = JSON.parse(localStorage.getItem('user'));
 
     const handleChange = (e) => {
         setChangePass({...changePass,[e.target.name] : e.target.value});
@@ -25,30 +25,29 @@ const ChangePassword = () => {
         e.preventDefault();
         const newErrors = validateForm(changePass);
         setErrors(newErrors);
-        // if (Object.keys(newErrors).length === 0) {
-        //     try {
-        //         const response = await axiosInstance.post(`/login`, loginForm, {})
-        //         const data = response.data.result;
-        //         console.log(data);
-        //         if (data.name) {
-        //             localStorage.setItem("user", JSON.stringify({ id: data._id, name: data.name,email:data.email  }));
-        //             navigate("/")
+        if (Object.keys(newErrors).length === 0) {
+            try {
+                const response = await axiosInstance.put(`/user/${user.id}/change-password`, changePass, {})
+                const data = response.data;
+                if (data.success) {
+                    alert(data.message);
+                    navigate("/")
 
-        //         } else {
-        //             alert('Please enter a valid details');
-        //         }
-        //     } catch (err) {
-        //         const data = err.response.data;
-        //         alert(data.message);
-        //         console.error('An error occurred :', data.message);
-        //     }
-        // } else {
-        // }
+                } else {
+                    alert('Please enter a valid details');
+                }
+            } catch (err) {
+                const data = err.response.data;
+                alert(data.message);
+                console.error('An error occurred :', data.message);
+            }
+        } else {
+        }
     }
 
     const validateForm = (data) => {
         const errors = {};
-        const{oldPassword, newPassword,confrmPassword} = data;
+        const{oldPassword, newPassword,confirmNewPassword} = data;
         
         if (!oldPassword) {
             errors.oldPassword = 'This field is required';
@@ -58,16 +57,16 @@ const ChangePassword = () => {
         }else if(!(newPassword.length>5)){
             errors.newPassword = "Password length must be atleast 6 characters";
         }
-        if (!confrmPassword) {
-            errors.confrmPassword = 'This field is required';
-        }else if(newPassword!==confrmPassword){
-            errors.confrmPassword ="Passwords did not match";
+        if (!confirmNewPassword) {
+            errors.confirmNewPassword = 'This field is required';
+        }else if(newPassword!==confirmNewPassword){
+            errors.confirmNewPassword ="Passwords did not match";
         }
         return errors;
 
     }
 
-    const { oldPassword, newPassword,confrmPassword } = changePass;
+    const { oldPassword, newPassword,confirmNewPassword } = changePass;
 
 
     return (
@@ -101,8 +100,8 @@ const ChangePassword = () => {
                                     <div className='error'>{errors.newPassword}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='password' name="confrmPassword" value={confrmPassword} label="Confirm Password *" variant="outlined" size="small" onChange={handleChange} />
-                                    <div className='error'>{errors.confrmPassword}</div>
+                                    <TextField type='password' name="confirmNewPassword" value={confirmNewPassword} label="Confirm Password *" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.confirmNewPassword}</div>
                                 </div>
 
                                 <div >

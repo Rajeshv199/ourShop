@@ -12,10 +12,10 @@ const Footer = () => {
                     </div>
                     <div className='d-flex'>
                         <div className='fontWeight mx-4'>
-                            <div className='my-1'>About</div>
-                            <div className='my-1'>Home</div>
-                            <div className='my-1'>FQA</div>
-                            <div className='my-1'>Legal and Policies</div>
+                            <div className='my-1 help'><Link to="#">About</Link></div>
+                            <div className='my-1 help'><Link to="/help">Help</Link></div>
+                            <div className='my-1 help'><Link to="#">Home</Link></div>
+                            <div className='my-1 help'><Link to="#">Legal and Policies</Link></div>
                         </div>
                         <div>
                             <h5 className='fw-bold'>Reach out to us</h5>

@@ -22,10 +22,10 @@ const Item = () => {
             </li> */}
             <div className="dropdown">
                 <button className="dropbtn">item
-                    <i class="fa fa-caret-down"></i>
+                    <i className="fa fa-caret-down"></i>
                 </button>
                 <div className="dropdown-content">
-                    {/* <div class="header">
+                    {/* <div className="header">
                     <h2>Mega Menu</h2>
                 </div> */}
                     <div className="row">
@@ -47,7 +47,7 @@ const Item = () => {
                             <Link to="/grocery">Grocery</Link>
 
                         </div>
-                        <div class="column">
+                        <div className="column">
                             <div ClassName="img-div">
                                 <img src="https://cdn.pixabay.com/photo/2021/11/16/15/35/technology-6801334_640.jpg" className='img-fluid' alt="img" ></img>
                             </div>

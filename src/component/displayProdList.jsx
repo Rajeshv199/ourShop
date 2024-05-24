@@ -30,7 +30,6 @@ const DisplayProdList = () => {
 
     }, []);
 
-    console.log(products);
     return (
         <div >
             <Navbar />

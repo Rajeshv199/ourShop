@@ -39,7 +39,7 @@ function ShopList() {
                 fetchShopList();
             }
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching data:', error.message);
         }
     };
 
@@ -49,14 +49,14 @@ function ShopList() {
     const getActionOption = (data) => {
         return (
             <div className="template-demo flex-nowrap cursor-pointer mr-2 w-100">
-                <span class="material-symbols-outlined text-dark" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">more_vert</span>
-                <div class="dropdown-menu branchDropdown p-0 mr-3" aria-labelledby="dropdownMenuButton">
+                <span className="material-symbols-outlined text-dark" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">more_vert</span>
+                <div className="dropdown-menu branchDropdown p-0 mr-3" aria-labelledby="dropdownMenuButton">
                     <Link to="/createshop" state={data}>
-                    <span class="dropdown-item d-flex item_edit align-items-center" data-toggle="modal" data-target="#exampleModalArchieve">
-                        <span class="material-symbols-outlined text-dark px-1 py-1">Edit</span>Edit</span>
+                    <span className="dropdown-item d-flex item_edit align-items-center" data-toggle="modal" data-target="#exampleModalArchieve">
+                        <span className="material-symbols-outlined text-dark px-1 py-1">Edit</span>Edit</span>
                     </Link>
-                    <span class="dropdown-item item_del  d-flex align-items-center" data-toggle="modal" data-target="#exampleModalDelete" onClick={() => handleDelete(data._id)}>
-                        <span class="material-symbols-outlined text-dark px-1 py-1" >Delete</span>Delete</span>
+                    <span className="dropdown-item item_del  d-flex align-items-center" data-toggle="modal" data-target="#exampleModalDelete" onClick={() => handleDelete(data._id)}>
+                        <span className="material-symbols-outlined text-dark px-1 py-1" >Delete</span>Delete</span>
                 </div>
             </div>
         )
@@ -77,7 +77,6 @@ function ShopList() {
     dataArr = parentCategory ? dataArr.filter(da => da.category === parentCategory) : dataArr;
     dataArr = category ? dataArr.filter(da => da.subCategory === category) : dataArr;
 
-    console.log(dataArr);
 
 
 

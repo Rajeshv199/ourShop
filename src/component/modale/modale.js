@@ -25,7 +25,7 @@ const Modal = ({ children, title, classWidth, ButtonText, Toggle, toggle, handle
        { /*<button type="button" className="btn btn-info text-white" onClick={handleCreateClick}>
           <i className="fa fa-plus"></i> {ButtonText}
   </button>*/}
-        <div className={toggle ? "modal  fade show d-block light-bg " : "modal fade bd-example-modal-lg"} id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className={toggle ? "modal  fade show d-block light-bg " : "modal fade bd-example-modal-lg"} id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className={`modal-dialog ${classWidth}`} role="document">
             <div className="modal-content">
               <div className="modal-header">

@@ -8,7 +8,7 @@ import axiosInstance from "../apiConfig/axoisSetup";
 
 
 const ForgotPassword = () => {
-    const [forgotPass, setForgotPass] = useState({shopId: "", newPassword: "", confrmPassword: "" });
+    const [forgotPass, setForgotPass] = useState({shopId: "", newPassword: "", confirmNewPassword: "" });
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
 
@@ -21,30 +21,30 @@ const ForgotPassword = () => {
         e.preventDefault();
         const newErrors = validateForm(forgotPass);
         setErrors(newErrors);
-        // if (Object.keys(newErrors).length === 0) {
-        //     try {
-        //         const response = await axiosInstance.post(`/signup`, forgotPass, {});
-        //         let data = response.data;
-        //         if (data.name && data.email && data.password) {
-        //             alert('Signup Successfully');
-        //             navigate("/");
-        //             localStorage.setItem("user", JSON.stringify({ id: data._id, name: data.name,email:data.email}));
-        //         } else {
-        //             alert("please enter a valid data")
-        //         }
+        if (Object.keys(newErrors).length === 0) {
+            try {
+                const response = await axiosInstance.post(`/shop/forgot-password`, forgotPass, {});
+                let data = response.data;
+                if (data.success) {
+                    alert('Signup Successfully');
+                    navigate("/");
+                    localStorage.setItem("user", JSON.stringify({ id: data._id, name: data.name,email:data.email}));
+                } else {
+                    alert("please enter a valid data")
+                }
 
-        //     } catch (err) {
-        //         console.error('An error occurred :', err);
-        //     }
-        // } else {
+            } catch (err) {
+                console.error('An error occurred :', err);
+            }
+        } else {
 
-        // }
+        }
 
     }
     const validateForm = (data) => {
         const errors = {};
         
-        const{shopId, newPassword, confrmPassword} = data;
+        const{shopId, newPassword, confirmNewPassword} = data;
         
         if (!shopId) {
             errors.shopId = 'This field is required';
@@ -56,10 +56,10 @@ const ForgotPassword = () => {
             errors.newPassword = "Password length must be atleast 6 characters";
         }
 
-        if (!confrmPassword) {
-            errors.confrmPassword = 'This field is required';
-        }else if(newPassword!==confrmPassword){
-            errors.confrmPassword ="Passwords did not match";
+        if (!confirmNewPassword) {
+            errors.confirmNewPassword = 'This field is required';
+        }else if(newPassword!==confirmNewPassword){
+            errors.confirmNewPassword ="Passwords did not match";
         }
         return errors;
 
@@ -68,7 +68,7 @@ const ForgotPassword = () => {
    
     
 
-    const { shopId, newPassword, confrmPassword } = forgotPass;
+    const { shopId, newPassword, confirmNewPassword } = forgotPass;
 
 
     return (
@@ -102,8 +102,8 @@ const ForgotPassword = () => {
                                     <div className='error'>{errors.newPassword}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='password' label="Confirm Password *" name='confrmPassword' value={confrmPassword} variant="outlined" size="small" onChange={handleChange} />
-                                    <div className='error'>{errors.confrmPassword}</div>
+                                    <TextField type='password' label="Confirm Password *" name='confirmNewPassword' value={confirmNewPassword} variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.confirmNewPassword}</div>
                                 </div>
 
                                 {/* <div className='f14 text-end mt-3 mx-4 px-2'>Already have an account? <Link className='colr' to="/login">Login</Link></div> */}

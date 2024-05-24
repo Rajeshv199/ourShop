@@ -17,23 +17,19 @@ import Jeans from './Items/Jeans';
 import Kurta from './Items/Kurta';
 import Shops from './Items/Shops';
 import Singlepage from './RedirectPage/Singlepage';
-import Yourorder from './component/Yourorder';
-import Wishlist from './component/Wishlist';
-import Orderpage from './component/Orderpage';
-import Transactionpage from './component/Transactionpage';
 import Createshop from './component/Createshop';
 import AddProduct from './component/Addproduct';
 import Admin from './component/Admin';
 import Shoplogin from './component/shoplogin';
 import Productlist from './component/Productlist';
 // import Sidebar from './component/Sidebar';
-import Suggestshop from './component/Suggestshop';
 import DisplayProdList from './component/displayProdList';
 import DetailsProduct from './component/detailsProduct';
 import Shoplist from './component/shoplist';
 import Help from './component/help';
 import ChangePassword from './component/changePassword';
 import ForgotPassword from './component/forgotPassword';
+import Review from './component/Review';
 
 
 
@@ -55,28 +51,25 @@ function App() {
             <Route path="/tshirts" element={<Tshirts />} />
             <Route path="/jeans" element={<Jeans />} />
             <Route path="/kurta" element={<Kurta />} />
-            <Route path="/yourorder" element={<Yourorder />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/orderpage/:id" element={<Orderpage />} />
             <Route path="/singlepage" element={<Singlepage />} />
             <Route path="/shops/:id" element={<Shops />} />
-            <Route path="/suggestshop/:shopId" element={<Suggestshop />} />
 
-            <Route path="/transactionpage/:id" element={<Transactionpage />} />
             <Route path="/createshop" element={<Createshop />} />
             <Route path="/adminlogin" element={<Shoplogin />} />
             <Route path="/admin/listProduct" element={<Productlist />} />
             <Route path="/admin/addProduct" element={<AddProduct />} />
             <Route path="/shopList" element={<Shoplist />} />
-            <Route path="/help" element={<Help />} />
+            
             <Route path="/updatePassword" element={<ChangePassword />} />
             <Route path="/forgotPassword" element={<ForgotPassword />} />
+            
             {/* <Route path="/sidebar" element={<Sidebar />} /> */}
             {/* <Route path="/admin/*" element={<Admin />} /> */}
 
             
           </Route>
-
+          <Route path="/help" element={<Help />} />
+          <Route path="/Review" element={<Review />} />
           <Route path="/:name/product-details/:id" element={<DetailsProduct />} />
           <Route path="/:name/products" element={<DisplayProdList />} />
           <Route path="/signup" element={<Signup />} />
@@ -93,3 +86,10 @@ function App() {
 }
 
 export default App;
+
+
+// error
+
+// upload single photo in product list
+// Forgot Password for shop
+// not delete shop 

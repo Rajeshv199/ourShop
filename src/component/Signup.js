@@ -15,7 +15,7 @@ const SignUp = () => {
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const { state } = useLocation();
-
+    const user = JSON.parse(localStorage.getItem('user'));
     const handleChange = (e) => {
         const { name, value } = e.target;
         setSignUpForm({...signUpForm,[name]:value});
@@ -28,11 +28,37 @@ const SignUp = () => {
         if (Object.keys(newErrors).length === 0) {
             try {
                 const response = await axiosInstance.post(`/signup`, signUpForm, {});
-                let data = response.data;
-                if (data.name && data.email && data.password) {
+                let data = response.data.result;
+                if (response.status) {
                     alert('Signup Successfully');
                     navigate("/");
                     localStorage.setItem("user", JSON.stringify({ id: data._id, name: data.name,email:data.email}));
+                } else {
+                    alert("Please enter a valid data")
+                }
+
+            } catch (err) {
+                const {data} =err.response;
+                alert(data.message);
+                console.error('An error occurred :', data);
+            }
+        } else {
+
+        }
+
+    }
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        const newErrors = validateForm(signUpForm);
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length === 0) {
+            try {
+                const response = await axiosInstance.put(`/user/${user.id}/edit-profile`, signUpForm, {});
+                let data = response.data;
+                if (data.success) {
+                    alert('Profile updated successfully');
+                    navigate("/");
+                    localStorage.setItem("user", JSON.stringify({ id: data.user._id, name: data.user.name,email:data.user.email}));
                 } else {
                     alert("please enter a valid data")
                 }
@@ -50,23 +76,27 @@ const SignUp = () => {
         
         const{name, email, password, confrmPassword} = data;
         if (!name) {errors.name = 'This field is required';}
+        else if(!(/^[a-zA-Z]+$/.test(name))){
+            errors.name = 'Enter a valid Name';
+        }
 
         if (!email) {
             errors.email = 'This field is required';
         } else if(!/\S+@\S+\.\S+/.test(email)){
             errors.email = 'Email is invalid';
         }
+        if(!state){
+            if (!password) {
+                errors.password = 'This field is required';
+            }else if(!(password.length>5)){
+                errors.password = "Password length must be atleast 6 characters";
+            }
 
-        if (!password) {
-            errors.password = 'This field is required';
-        }else if(!(password.length>5)){
-            errors.password = "Password length must be atleast 6 characters";
-        }
-
-        if (!confrmPassword) {
-            errors.confrmPassword = 'This field is required';
-        }else if(password!==confrmPassword){
-            errors.confrmPassword ="Passwords did not match";
+            if (!confrmPassword) {
+                errors.confrmPassword = 'This field is required';
+            }else if(password!==confrmPassword){
+                errors.confrmPassword ="Passwords did not match";
+            }
         }
         return errors;
 
@@ -95,10 +125,9 @@ const SignUp = () => {
     useEffect(() => {
         if(state){
             const{user} = state;
-            console.log(user);
             setSignUpForm(user);
         }
-    })
+    },[])
 
     const { name, email, password, confrmPassword } = signUpForm;
 
@@ -164,7 +193,7 @@ const SignUp = () => {
                                 }
                                 <div>
                                     {state?(
-                                        <button className='btn btn-primary text-center w-75 my-4'>Update</button>
+                                        <button className='btn btn-primary text-center w-75 my-4' onClick={handleUpdate}>Update</button>
                                     ):(
                                         <button className='btn btn-primary text-center w-75 my-4' onClick={handleSubmit}>Sign Up</button>
                                     )}
@@ -178,21 +207,8 @@ const SignUp = () => {
             </div>
 
 
-            {/* <h1>SignUp</h1>
-            <form className="signup-form">
-                <div className="login-inputbox">
-                    <input className="inputBox" type="text"
-                        value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter Your Name..." />
-
-                    <input className="inputBox" type="text"
-                        value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Your Email..." />
-
-                    <input className="inputBox" type="password"
-                        value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter Your Password..." />
-
-                    <button onClick={collectData} className="appButton">Sign up</button>
-                </div>
-            </form> */}
+            
+           
         </div>
 
     )

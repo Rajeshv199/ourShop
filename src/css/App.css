@@ -104,6 +104,11 @@ font-size: 30px;
   background-color: #1150a7f5;
   display: block;
   text-align: center;
+  /* height: 300px; */
+}
+
+.shopSlick .slick-slide{
+  width: 227px!important;
 }
 
 .shopSlick .slick-cloned{

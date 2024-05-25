@@ -20,6 +20,7 @@ const Home = () => {
     const [ratingPop, setRatingPop] = useState(false);
     const [shopId, setShopId] = useState("");
     const [errors, setErrors] = useState({});
+    const auth = localStorage.getItem('user');
 
     const [ratingForm, setRatingForm] = useState({name:"",comment:"",rating:""});
     // const [ratingcount, setRatingcount] = useState(3);
@@ -42,6 +43,7 @@ const Home = () => {
                 const data = response.data;
                 if (data.success) {
                     RatingPop();
+                    setRatingForm({name:"",comment:"",rating:""});
                 } else {
                     alert('Please enter a valid details');
                 }
@@ -122,7 +124,7 @@ const Home = () => {
                             <Link to="#"><button className='btnhover' type="button"> Know More</button></Link>
                         </div>
                         <div className="home-btn mx-5 ">
-                            <Link to="/signup"><button className='bg-pink btnhover2' type="button">Sign Up</button></Link>
+                            <Link to={auth?"#":"/signup"}><button className='bg-pink btnhover2' type="button">Sign Up</button></Link>
                         </div>
                     </div>
                 </div>
@@ -135,17 +137,17 @@ const Home = () => {
                         <div className='mt-1'>Location :</div>
                         <div className=" mx-2">
                             <TextField select name="state" label="State" size="small">
-                                {/* <MenuItem value="Project ID"> state1</MenuItem> */}
+                                <MenuItem value="Project ID"> state1</MenuItem>
                             </TextField>
                         </div>
                         <div className=" mx-2">
                             <TextField select name="city" label="City" size="small">
-                                {/* <MenuItem value="Project ID"> city</MenuItem> */}
+                                <MenuItem value="Project ID"> city</MenuItem>
                             </TextField>
                         </div>
                         <div className=" mx-2">
                             <TextField select name="category" label="Category" size="small">
-                                {/* <MenuItem value="Project ID"> Category</MenuItem> */}
+                                <MenuItem value="Project ID"> Category</MenuItem>
                             </TextField>
                         </div>
                     </div>
@@ -177,7 +179,7 @@ const Home = () => {
                             </div>
 
                             <div className='text-center imgItem'>
-                                <Link to={`${sh1.Name}/products`} state={{ id: sh1._id, name: sh1.Name }}><button className='rounded my-3 fontWeight'>View Shop</button></Link>
+                                <Link to={`/${sh1.Name}/products`} state={{ id: sh1._id, name: sh1.Name }}><button className='rounded my-3 fontWeight'>View Shop</button></Link>
                             </div>
                             <div className='rating' onClick={()=>RatingPop(sh1._id)}>Rate</div>
                         </div>

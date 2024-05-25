@@ -14,8 +14,10 @@ const SignUp = () => {
     const [signUpForm, setSignUpForm] = useState({ name: "", email: "", password: "", confrmPassword: "" });
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
+    const [allShop, setAllShop] = useState([]);
     const { state } = useLocation();
     const user = JSON.parse(localStorage.getItem('user'));
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setSignUpForm({...signUpForm,[name]:value});
@@ -102,23 +104,17 @@ const SignUp = () => {
 
     }
 
-    let imgArr = ["https://images.unsplash.com/photo-1570857502809-08184874388e?q=80&w=1478&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "https://images.unsplash.com/photo-1526745925052-dd824d27b9ab?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "https://images.unsplash.com/photo-1567958451986-2de427a4a0be?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "https://plus.unsplash.com/premium_photo-1661964205360-b0621b5a9366?q=80&w=1438&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        "https://images.unsplash.com/photo-1617286647344-95c86d56748a?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"]
-
-    const settings = {
-        dots: false,
-        infinite: true,
-        speed: 1000,
-        slidesToShow: 5,
-        slidesToScroll: 1,
-        autoplaySpeed: 1000,
-        autoplay: {
-            delay: 2500,
-            disableOnInteraction: false,
+    const getAllshop= async()=>{
+        try {
+            const response = await axiosInstance.get(`/highest-rated-shop`, {});
+            let data = response.data;
+            if (data.success) {
+                setAllShop(data.highestRatedShop.shops);
+            } 
+        } catch (err) {
+            const {data} =err.response;
+            alert(data.message);
+            console.error('An error occurred :', data);
         }
     };
 
@@ -127,7 +123,31 @@ const SignUp = () => {
             const{user} = state;
             setSignUpForm(user);
         }
-    },[])
+
+        getAllshop();
+
+    },[]);
+
+    let imgArr = ["https://images.unsplash.com/photo-1570857502809-08184874388e?q=80&w=1478&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    // "https://images.unsplash.com/photo-1526745925052-dd824d27b9ab?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    // "https://images.unsplash.com/photo-1567958451986-2de427a4a0be?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    // "https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    // "https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      ]
+
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: allShop.length<=5?allShop.length:5,
+        slidesToScroll: 1,
+        autoplaySpeed: 1000,
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+        }
+    };
 
     const { name, email, password, confrmPassword } = signUpForm;
 
@@ -137,14 +157,14 @@ const SignUp = () => {
             {!state &&
             <div className="shopSlick">
                 <Slider {...settings}>
-                    {imgArr.map((item, index) => (
+                    {allShop.map((item, index) => (
                         <div key={index}>
                             <div className="slick-cloned">
-                                <div className="shopList" ><img width="100%" height="100%" src={item} alt="" /></div>
+                                <div className="shopList" ><img width="100%" height="100%" src={item.image.url} alt="" /></div>
                                 <div className="shopDetails">
-                                    <div className='name'>Shop Name</div>
-                                    <div className="title">Freeshop Technologies Private Limited, CIN: U74900KA20 </div>
-                                    <div className='mt-3'><button>Shop Now</button></div>
+                                    <div className='name'>{item.Name}</div>
+                                    {/* <div className="title">Freeshop Technologies Private Limited, CIN: U74900KA20 </div> */}
+                                    <div className='mt-5'><Link to={`/${item.Name}/products`} state={{ id: item._id, name: item.Name }}><button>Shop Now</button></Link></div>
                                 </div>
                             </div>
                         </div>

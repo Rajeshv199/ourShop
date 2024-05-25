@@ -130,7 +130,7 @@ function Productlist() {
   dataArr = parentCategory ? dataArr.filter(da => da.category === parentCategory) : dataArr;
   dataArr = category ? dataArr.filter(da => da.subCategory === category) : dataArr;
 
-
+         
 
 
   return (

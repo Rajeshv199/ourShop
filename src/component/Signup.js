@@ -78,7 +78,7 @@ const SignUp = () => {
         
         const{name, email, password, confrmPassword} = data;
         if (!name) {errors.name = 'This field is required';}
-        else if(!(/^[a-zA-Z]+$/.test(name))){
+        else if(!(/^[A-Za-z\s]*$/.test(name))){
             errors.name = 'Enter a valid Name';
         }
 

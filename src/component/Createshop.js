@@ -102,7 +102,7 @@ const Createshop = () => {
         const errors = {};
         const {Name, image, location, city,pincode, password } = data;
         if (!Name) {errors.Name = 'This field is required';}
-        else if(!(/^[a-zA-Z]+$/.test(Name))){
+        else if(!(/^[A-Za-z\s]*$/.test(Name))){
             errors.Name = 'Enter a valid Name';
         }
 

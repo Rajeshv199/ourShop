@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Nav from './Nav';
 import Modal from "./modale/modale";
 import axiosInstance from "../apiConfig/axoisSetup";
+import Whatsapp from "../images/whatsapp.png";
 
 
 
@@ -22,7 +23,7 @@ const Home = () => {
     const [errors, setErrors] = useState({});
     const auth = localStorage.getItem('user');
 
-    const [ratingForm, setRatingForm] = useState({name:"",comment:"",rating:""});
+    const [ratingForm, setRatingForm] = useState({name:"",comment:"",rating:"",email:"",phoneNo:""});
     // const [ratingcount, setRatingcount] = useState(3);
     const ratingArr = [1, 2, 3, 4, 5]
     const cities = [];
@@ -57,7 +58,7 @@ const Home = () => {
     }
     const validateForm = (data) => {
         const errors = {};
-        const{name,comment,rating} = data;
+        const{name,comment,rating,email,phoneNo} = data;
         if (!name) {
             errors.name = 'This field is required';
         } 
@@ -66,6 +67,12 @@ const Home = () => {
         }
         if (!rating) {
             errors.rating = 'This field is required';
+        }
+        if (!email) {
+            errors.email = 'This field is required';
+        }
+        if (!phoneNo) {
+            errors.phoneNo = 'This field is required';
         }
         return errors;
 
@@ -105,8 +112,7 @@ const Home = () => {
     }, []);
 
     const { state, city, category } = filter;
-    const { name,comment,rating } = ratingForm;
-    console.log(shopArr);
+    const { name,comment,rating,email,phoneNo} = ratingForm;
     return (
 
         <div className="container-flui">
@@ -115,7 +121,7 @@ const Home = () => {
             <div>
                 <Slideshow />
             </div>
-            <div className=" home-bg" style={{ backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(https://s3-alpha-sig.figma.com/img/8974/920d/87312d922f53c47157f3dfb29248d743?Expires=1716768000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=UmJCFCWsQimFqa1ESpvs6ImcAtDs24G1pkN~IAw~W55FTT7dmZOPMOlIl63egdqnULz1JPgSb4VoaMxF3bjB7KfhQ8IrIJeKfDZ6wLgCxkSZkIUDXTwJ77vlNo1NsiK1ID4Y7A2aslRUMl3xVt8N-qkDFk6XzjaUNPjD2v5dNq-vLPnPdYvLeypq1nRCBg3yT84rH86R2sBePjCdeKVLKbTOeSvgcVFwSwsJUh5m9BzqmQ1fxML2lw-xTt3g3bqq4gyD7-ggxijpf-X9meqqS8H1-7EMB5EO4rN51b-iP4Lr47N2nAzFZzE-7XpdwWH7yf4gp8-U5Lvg2521xY2kxw__)" }}>
+            <div className=" home-bg" style={{ backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(https://s3-alpha-sig.figma.com/img/8974/920d/87312d922f53c47157f3dfb29248d743?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=E5AsgbsHbG9TLJBpIDZX~Z4fejUbyrvcMydHkx81-K7H2PyegeEYJH2YveZa~wJ2gEAURgIP-tBfKkdtmLSlZKwCCk3w1ru8iNCINKMeauXHTHkD7GKjcHT1tROIRTx8XXtXNFyR8BRQdcfDsDXWd-Ht6OmobFK7UzHn795MlbWQxV6B3ueZs2r4jbGOaTIv-m~KQrbmpcKuJNEUP5SoukY4TnK77nNkOPf9kuv1bvOmK9EuJT58hs3NiRAFjryAVauy0efl1iPnFN0vvbabQwJ0VX5f603XP6gcwX~re7XJMyGAYdw4~tPsq3acS0efTJZaC9IP29uqRvzmAg0Ebg__)" }}>
                 <div className="home-fst-line">
                     <h2>Start your Online Business with Zero Investment ...</h2>
                     <h6>On-demand delivery from every restaurant and store in your city. They are massive in the India.</h6>
@@ -162,21 +168,34 @@ const Home = () => {
                             <div className='d-flex justify-content-between mt-2'>
                                 <div className='fw-bold text-capitalize'>{sh1.Name}</div>
 
-                                <div><Link className='text-dark' to="/Review" state={sh1._id}>
-
+                                <div className='d-flex'>
+                                    <Link className='text-dark' to="/Review" state={sh1._id}>
                                     {ratingArr.map((no,index)=>(
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="15px" className={"mx-1 cursor-pointer "+(index<+sh1.ratings?"text-warning":"")}>
                                         <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
                                     </svg>
                                     ))}
                                    </Link>
+
+                                    <div className='f14 text-secondary mt-1'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#5F6368" className='mb-1'><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
+                                        {sh1.numOfReviews}
+                                    </div>
                                 </div>
                             </div>
-                            <div className='f14 text-end text-secondary'>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14px" className="" style={{ marginBottom: "2px" }}>
-                                    <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .7575 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clipRule="evenodd" />
-                                </svg>&nbsp;{ sh1.numOfReviews}
+
+                            <div className='d-flex f12 mt-2 justify-content-center'>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#EA3323"><path d="M480.21-480Q510-480 531-501.21t21-51Q552-582 530.79-603t-51-21Q450-624 429-602.79t-21 51Q408-522 429.21-501t51 21ZM480-96Q323.03-227.11 245.51-339.55 168-452 168-549q0-134 89-224.5T479.5-864q133.5 0 223 90.5T792-549q0 97-77 209T480-96Z"/></svg>
+                                    &nbsp;{sh1.city}, india
+                                </div>
+                                <div className='mx-2'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="14px" viewBox="0 -960 960 960" width="14px" fill="#0090FF"><path d="M763-145q-121-9-229.5-59.5T339-341q-86-86-136-194.5T144-765q-2-21 12.5-36.5T192-817h136q17 0 29.5 10.5T374-780l24 107q2 13-1.5 25T385-628l-97 98q20 38 46 73t58 66q30 30 64 55.5t72 45.5l99-96q8-8 20-11.5t25-1.5l107 23q17 5 27 17.5t10 29.5v136q0 21-16 35.5T763-145Z"/></svg>
+                                    &nbsp;+91 {sh1.mobileNo}
+                                </div>
+                                <div><img className='mb-1' src={Whatsapp} alt=''/></div>
                             </div>
+                           
 
                             <div className='text-center imgItem'>
                                 <Link to={`/${sh1.Name}/products`} state={{ id: sh1._id, name: sh1.Name }}><button className='rounded my-3 fontWeight'>View Shop</button></Link>
@@ -202,7 +221,7 @@ const Home = () => {
                             <TextField className='w-75' name="comment" value={comment} label="Comment" multiline rows={2} size="small" onChange={handleChange}/>
                         </div>
 
-                        <div className='d-flex justify-content-around w-75 m-auto my-4'>
+                        <div className='d-flex justify-content-around w-75 m-auto my-3'>
                             {ratingArr.map((no,index)=>(
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="40px" className={"mx-1 cursor-pointer "+(index<+rating?"text-warning":"")} onClick={()=>setRatingForm({...ratingForm,rating:+index+1})} key={index}>
                                     <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
@@ -210,8 +229,14 @@ const Home = () => {
                             ))}
                             
                         </div>
+                        <div >
+                            <TextField className='w-75' name="email" value={email} label="Email" size="small" onChange={handleChange} />
+                        </div>
+                        <div >
+                            <TextField className='w-75 mt-3' name="phoneNo" value={phoneNo} label="Phone No" size="small" onChange={handleChange} />
+                        </div>
 
-                        <button className="btn text-white bg-primary my-2 w-75" onClick={handleRate}>Rate</button>
+                        <button className="btn text-white bg-primary my-4 w-75" onClick={handleRate}>Rate</button>
 
 
                     </div>

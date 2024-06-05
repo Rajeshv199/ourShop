@@ -46,6 +46,7 @@ const Nav = () => {
                     <div className='text-dark fw-bold'>Shop By Category</div>
                     <Link to="/admin/addProduct" onClick={toggleMenu}>Add Product</Link>
                     <Link to="/admin/listProduct" onClick={toggleMenu}>List Product</Link>
+                    <Link to="/admin/shopReview" onClick={toggleMenu}>Review</Link>
                 </nav>
 
                 <div className='logout'>

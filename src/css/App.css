@@ -555,7 +555,7 @@ font-size: 30px;
   position: fixed;
   width: 100%;
   bottom: 0px;
-  padding:20px;
+  padding:0 20px 20px 20px; 
   color: #0090FF;
   font-weight: 500;
   background-color: #fff;
@@ -614,7 +614,7 @@ font-size: 30px;
 .ratingPup{
   position: relative;
   width: 440px;
-  margin-top: 100px;
+  margin-top: 50px;
   border: none!important;
 }
 .ratingPup .modal-header, .ratingPup .modal-body{

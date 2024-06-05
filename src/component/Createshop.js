@@ -14,7 +14,7 @@ import '../css/createshop.css';
 const Createshop = () => {
 
     const auth = JSON.parse(localStorage.getItem('user'));
-    const [formData, setFormData] = useState({ userId: auth.id, Name: "", image: "",pincode:"", location: "", city: "", password: "" });
+    const [formData, setFormData] = useState({ userId: auth.id, Name: "",email:"",mobileNo:"", image: "",pincode:"", location: "", city: "", password: "" });
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const { state } = useLocation();
@@ -37,7 +37,7 @@ const Createshop = () => {
 
     const { id } = useParams();
 
-    const { Name, image,pincode, location, city, password } = formData;
+    const { Name,email,mobileNo, image,pincode, location, city, password } = formData;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -100,19 +100,28 @@ const Createshop = () => {
 
     const validateForm = (data) => {
         const errors = {};
-        const {Name, image, location, city,pincode, password } = data;
+        const {Name,email,mobileNo, image, location, city,pincode, password } = data;
         if (!Name) {errors.Name = 'This field is required';}
         else if(!(/^[A-Za-z\s]*$/.test(Name))){
             errors.Name = 'Enter a valid Name';
         }
-
+        if (!email) {
+            errors.email = 'This field is required';
+        } else if(!/\S+@\S+\.\S+/.test(email)){
+            errors.email = 'Email is invalid';
+        }
+        if (!mobileNo) {
+            errors.mobileNo = 'This field is required';
+        } else if(!/^\d{10}$/.test(mobileNo)){
+            errors.mobileNo = 'Enter a valid MobileNo';
+        }
         if (!image) { errors.image = 'This field is required';} 
 
         if (!location) {errors.location = 'This field is required';} 
 
         if (!city) {errors.city = 'This field is required';}
         if (!pincode) {errors.pincode = 'This field is required';} 
-        else if(!/^[0-9]+$/.test(pincode)){
+        else if(!/^\d{6}$/.test(pincode)){
             errors.pincode = 'Enter a valid Pincode';
         }
 
@@ -129,7 +138,7 @@ const Createshop = () => {
 
     useEffect(()=>{
         if(state){
-            let json={userId: auth.id,Name:state.Name,image:state.image.url,location:state.location,city:state.city,pincode:state.pincode};
+            let json={userId: auth.id,Name:state.Name,email:state.email,mobileNo:state.mobileNo,image:state.image.url,location:state.location,city:state.city,pincode:state.pincode};
             setFormData(json);
           
         }
@@ -162,6 +171,14 @@ const Createshop = () => {
                                 <div className="sign-input">
                                     <TextField type='text' name='Name' value={Name} label="Shop Name *" variant="outlined" size="small" onChange={handleChange} />
                                     <div className='error'>{errors.Name}</div>
+                                </div>
+                                <div className="sign-input">
+                                    <TextField type='text' name='email' value={email} label="Email *" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.email}</div>
+                                </div>
+                                <div className="sign-input">
+                                    <TextField type='text' name='mobileNo' value={mobileNo} label="Mobile No. *" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.mobileNo}</div>
                                 </div>
                                 <div className="sign-input">
                                     <TextField type='file' className='inputFile' name='image' variant="outlined" accessKey='.jpg,.pmg.jpeg' size="small" onChange={handleChange} />

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState,useEffect } from 'react';
+import { Link, useNavigate,useLocation } from 'react-router-dom';
 import Navbar from "./Nav";
 import TextField from '@mui/material/TextField';
 import shop11 from "../images/shop11.png"
@@ -13,6 +13,8 @@ function Adminlogin() {
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     // const auths = localStorage.getItem('admin');
+    const { state } = useLocation();
+
     const handleChange = (e) => {
         const { currentTarget: input } = e;
         let adminForm1 = { ...adminForm };
@@ -57,6 +59,13 @@ function Adminlogin() {
         return errors;
     }
 
+    useEffect(()=>{
+        if(state){
+            setAdminForm({...adminForm, shopId:state})
+        }
+    },[]);
+    
+    console.log(state);
     const { shopId, password } = adminForm;
     return (
         <>

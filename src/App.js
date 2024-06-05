@@ -30,6 +30,8 @@ import Help from './component/help';
 import ChangePassword from './component/changePassword';
 import ForgotPassword from './component/forgotPassword';
 import Review from './component/Review';
+import ShopReview from './component/shopReview';
+import SuperAdmin from './component/superAdmin';
 
 
 
@@ -58,7 +60,8 @@ function App() {
             <Route path="/adminlogin" element={<Shoplogin />} />
             <Route path="/admin/listProduct" element={<Productlist />} />
             <Route path="/admin/addProduct" element={<AddProduct />} />
-            <Route path="/shopList" element={<Shoplist />} />
+            <Route path="/shopList" element={<Shoplist/>} />
+            <Route path="/admin/shopReview" element={<ShopReview/>} />
             
             <Route path="/updatePassword" element={<ChangePassword />} />
             <Route path="/forgotPassword" element={<ForgotPassword />} />
@@ -68,6 +71,9 @@ function App() {
 
             
           </Route>
+
+          <Route path="/Super-Admin" element={<SuperAdmin />} />
+
           <Route path="/help" element={<Help />} />
           <Route path="/Review" element={<Review />} />
           <Route path="/:name/product-details/:id" element={<DetailsProduct />} />

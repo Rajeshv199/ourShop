@@ -95,23 +95,29 @@ function ShopList() {
                         {dataArr[0]?
                         <div className='my-3 '>
                             <div className='row mx-0 d-flex text-white f14'>
-                                <div className="listRadio bg-Arsenic py-2"><div></div></div>
-                                <div className='col-2 bg-Arsenic py-2'>Shop ID</div>
+                                {/* <div className="listRadio bg-Arsenic py-2"><div></div></div> */}
+                                <div className='col-1 bg-Arsenic py-2'>Shop ID</div>
                                 <div className='col-2 bg-Arsenic py-2'>Name</div>
-                                <div className='col-2 bg-Arsenic py-2'>Image</div>
+                                <div className='col-2 bg-Arsenic py-2'>Email</div>
+                                <div className='col-1 bg-Arsenic py-2'>Mobile No</div>
+                                <div className='col-1 bg-Arsenic py-2'>Image</div>
                                 <div className='col-2 bg-Arsenic py-2'>Location</div>
-                                <div className='col-2 bg-Arsenic py-2'>city</div>
+                                <div className='col-1 bg-Arsenic py-2'>city</div>
                                 <div className='col-1 bg-Arsenic py-2'>Action</div>
+                                <div className='col-1 bg-Arsenic py-2'></div>
                             </div>
                             {dataArr.map((d1, index) =>
                                 <div className='row mx-0 d-flex text-dark f14' key={index}>
-                                    <div className="listRadio text-center bg-ligtQuat py-2"><input type="checkbox" name="id" /></div>
-                                    <div className='col-2 bg-ligtQuat pt-1'>{d1.shopId}</div>
+                                    {/* <div className="listRadio text-center bg-ligtQuat py-2"><input type="checkbox" name="id" /></div> */}
+                                    <div className='col-1 bg-ligtQuat pt-1'>{d1.shopId}</div>
                                     <div className='col-2 bg-ligtQuat pt-1'>{d1.Name}</div>
-                                    <div className='col-2 bg-ligtQuat pt-1'><img width="40px" height="40px" src={d1.image.url} alt='' /></div>
+                                    <div className='col-2 bg-ligtQuat pt-1'>{d1.email}</div>
+                                    <div className='col-1 bg-ligtQuat pt-1'>{d1.mobileNo}</div>
+                                    <div className='col-1 bg-ligtQuat pt-1 text-centr'><img width="40px" height="40px" src={d1.image.url} alt='' /></div>
                                     <div className='col-2 bg-ligtQuat pt-1'>{d1.location}</div>
-                                    <div className='col-2 bg-ligtQuat pt-1'>{d1.city}</div>
+                                    <div className='col-1 bg-ligtQuat pt-1'>{d1.city}</div>
                                     <div className='col-1 bg-ligtQuat pt-1'>{getActionOption(d1)}</div>
+                                    <div className='col-1 bg-ligtQuat pt-1'><Link to="/adminlogin" className='text-primary' state={d1.shopId}>Login</Link></div>
                                 </div>
 
                             )}

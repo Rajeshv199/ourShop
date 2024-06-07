@@ -167,7 +167,7 @@ const Home = () => {
                         <div className='mt-1 fontWeight'>Location : &nbsp;</div>
                         <div className=" mx-2">
                             <TextField select value={state} name="state" label="State" size="small" onChange={handleChange}>
-                            <MenuItem value='' >Select</MenuItem>
+                            <MenuItem value='' >All</MenuItem>
                                 {states.map((s1,index)=>(
                                     <MenuItem value={s1} key={index} >{s1}</MenuItem>
                                 ))}
@@ -176,7 +176,7 @@ const Home = () => {
                         </div>
                         <div className=" mx-2">
                             <TextField select value={city} name="city" label="City"  size="small" onChange={handleChange}>
-                                <MenuItem value='' >Select</MenuItem>
+                                <MenuItem value='' >All</MenuItem>
                                 {cities.map((c1,index)=>(
                                     <MenuItem value={c1} key={index}>{c1}</MenuItem>
                                 ))}

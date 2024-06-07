@@ -10,6 +10,8 @@ import axiosInstance from "../apiConfig/axoisSetup";
 function Productlist() {
   const [data, setData] = useState([]);
   const [images, setImages] = useState('');
+  const [parentCategArr, setParentCategArr] = useState([]);
+  const [allCategory, setAllCategory] = useState([]);
   const [filterData, setFilterData] = useState({ parentCategory: "", category: "" });
   const [addImage, setAddImage] = useState(false);
   const [id, setId] = useState("");
@@ -57,6 +59,7 @@ function Productlist() {
       console.error('Error fetching data:', error);
     }
   };
+
   const handleDelete = async (id) => {
     try {
 
@@ -99,7 +102,6 @@ function Productlist() {
     }
   }
 
-
   const getActionOption = (data) => {
     return (
       <div className="template-demo flex-nowrap cursor-pointer mr-2 w-100">
@@ -116,21 +118,44 @@ function Productlist() {
     )
   }
 
-
+  const fatchCategory = async () => {
+    try {
+        let response = await axiosInstance.get(`/categories`, {});
+        let data = response.data;
+        let categoryArr=[];
+        if (data.success) {
+            data.categoryies.map(d1=>{
+                categoryArr.push(d1.parentCategory);
+            });
+            setParentCategArr(categoryArr);
+            setAllCategory(data.categoryies);
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+  };
 
   useEffect(() => {
     // Fetch products when the component mounts
     fetchProducts();
+    fatchCategory();
   }, []);
 
-  // console.log(filterData);
+  let childCategArr=[];
+  if(filterData.parentCategory){
+    let cateArr = allCategory.find(f1=>f1.parentCategory===filterData.parentCategory).childCategories;
+    cateArr.map(d1=>{
+      childCategArr.push(d1);
+    });
+
+}
+
   const { parentCategory, category } = filterData;
 
   let dataArr = data;
   dataArr = parentCategory ? dataArr.filter(da => da.category === parentCategory) : dataArr;
   dataArr = category ? dataArr.filter(da => da.subCategory === category) : dataArr;
 
-         
 
 
   return (
@@ -154,27 +179,25 @@ function Productlist() {
             <div className='col-3 mx-2'>
               <TextField select className='w-100' name="parentCategory" value={parentCategory} label="Parent Category" size="small" onChange={handleChange}>
                 <MenuItem value=""> All</MenuItem>
-                <MenuItem value="Mobile"> Mobile</MenuItem>
-                <MenuItem value="Computer">Computer</MenuItem>
-                <MenuItem value="TV">TV</MenuItem>
-                <MenuItem value="Electronics">Electronics</MenuItem>
+                {parentCategArr.map((p1,index)=>(
+                  <MenuItem value={p1} key={index}>{p1}</MenuItem>
+                ))}
               </TextField>
             </div>
             <div className='col-3'>
               <TextField select className='w-100' name="category" value={category} label="Category" size="small" onChange={handleChange}>
                 <MenuItem value=""> All</MenuItem>
-                <MenuItem value="All Mobile"> All Mobile</MenuItem>
-                <MenuItem value="Power Bank">Power Bank</MenuItem>
-                <MenuItem value="Tablets">Tablets</MenuItem>
-                <MenuItem value="Laptop">Laptop</MenuItem>
+                {childCategArr.map((c1,index)=>(
+                  <MenuItem value={c1} key={index}>{c1}</MenuItem>
+                ))}
               </TextField>
             </div>
 
             <div className='col-4 text-end'>
               <Link to="/admin/addProduct">
                 <button className='btn btn-primary '>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20px" className="mb-1 mx-1">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" width="20px" className="mb-1 mx-1">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                   </svg>
                   Add Product</button>
               </Link>

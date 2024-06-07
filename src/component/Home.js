@@ -39,6 +39,7 @@ const Home = () => {
         const newErrors = validateForm(ratingForm);
         setErrors(newErrors);
         if (Object.keys(newErrors).length === 0) {
+            console.log(ratingForm);
             try {
                 const response = await axiosInstance.post(`/review/${shopId}`, ratingForm, {});
                 const data = response.data;
@@ -70,15 +71,17 @@ const Home = () => {
         }
         if (!email) {
             errors.email = 'This field is required';
+        } else if(!/\S+@\S+\.\S+/.test(email)){
+            errors.email = 'Email is invalid';
         }
         if (!phoneNo) {
             errors.phoneNo = 'This field is required';
+        } else if(!/^\d{10}$/.test(phoneNo)){
+            errors.phoneNo = 'Enter a valid PhoneNo';
         }
         return errors;
 
     }
-
-
 
     const fetchShops = async () => {
         try {
@@ -87,7 +90,6 @@ const Home = () => {
 
             if (data.success) {
                 setShopArr(data.shops);
-
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -98,8 +100,6 @@ const Home = () => {
         setShopId(id);
         setRatingPop(!ratingPop);
     }
-
-
 
     const getCityName = ()=>{
         shopArr.map(s1=>(cities.push(s1.city)))

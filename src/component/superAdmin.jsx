@@ -3,26 +3,28 @@ import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from "../apiConfig/axoisSetup";
 import Select from "react-select";
 import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
+import Modal from "./modale/modale";
 
-const options1 = [
-    { value: "Electronics", label: "Electronics" },
-    { value: "Furniture", label: "Furniture" },
-    { value: "Jewelry", label: "Jewelry" },
-    { value: "Sporting goods", label: "Sporting goods" },
-    { value: "Beauty", label: "Beauty" },
-    { value: "Food and beverage", label: "Food and beverage" },
-    { value: "Household items", label: "Household items" },
-];
+let parentCategArr = [];
 
 const SuperAdmin = () => {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [parentCategory,setParentCategory] = useState("");
+    const [category,setCategory] = useState({parentCategory:"",childCategory:""});
+    const [selectCategory, setSelectCategory] = useState('');
+    const [signUpForm, setSignUpForm] = useState({ name: "", email: "", password: "", confrmPassword: "" });
+    const [loginForm, setLoginForm] = useState({ email: "", password: "" });
+    const [allCategory, setAllCategory] = useState([]);
+    const [filterCagegory, setFilterCagegory] = useState('');
     const [shopRate, setShopRate] = useState([]);
     const [shops, setShops] = useState([]);
+    const [loginPop, setLoginPop] = useState(false);
+    const [signupPop, setSignupPop] = useState(false);
     const [option, setOption] = useState("review");
-    const auth = localStorage.getItem('user');
-
+    const [errors, setErrors] = useState({});
+    const admin = localStorage.getItem('superAdmin');
+    
     const ratingArr = [1, 2, 3, 4, 5]
 
     const navigate = useNavigate();
@@ -30,11 +32,144 @@ const SuperAdmin = () => {
         setIsOpen(!isOpen);
     };
 
+    const LoginPop = () => {
+        setLoginForm({ email: "", password: "" });
+        setLoginPop(!loginPop);
+    }
+    const SignupPop = () => {
+        setSignUpForm({ name: "", email: "", password: "", confrmPassword: "" });
+        setSignupPop(!signupPop);
+    }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setCategory({ ...category, [name]: value });
+        setLoginForm({ ...loginForm, [name]: value });
+    }
+    const handleChangeSign = (e) => {
+        const { name, value } = e.target;
+        setSignUpForm({ ...signUpForm, [name]: value });
+    }
+    const handleSelectCategory = (data) => {
+        let category2 = { ...category };
+        setSelectCategory(data);
+        category2["parentCategory"] = data.value;
+        setCategory(category2);
+    };
+
+    const handleShowCateg=(data)=>{
+        setFilterCagegory(data.value);
+    }
+
+    const handleSignup= async (e) =>{
+        e.preventDefault();
+        const newErrors = validateForm(signUpForm);
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length === 0) {
+            try {
+                const response = await axiosInstance.post(`/signup-admin`, signUpForm, {});
+                let data = response.data.result;
+                if (response.status) {
+                    alert('Signup Successfully');
+                    navigate("/Super-Admin");
+                    localStorage.setItem("superAdmin", JSON.stringify({ id: data._id, name: data.name,email:data.email}));
+                    SignupPop()
+                } else {
+                    alert("Please enter a valid data")
+                }
+
+            } catch (err) {
+                const {data} =err.response;
+                alert(data.message);
+                console.error('An error occurred :', data);
+            }
+        } 
+    }
+    const handleLogin= async (e) =>{
+        e.preventDefault();
+        const newErrors = validateForm2(loginForm);
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length === 0) {
+            try {
+                
+                const response = await axiosInstance.post(`/adminlogin`, loginForm, {});
+                let data = response.data.result;
+                if (response.status) {
+                    alert('Signup Successfully');
+                    navigate("/Super-Admin");
+                    localStorage.setItem("superAdmin", JSON.stringify({ id: data._id, name: data.name,email:data.email}));
+                    setLoginPop(false);
+                } else {
+                    alert("Please enter a valid data")
+                }
+
+            } catch (err) {
+                const {data} =err.response;
+                alert(data.message);
+                console.error('An error occurred :', data);
+            }
+        } 
+    }
+
+    const handleParentCateg = async ()=> {
+        try {
+            const response = await axiosInstance.post(`/addParentCategry`, {parentCategory}, {})
+            const data = response.data;
+            if (data.success) {
+                alert(data.message);
+                setParentCategory("");
+                fatchCategory();
+            } else {
+                alert('Please enter a valid details');
+            }
+        } catch (err) {
+            const data = err.response.data;
+            alert(data.message);
+            console.error('An error occurred :', data.message);
+        }
+    }
+
+    const handleChildCateg = async ()=> {
+        try {
+            
+            const response = await axiosInstance.put(`/addChildCategry`, category, {})
+            const data = response.data;
+            if (data.success) {
+                alert(data.message);
+                setCategory({parentCategory:"",childCategory:""});
+                setSelectCategory('');
+                fatchCategory();
+            } else {
+                alert('Please enter a valid details');
+            }
+        } catch (err) {
+            const data = err.response.data;
+            alert(data.message);
+            console.error('An error occurred :', data.message);
+        }
+    }
+
+    const fatchCategory = async () => {
+        try {
+            let response = await axiosInstance.get(`/categories`, {});
+            let data = response.data;
+            let categoryArr=[];
+            if (data.success) {
+                data.categoryies.map(d1=>{
+                    categoryArr.push({value:d1.parentCategory,label:d1.parentCategory});
+                });
+                parentCategArr=categoryArr;
+                setAllCategory(data.categoryies);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
     const fatchRating = async () => {
         try {
             let response = await axiosInstance.get(`/reviews`, {});
             let data = response.data;
-            console.log(data.reviews);
             if (data.success) {
                 setShopRate(data.reviews);
 
@@ -82,14 +217,61 @@ const SuperAdmin = () => {
         }
     };
 
+    const validateForm = (data) => {
+        const errors = {};
+        
+        const{name, email, password, confrmPassword} = data;
+        if (!name) {errors.name = 'This field is required';}
+        else if(!(/^[A-Za-z\s]*$/.test(name))){
+            errors.name = 'Enter a valid Name';
+        }
+
+        if (!email) {
+            errors.email = 'This field is required';
+        } else if(!/\S+@\S+\.\S+/.test(email)){
+            errors.email = 'Email is invalid';
+        }
+        if (!password) {
+            errors.password = 'This field is required';
+        }else if(!(password.length>5)){
+            errors.password = "Password length must be atleast 6 characters";
+        }
+        if (!confrmPassword) {
+            errors.confrmPassword = 'This field is required';
+        }else if(password!==confrmPassword){
+            errors.confrmPassword ="Passwords did not match";
+        }
+        
+        return errors;
+
+    }
+    const validateForm2 = (data) => {
+        const errors = {};
+        const{email, password} = data;
+        if (!email) {
+            errors.email = 'This field is required';
+        } else if(!/\S+@\S+\.\S+/.test(email)){
+            errors.email = 'Email is invalid';
+        }
+        if (!password) {
+            errors.password = 'This field is required';
+        }else if(!(password.length>5)){
+            errors.password = "Password length must be atleast 6 characters";
+        }
+       
+        return errors;
+
+    }
+
     const handleLogout = () => {
-        localStorage.removeItem('admin');
-        navigate("/");
+        localStorage.removeItem('superAdmin');
+        window.location.reload()
 
     }
     useEffect(() => {
         fatchRating();
         fetchShopList();
+        fatchCategory();
 
     }, []);
 
@@ -105,9 +287,14 @@ const SuperAdmin = () => {
         )
     }
 
+    // console.log(allCategory);
 
-    let auth2 = JSON.parse(auth);
+    let auth2 = JSON.parse(admin);
 
+    const {childCategory} = category;
+    let childArr = filterCagegory?allCategory.filter(d1=>d1.parentCategory===filterCagegory):[];
+
+    const { name, email, password, confrmPassword}=signUpForm;
 
     return (
         <div>
@@ -118,7 +305,7 @@ const SuperAdmin = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width={26} className="mb-1 mx-2">
                             <path fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clipRule="evenodd" />
                         </svg>
-                        {auth ? auth2.name : "Hello, Sign in"}
+                        {admin ? auth2.name : "Hello, Sign in"}
                     </div>
                     <button className="menu-toggle" onClick={toggleMenu}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width={24}>
@@ -128,17 +315,12 @@ const SuperAdmin = () => {
 
                     <nav className="menu-items">
                         <div className='text-dark fw-bold'>Options</div>
-                        <Link to="#" onClick={() => { toggleMenu(); setOption("review") }}>Review</Link>
-                        <Link to="#" onClick={() => { toggleMenu(); setOption("shops") }}>All Shops</Link>
-                        <Link to="#" onClick={() => { toggleMenu(); setOption("category") }}>Category</Link>
+                        <Link to="#" onClick={() => { toggleMenu(); admin?setOption("review"):LoginPop() }}>Review</Link>
+                        <Link to="#" onClick={() => { toggleMenu(); admin?setOption("shops"):LoginPop() }}>All Shops</Link>
+                        <Link to="#" onClick={() => { toggleMenu(); admin?setOption("category"):LoginPop() }}>Category</Link>
                     </nav>
 
-                    <div className='logout'>
-                        <span onClick={handleLogout}>
-                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"></path></svg>
-                            Logout
-                        </span>
-                    </div>
+                   
 
                 </div>
 
@@ -155,10 +337,15 @@ const SuperAdmin = () => {
 
 
                 <div className='d-flex mt-2'>
-                    <span onClick={handleLogout}>
+                    {admin?(
+                        <span onClick={handleLogout}>
                         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"></path></svg>
                         &nbsp;Logout
                     </span>
+                    ):(
+                        <span onClick={LoginPop}>Login</span>
+                    )}
+                    
 
                 </div>
 
@@ -250,35 +437,37 @@ const SuperAdmin = () => {
                     <div className='container my-5'>
                         <div className='d-flex'>
                             <div className='w-25 '>
-                                <TextField className='w-100' name="name"  label="Parent Category  *" size="small" ></TextField>
+                                <TextField className='w-100' name="parentCategory" value={parentCategory} label="Add Parent Category *" size="small" onChange={(e)=>setParentCategory(e.target.value)}/>
                                 <div className='error2'></div>
                             </div>
-                            <div className='mx-5'><button className='btn btn-primary '>Save</button></div>
+                            <div className='mx-5'>
+                                <button className='btn btn-primary' disabled={parentCategory?false:true} onClick={handleParentCateg}>Save</button>
+                            </div>
                         </div>
                         <hr/>
 
                         <div className='d-flex my-4'>
 
                             <div className='w-25 mr-4'>
-                                <Select  options={options1} placeholder="Choose Parent Category"  />
+                                <Select  options={parentCategArr} value={selectCategory} name='parentCategory' placeholder="Choose Parent Category" onChange={handleSelectCategory}/>
                                 <div className='error2'></div>
                             </div>
 
                             <div className='w-25 mx-4'>
-                                <TextField className='w-100' name="name"  label="Add Child Category  *" size="small" ></TextField>
+                                <TextField className='w-100' disabled={category.parentCategory?false:true} name="childCategory" value={childCategory} label="Add Child Category *" size="small" onChange={handleChange}/>
                                 <div className='error2'></div>
                             </div>
 
                             <div>
-                                <button className='btn btn-primary'>Save</button>
+                                <button className='btn btn-primary' disabled={childCategory?false:true} onClick={handleChildCateg}>Save</button>
                             </div>
 
                         </div>
 
                         <div className='d-flex my-5'>
                             <div className='mx-3 fontWeight mt-1'>Filter</div>
-                            <div >
-                                <Select  options={options1} placeholder="Choose Parent Category"  />
+                            <div className='w-25'>
+                                <Select  options={parentCategArr} placeholder="Choose Parent Category" onChange={handleShowCateg} />
                             </div>
                         </div>
 
@@ -286,16 +475,79 @@ const SuperAdmin = () => {
                             <div className='col-2 bg-dark border py-2'>Id</div>
                             <div className='col-3 bg-dark border py-2'>Category</div>
                         </div>
-                        <div className='row'>
-                            <div className='col-2 border py-2'>12540</div>
-                            <div className='col-3 border py-2'>Electronics</div>
-                        </div>
+                        {childArr.map((d1,index)=>(
+                           <>
+                            {d1.childCategories.map((c1,index2)=>(
+                                <div className='row' key={index2}>
+                                    <div className='col-2 border py-2'>{index2<1?filterCagegory:""}</div>
+                                    <div className='col-3 border py-2'>{c1}</div>
+                                </div> 
+                            ))}
+                           </>
+                             
+                        ))}
+                        
 
                     </div>
                 }
             </div>
 
+            <div>
+                <Modal toggle={signupPop} Toggle={SignupPop} title="" classWidth="ratingPup">
+                    <div className='text-center title '>
+                        <h4 className='colr-blue'>Sign Up</h4>
+                    </div>
+                    <hr className='my-2 ' />
+                    <div className="text-center py-4">
+                        <div >
+                            <TextField className='w-75 my-3' name="name" value={name} label="Name" size="small" onChange={handleChangeSign}/>
+                            <div className='error3'>{errors.name}</div>
+                        </div>
+                        <div >
+                            <TextField className='w-75 my-3' name="email" value={email} label="Email" size="small" onChange={handleChangeSign}/>
+                            <div className='error3'>{errors.email}</div>
+                        </div>
 
+                        <div >
+                            <TextField type='password' className='w-75 my-3' name="password" value={password} label="Password" size="small" onChange={handleChangeSign}/>
+                            <div className='error3'>{errors.password}</div>
+                        </div>
+                        <div >
+                            <TextField type='password' className='w-75 my-3' name="confrmPassword" value={confrmPassword} label="Confirm Password" size="small" onChange={handleChangeSign}/>
+                            <div className='error3'>{errors.confrmPassword}</div>
+                        </div>
+                        <div>Already have an account? <span className='colr cursor-pointer' onClick={()=>{LoginPop();setSignupPop(false)}}>Login</span></div>
+                        <button className="btn text-white bg-primary my-4 w-75" onClick={handleSignup}>Sign Up</button>
+                    </div>
+
+                </Modal>
+            </div>
+            {loginPop &&
+            <div>
+                <Modal toggle={loginPop} Toggle={LoginPop} title="" classWidth="ratingPup">
+                    <div className='text-center title '>
+                        <h4 className='colr-blue'>Login</h4>
+                    </div>
+                    <hr className='my-2 ' />
+                    <div className="text-center py-4">
+                        <div >
+                            <TextField className='w-75 my-3' name="email" value={loginForm.email} label="Email" size="small" onChange={handleChange} />
+                            <div className='error3'>{errors.email}</div>
+                        </div>
+
+                        <div >
+                            <TextField type='password' className='w-75 my-3' name="password" value={loginForm.password} label="Password" size="small" onChange={handleChange}/>
+                            <div className='error3'>{errors.password}</div>
+                        </div>
+                        <div>Create a account?<span className='colr cursor-pointer' onClick={()=>{SignupPop();setLoginPop(false)}}> Sign up</span></div>
+                        <button className="btn text-white bg-primary my-4 w-75" onClick={handleLogin}>Login</button>
+
+
+                    </div>
+
+                </Modal>
+            </div>
+            }
 
         </div>
 

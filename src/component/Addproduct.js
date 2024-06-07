@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,32 +8,17 @@ import MenuItem from '@mui/material/MenuItem';
 import Navbar from './Navbar2';
 import axiosInstance from "../apiConfig/axoisSetup";
 
-const options1 = [
-    { value: "Electronics", label: "Electronics" },
-    { value: "Furniture", label: "Furniture" },
-    { value: "Jewelry", label: "Jewelry" },
-    { value: "Sporting goods", label: "Sporting goods" },
-    { value: "Beauty", label: "Beauty" },
-    { value: "Food and beverage", label: "Food and beverage" },
-    { value: "Household items", label: "Household items" },
-];
-const options2 = [
-    { value: "Audio", label: "Audio" },
-    { value: "All Mobile", label: "All Mobile" },
-    { value: "Power Bank", label: "Power Bank" },
-    { value: "Tablets", label: "Tablets" },
-    { value: "Laptop", label: "Laptop" },
-    { value: "Tables", label: "Tables" },
-    { value: "Chairs", label: "Chairs" },
-    { value: "Beds", label: "Beds" },
-];
+
+let parentCategArr = [];
+let childCategArr = [];
+
 
 
 const Addproduct = () => {
     const auths = localStorage.getItem('admin');
 
 
-    const [formData, setFormData] = React.useState({
+    const [formData, setFormData] = useState({
         shopid: JSON.parse(auths).id,
         category: "",
         subCategory: "",
@@ -51,8 +35,9 @@ const Addproduct = () => {
 
     });
     const { category, subCategory, name, title, subtitle, offer, code, brand, price, about, description } = formData;
-    const [category2, setCategory] = React.useState('');
-    const [subCategory2, setSubCategory] = React.useState('');
+    const [category2, setCategory] = useState('');
+    const [subCategory2, setSubCategory] = useState('');
+    const [allCategory, setAllCategory] = useState([]);
     const [images, setImages] = useState([]);
     const [addCateg, setAddCateg] = useState(false);
     const [errors, setErrors] = useState({});
@@ -201,6 +186,23 @@ const Addproduct = () => {
         setErrors(errors);
     }
 
+    const fatchCategory = async () => {
+        try {
+            let response = await axiosInstance.get(`/categories`, {});
+            let data = response.data;
+            let categoryArr=[];
+            if (data.success) {
+                data.categoryies.map(d1=>{
+                    categoryArr.push({value:d1.parentCategory,label:d1.parentCategory});
+                });
+                parentCategArr=categoryArr;
+                setAllCategory(data.categoryies);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
     useEffect(() => {
         if (state) {
             const { data } = state;
@@ -208,8 +210,19 @@ const Addproduct = () => {
             setCategory({ value: data.category, label: data.category });
             setSubCategory({ value: data.subCategory, label: data.subCategory })
             setAddCateg(true);
+
         }
+        fatchCategory();
     }, []);
+
+    if(category){
+        let categoryArr=[];
+        let cateArr = allCategory.find(f1=>f1.parentCategory===category).childCategories;
+        cateArr.map(d1=>{
+            categoryArr.push({value:d1,label:d1});
+        });
+        childCategArr=categoryArr;
+    }
 
     return (
         <div>
@@ -220,11 +233,11 @@ const Addproduct = () => {
                     <div className='bg-water py-2 px-3 fontWeight'>Add Product</div>
                     <div className='row my-4 mx-3'>
                         <div className='col-4 col-md-3'>
-                            <Select value={category2} isDisabled={addCateg ? true : false} options={options1} placeholder="Choose Category" onChange={handleCategory} />
+                            <Select value={category2} isDisabled={addCateg ? true : false} options={parentCategArr} placeholder="Choose Category" onChange={handleCategory} />
                             <div className='error2'>{errors.category}</div>
                         </div>
                         <div className='col-4 col-md-3'>
-                            <Select value={subCategory2} isDisabled={addCateg ? true : false} options={options2} placeholder="Choose Sub Category" onChange={handleSubCategory} />
+                            <Select value={subCategory2} isDisabled={addCateg || !category ? true : false} options={childCategArr} placeholder="Choose Sub Category" onChange={handleSubCategory} />
                             <div className='error2'>{errors.subCategory}</div>
                         </div>
                         {!addCateg &&
@@ -298,8 +311,8 @@ const Addproduct = () => {
                                     <button className='btn btn-primary' onClick={updateProduct}>Update Product</button>
                                 ) : (
                                     <button className='btn btn-primary' onClick={createProduct}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20px" className="mb-1 mx-1">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" width="20px" className="mb-1 mx-1">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                         </svg>
                                         Add Product</button>
                                 )}
@@ -322,10 +335,10 @@ const Addproduct = () => {
                         <form onSubmit={(e) => createshop(e)} className="addproduct-input">
 
                         <div style={{textAlign:"start",margin:"12px"}}>
-                            <Select value={category} options={options1} placeholder="Choose Category" onChange={handleCategory}/>
+                            <Select value={category} options={parentCategArr} placeholder="Choose Category" onChange={handleCategory}/>
                         </div>
                         <div style={{textAlign:"start",margin:"12px"}}>
-                            <Select value={subCategory}  options={options2} placeholder="Choose Sub Category" onChange={handleSubCategory}/>
+                            <Select value={subCategory}  options={childCategArr} placeholder="Choose Sub Category" onChange={handleSubCategory}/>
                         </div>
             
                             <button className="createshop-button" type='submit' onClick={()=>setAddCateg(false)}>Next</button>

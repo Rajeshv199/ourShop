@@ -203,7 +203,7 @@ const Createshop = () => {
 
                                 <div className='f14 text-end mt-3 mx-4 px-2'>
                                     {!state&&
-                                    <div>Have an account?<Link className='colr' to="/adminlogin"> Shop Login</Link></div>
+                                    <div>Have an account?<Link className='colr' to="/shoplogin"> Shop Login</Link></div>
                                     }
                                 </div>
 
@@ -233,7 +233,7 @@ const Createshop = () => {
                     <input className="createshop-field-1" onChange={onChangeHandler} type="password" placeholder="password" value={password} name='password' required /><br />
 
                     <button className="createshop-button-" type='submit'>Create Shop</button>
-                    <p> Have an account?</p><li><Link to="/adminlogin">Admin Login</Link></li>
+                    <p> Have an account?</p><li><Link to="/shoplogin">Admin Login</Link></li>
 
                 </form>
             </div> */}

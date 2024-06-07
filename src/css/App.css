@@ -215,6 +215,13 @@ font-size: 30px;
   margin-left: 4px;
   color: #DC4C64;
 }
+.error3{
+  position: absolute;
+  font-size: 12px;
+  margin-top: -16px;
+  margin-left: 56px;
+  color: #DC4C64;
+}
 
 .sign-input .MuiFormControl-root{
   width: 80%!important;

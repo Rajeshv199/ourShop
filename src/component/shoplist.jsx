@@ -117,7 +117,7 @@ function ShopList() {
                                     <div className='col-2 bg-ligtQuat pt-1'>{d1.location}</div>
                                     <div className='col-1 bg-ligtQuat pt-1'>{d1.city}</div>
                                     <div className='col-1 bg-ligtQuat pt-1'>{getActionOption(d1)}</div>
-                                    <div className='col-1 bg-ligtQuat pt-1'><Link to="/adminlogin" className='text-primary' state={d1.shopId}>Login</Link></div>
+                                    <div className='col-1 bg-ligtQuat pt-1'><Link to="/shoplogin" className='text-primary' state={d1.shopId}>Login</Link></div>
                                 </div>
 
                             )}

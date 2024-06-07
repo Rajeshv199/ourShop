@@ -57,7 +57,7 @@ function App() {
             <Route path="/shops/:id" element={<Shops />} />
 
             <Route path="/createshop" element={<Createshop />} />
-            <Route path="/adminlogin" element={<Shoplogin />} />
+            <Route path="/shoplogin" element={<Shoplogin />} />
             <Route path="/admin/listProduct" element={<Productlist />} />
             <Route path="/admin/addProduct" element={<AddProduct />} />
             <Route path="/shopList" element={<Shoplist/>} />
@@ -72,7 +72,7 @@ function App() {
             
           </Route>
 
-          <Route path="/Super-Admin" element={<SuperAdmin />} />
+          <Route path="/super-Admin" element={<SuperAdmin />} />
 
           <Route path="/help" element={<Help />} />
           <Route path="/Review" element={<Review />} />

@@ -3,7 +3,6 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 // import { addToCart } from "../redux/cartActions";
 // import { store } from "../redux/store";
 // import Singlepage from '../RedirectPage/Singlepage'
-import { useSelector } from "react-redux";
 import Modal from "./modale/modale";
 import axiosInstance from "../apiConfig/axoisSetup";
 import TextField from '@mui/material/TextField';
@@ -17,7 +16,7 @@ const Nav = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [ratingPop, setRatingPop] = useState(false);
-    const [ratingForm, setRatingForm] = useState({ name: "", comment: "", rating: "" });
+    const [ratingForm, setRatingForm] = useState({ name: "", comment: "", rating: "",email:"",phoneNo:"" });
     const ratingArr = [1, 2, 3, 4, 5]
     const [errors, setErrors] = useState({});
 
@@ -72,11 +71,21 @@ const Nav = () => {
         if (!rating) {
             errors.rating = 'This field is required';
         }
+        if (!email) {
+            errors.email = 'This field is required';
+        } else if(!/\S+@\S+\.\S+/.test(email)){
+            errors.email = 'Email is invalid';
+        }
+        if (!phoneNo) {
+            errors.phoneNo = 'This field is required';
+        } else if(!/^\d{10}$/.test(phoneNo)){
+            errors.phoneNo = 'Enter a valid PhoneNo';
+        }
         return errors;
 
     }
 
-    const { name, comment, rating } = ratingForm;
+    const { name, comment, rating,email,phoneNo } = ratingForm;
 
     return (
         <div>
@@ -150,6 +159,12 @@ const Nav = () => {
                                 </svg>
                             ))}
 
+                        </div>
+                        <div >
+                            <TextField className='w-75' name="email" value={email} label="Email" size="small" onChange={handleChange} />
+                        </div>
+                        <div >
+                            <TextField className='w-75 mt-3' name="phoneNo" value={phoneNo} label="Phone No" size="small" onChange={handleChange} />
                         </div>
 
                         <button className="btn text-white bg-primary my-2 w-75" onClick={handleRate}>Rate</button>

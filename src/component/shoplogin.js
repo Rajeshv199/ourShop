@@ -28,7 +28,7 @@ function Adminlogin() {
         setErrors(newErrors);
         if (Object.keys(newErrors).length === 0) {
             try {
-                const response = await axiosInstance.post(`/adminlogin`, adminForm, {});
+                const response = await axiosInstance.post(`/shoplogin`, adminForm, {});
                 let data = response.data.result;
                 if (data.Name) {
                     localStorage.setItem("admin", JSON.stringify({ id: data._id, name: data.Name }));

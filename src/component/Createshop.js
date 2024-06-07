@@ -14,10 +14,10 @@ import '../css/createshop.css';
 const Createshop = () => {
 
     const auth = JSON.parse(localStorage.getItem('user'));
-    const [formData, setFormData] = useState({ userId: auth.id, Name: "",email:"",mobileNo:"", image: "",pincode:"", location: "", city: "", password: "" });
+    const [formData, setFormData] = useState({ userId: auth.id, Name: "",email:"",mobileNo:"", image: "",pinCode:"", location: "", city: "", password: "",state:"" });
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
-    const { state } = useLocation();
+    const {state} = useLocation();
 
     const handleChange = (e) => {
         if (e.target.name === 'image') {
@@ -37,7 +37,7 @@ const Createshop = () => {
 
     const { id } = useParams();
 
-    const { Name,email,mobileNo, image,pincode, location, city, password } = formData;
+    const { Name,email,mobileNo, image,pinCode, location, city, password } = formData;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -100,7 +100,7 @@ const Createshop = () => {
 
     const validateForm = (data) => {
         const errors = {};
-        const {Name,email,mobileNo, image, location, city,pincode, password } = data;
+        const {Name,email,mobileNo, image, location, city,pinCode, password} = data;
         if (!Name) {errors.Name = 'This field is required';}
         else if(!(/^[A-Za-z\s]*$/.test(Name))){
             errors.Name = 'Enter a valid Name';
@@ -120,9 +120,10 @@ const Createshop = () => {
         if (!location) {errors.location = 'This field is required';} 
 
         if (!city) {errors.city = 'This field is required';}
-        if (!pincode) {errors.pincode = 'This field is required';} 
-        else if(!/^\d{6}$/.test(pincode)){
-            errors.pincode = 'Enter a valid Pincode';
+        if (!data.state) {errors.state = 'This field is required';}
+        if (!pinCode) {errors.pinCode = 'This field is required';} 
+        else if(!/^\d{6}$/.test(pinCode)){
+            errors.pinCode = 'Enter a valid pinCode';
         }
 
         if(!state){
@@ -138,11 +139,14 @@ const Createshop = () => {
 
     useEffect(()=>{
         if(state){
-            let json={userId: auth.id,Name:state.Name,email:state.email,mobileNo:state.mobileNo,image:state.image.url,location:state.location,city:state.city,pincode:state.pincode};
+            const{Name,email,mobileNo,image,location,city,pinCode} = state;
+            let json={userId: auth.id,Name:Name,email:email,mobileNo:mobileNo,image:image.url,location:location,city:city,pinCode:pinCode,state:state.state};
             setFormData(json);
           
         }
     },[]);
+
+    console.log(errors);
 
     return (
         <>
@@ -193,8 +197,12 @@ const Createshop = () => {
                                     <div className='error'>{errors.city}</div>
                                 </div>
                                 <div className="sign-input">
-                                    <TextField type='text' name='pincode' value={pincode} label="Pin code *" variant="outlined" size="small" onChange={handleChange} />
-                                    <div className='error'>{errors.pincode}</div>
+                                    <TextField type='text' name='pinCode' value={pinCode} label="Pin code *" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.pinCode}</div>
+                                </div>
+                                <div className="sign-input">
+                                    <TextField type='text' name='state' value={formData.state} label="State *" variant="outlined" size="small" onChange={handleChange} />
+                                    <div className='error'>{errors.state}</div>
                                 </div>
                                 <div className="sign-input" >
                                     <TextField type='password' className={state?'input-disble':""} disabled={state?true:false} name='password' value={password} label="Password *" variant="outlined" size="small" onChange={handleChange} />
@@ -223,20 +231,7 @@ const Createshop = () => {
 
             </div>
 
-            {/* <div>Createshop</div>
-            <div className="createshop-form-1">
-                <form onSubmit={(e) => createshop(e)} className="createshop-form-input-1">
-                    <input className="createshop-field-1" onChange={onChangeHandler} type="text" placeholder="shop name" value={Name} name='Name' /><br />
-                    <input className="createshop-field-1" accept='image/*' type="file" files={image} multiple onChange={onChangeHandler} name='image' /><br />
-                    <input className="createshop-field-1" onChange={onChangeHandler} type="text" placeholder="location" value={location} name='location' required /><br />
-                    <input className="createshop-field-1" onChange={onChangeHandler} type="text" placeholder="city" value={city} name='city' required /><br />
-                    <input className="createshop-field-1" onChange={onChangeHandler} type="password" placeholder="password" value={password} name='password' required /><br />
-
-                    <button className="createshop-button-" type='submit'>Create Shop</button>
-                    <p> Have an account?</p><li><Link to="/shoplogin">Admin Login</Link></li>
-
-                </form>
-            </div> */}
+           
         </>
     );
 };

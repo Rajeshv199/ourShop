@@ -125,7 +125,9 @@ font-size: 30px;
   /* opacity: 0.5; */
   filter: brightness(75%);
 }
-
+.boxShadow{
+  box-shadow: 0px 0px 4px 0px #00000040;
+}
 
 .shopSlick .shopDetails{
   position: absolute;
@@ -665,6 +667,16 @@ font-size: 30px;
 .helpContainer:hover{
   box-shadow: 0px 0px 12px 0px #00000029;
 
+}
+.cateDetele{
+  display: none;
+}
+.btnHover:hover .cateDetele{
+  display: block;
+}
+.btnHover:hover{
+  background-color: #f7ecec;
+  cursor: pointer;
 }
 /* end  */
 

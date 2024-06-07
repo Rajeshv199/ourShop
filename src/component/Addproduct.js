@@ -326,44 +326,7 @@ const Addproduct = () => {
 
             </div>
 
-            {/* <div className="addproduct-form">
-                <h1 className="addproduct-heading">add product</h1>
-
-                <div className="addproduct-input-div">
-
-                    {addCateg ?(
-                        <form onSubmit={(e) => createshop(e)} className="addproduct-input">
-
-                        <div style={{textAlign:"start",margin:"12px"}}>
-                            <Select value={category} options={parentCategArr} placeholder="Choose Category" onChange={handleCategory}/>
-                        </div>
-                        <div style={{textAlign:"start",margin:"12px"}}>
-                            <Select value={subCategory}  options={childCategArr} placeholder="Choose Sub Category" onChange={handleSubCategory}/>
-                        </div>
             
-                            <button className="createshop-button" type='submit' onClick={()=>setAddCateg(false)}>Next</button>
-                        </form>
-                    ):(
-                    
-                    <form onSubmit={(e) => createshop(e)} className="addproduct-input">
-                        <input onChange={onChangeHandler} value={name} className="createshop-field" type="text" placeholder="product name" name='name' />
-                        <input className="createshop-field" onChange={onChangeHandler} value={title} type="text" placeholder="Title" name='Title' />
-                        <input className="createshop-field" onChange={onChangeHandler} value={id} type="text" placeholder="Sub Title" name='Sub Title' />
-                        <input className="createshop-field" onChange={onChangeHandler} value={id} type="text" placeholder="Offer" name='offer' />
-                        <input className="createshop-field" onChange={onChangeHandler} value={id} type="text" placeholder="Code" name='code' />
-                        <input className="createshop-field" onChange={onChangeHandler} value={id} type="text" placeholder="Brand" name='brand' />
-                        <input className="createshop-field" onChange={onChangeHandler} value={price} type="text" placeholder="price" name='price' required />
-
-                        <input className="createshop-field" accept='image/*' type="file" files={image} multiple onChange={onChangeHandler} name='image' />
-                        
-                        <input className="createshop-field" onChange={onChangeHandler} value={title} type="text" placeholder="Thumbnail" name='thumbnail' required />
-
-                        <button className="createshop-button" type='submit'>Addproduct</button>
-                    </form>
-                )}
-                </div>
-                
-            </div> */}
         </div>
     )
 }

@@ -17,7 +17,9 @@ const Home = () => {
 
     const [shopArr, setShopArr] = useState([]);
     const [filter, setFilter] = useState({ state: "", city: "", category: "" });
-    // const [myCity, setMyCity] = useState([]);
+    const [states, setStates] = useState([]);
+    const [cities, setCities] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [ratingPop, setRatingPop] = useState(false);
     const [shopId, setShopId] = useState("");
     const [errors, setErrors] = useState({});
@@ -25,15 +27,16 @@ const Home = () => {
 
     const [ratingForm, setRatingForm] = useState({name:"",comment:"",rating:"",email:"",phoneNo:""});
     // const [ratingcount, setRatingcount] = useState(3);
-    const ratingArr = [1, 2, 3, 4, 5]
-    const cities = [];
+    const ratingArr = [1, 2, 3, 4, 5];
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setRatingForm({...ratingForm,[name]:value});
+        setFilter({...filter,[name]:value});
        
     }
 
+    console.log(filter);
 
     const handleRate= async()=>{
         const newErrors = validateForm(ratingForm);
@@ -57,6 +60,7 @@ const Home = () => {
         } else {
         }
     }
+
     const validateForm = (data) => {
         const errors = {};
         const{name,comment,rating,email,phoneNo} = data;
@@ -96,23 +100,43 @@ const Home = () => {
         }
     };
 
+    const fetchFilterCateg = async () => {
+        try {
+            const response = await axiosInstance.get(`/filterData`, {});
+            let data = response.data;
+            console.log(data);
+
+            if (data.success) {
+                setCities(data.cities);
+                setStates(data.states);
+                setCategories(data.categories);
+                // setShopArr(data.shops);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
     const RatingPop = (id) => {
         setShopId(id);
         setRatingPop(!ratingPop);
     }
 
-    const getCityName = ()=>{
-        shopArr.map(s1=>(cities.push(s1.city)))
-    }
-    console.log(cities);
 
     useEffect(() => {
         fetchShops();
-        getCityName();
+        fetchFilterCateg();
     }, []);
 
     const { state, city, category } = filter;
     const { name,comment,rating,email,phoneNo} = ratingForm;
+
+    let shopArr2 = shopArr;
+
+    shopArr2 = state?shopArr2.filter(sh=>sh.state.toLowerCase()===state.toLowerCase()):shopArr;
+    shopArr2 = city?shopArr2.filter(sh=>sh.city.toLowerCase()===city.toLowerCase()):shopArr2;
+
+
     return (
 
         <div className="container-flui">
@@ -140,27 +164,38 @@ const Home = () => {
                     <div><h3 className="colrblue fw-bold">Our Shop</h3></div>
 
                     <div className='d-flex filterDrop mt-1'>
-                        <div className='mt-1'>Location :</div>
+                        <div className='mt-1 fontWeight'>Location : &nbsp;</div>
                         <div className=" mx-2">
-                            <TextField select name="state" label="State" size="small">
-                                <MenuItem value="Project ID"> state1</MenuItem>
+                            <TextField select value={state} name="state" label="State" size="small" onChange={handleChange}>
+                            <MenuItem value='' >Select</MenuItem>
+                                {states.map((s1,index)=>(
+                                    <MenuItem value={s1} key={index} >{s1}</MenuItem>
+                                ))}
+                                
                             </TextField>
                         </div>
                         <div className=" mx-2">
-                            <TextField select name="city" label="City" size="small">
-                                <MenuItem value="Project ID"> city</MenuItem>
+                            <TextField select value={city} name="city" label="City"  size="small" onChange={handleChange}>
+                                <MenuItem value='' >Select</MenuItem>
+                                {cities.map((c1,index)=>(
+                                    <MenuItem value={c1} key={index}>{c1}</MenuItem>
+                                ))}
+                                
                             </TextField>
                         </div>
-                        <div className=" mx-2">
-                            <TextField select name="category" label="Category" size="small">
-                                <MenuItem value="Project ID"> Category</MenuItem>
+                        {/* <div className=" mx-2">
+                            <TextField select value={category} name="category" label="Category" size="small" onChange={handleChange}>
+                                {categories.map((ca,index)=>(
+                                    <MenuItem value={ca} key={index}>{ca}</MenuItem>
+                                ))}
+                                
                             </TextField>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
                 <div className='row mx-0 mt-4'>
-                    {shopArr.map((sh1, index) => (
+                    {shopArr2[0]?shopArr2.map((sh1, index) => (
                         <div className='col-3 shopCart' key={index}>
                             <div className='shopImg'>
                                 <img src={sh1.image.url} alt='' />
@@ -202,7 +237,9 @@ const Home = () => {
                             </div>
                             <div className='rating' onClick={()=>RatingPop(sh1._id)}>Rate</div>
                         </div>
-                    ))}
+                    )):(
+                        <h5 className='text-center my-5 text-secondary'>Shop not found</h5>
+                    )}
 
                 </div>
 

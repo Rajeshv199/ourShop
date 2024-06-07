@@ -204,6 +204,21 @@ const SuperAdmin = () => {
             console.error('Error fetching data:', error.message);
         }
     }
+
+    const handleDeleteCate = async (id,childCategory) => {
+        console.log(id,childCategory);
+        try {
+            const response = await axiosInstance.delete(`/deleteChildCategry/${id}/${childCategory}`, {});
+            let data = response.data;
+            if (data.success) {
+                alert(data.message);
+                fatchCategory();
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error.message);
+        }
+    };
+
     const handleShopDelete = async (id) => {
         try {
             const response = await axiosInstance.delete(`/admin/deleteshop/${id}`, {});
@@ -431,8 +446,8 @@ const SuperAdmin = () => {
                 }
 
                 {option === "category" &&
-                    <div className='container my-5'>
-                        <div className='d-flex'>
+                    <div className='container my-3'>
+                        <div className='d-flex boxShadow rounded p-5'>
                             <div className='w-25 '>
                                 <TextField className='w-100' name="parentCategory" value={parentCategory} label="Add Parent Category *" size="small" onChange={(e)=>setParentCategory(e.target.value)}/>
                                 <div className='error2'></div>
@@ -441,9 +456,8 @@ const SuperAdmin = () => {
                                 <button className='btn btn-primary' disabled={parentCategory?false:true} onClick={handleParentCateg}>Save</button>
                             </div>
                         </div>
-                        <hr/>
 
-                        <div className='d-flex my-4'>
+                        <div className='d-flex my-4 boxShadow rounded p-5'>
 
                             <div className='w-25 mr-4'>
                                 <Select  options={parentCategArr} value={selectCategory} name='parentCategory' placeholder="Choose Parent Category" onChange={handleSelectCategory}/>
@@ -461,28 +475,36 @@ const SuperAdmin = () => {
 
                         </div>
 
-                        <div className='d-flex my-5'>
-                            <div className='mx-3 fontWeight mt-1'>Filter</div>
-                            <div className='w-25'>
-                                <Select  options={parentCategArr} placeholder="Choose Parent Category" onChange={handleShowCateg} />
-                            </div>
-                        </div>
+                        <div className=' boxShadow rounded p-5'>
 
-                        <div className='row text-white'>
-                            <div className='col-2 bg-dark border py-2'>Id</div>
-                            <div className='col-3 bg-dark border py-2'>Category</div>
-                        </div>
-                        {childArr.map((d1,index)=>(
-                           <>
-                            {d1.childCategories.map((c1,index2)=>(
-                                <div className='row' key={index2}>
-                                    <div className='col-2 border py-2'>{index2<1?filterCagegory:""}</div>
-                                    <div className='col-3 border py-2'>{c1}</div>
-                                </div> 
+                            <div className='d-flex mb-3'>
+                                <div className='mx-3 fontWeight mt-1'>Filter</div>
+                                <div className='w-25'>
+                                    <Select  options={parentCategArr} placeholder="Choose Parent Category" onChange={handleShowCateg} />
+                                </div>
+                            </div>
+
+                            <div className='row text-white f14'>
+                                <div className='col-2 bg-dark border py-2'>Parent Category</div>
+                                <div className='col-3 bg-dark border py-2'>Category</div>
+                            </div>
+                            {childArr.map((d1,index)=>(
+                            <>
+                                {d1.childCategories.map((c1,index2)=>(
+                                    <div className='row f14' key={index2}>
+                                        <div className='col-2 border py-2'>{index2<1?filterCagegory:""}</div>
+                                        <div className='col-3 border btnHover d-flex justify-content-between py-2'>{c1} 
+                                        <span className='cateDetele' onClick={()=>handleDeleteCate(d1._id,c1)}> 
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="17px" viewBox="0 -960 960 960" width="17px" fill="#EA3323"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                                        </span>
+                                        
+                                        </div>
+                                    </div> 
+                                ))}
+                            </>
+                                
                             ))}
-                           </>
-                             
-                        ))}
+                        </div>
                         
 
                     </div>

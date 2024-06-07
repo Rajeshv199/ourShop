@@ -15,7 +15,7 @@ function ShopList() {
         setFilterData({ ...filterData, [e.target.name]: e.target.value });
 
     };
-
+console.log(data);
     const user = JSON.parse(localStorage.getItem('user'));
 
     const fetchShopList = async () => {
@@ -101,8 +101,9 @@ function ShopList() {
                                 <div className='col-2 bg-Arsenic py-2'>Email</div>
                                 <div className='col-1 bg-Arsenic py-2'>Mobile No</div>
                                 <div className='col-1 bg-Arsenic py-2'>Image</div>
-                                <div className='col-2 bg-Arsenic py-2'>Location</div>
+                                <div className='col-1 bg-Arsenic py-2'>Location</div>
                                 <div className='col-1 bg-Arsenic py-2'>city</div>
+                                <div className='col-1 bg-Arsenic py-2'>State</div>
                                 <div className='col-1 bg-Arsenic py-2'>Action</div>
                                 <div className='col-1 bg-Arsenic py-2'></div>
                             </div>
@@ -114,8 +115,9 @@ function ShopList() {
                                     <div className='col-2 bg-ligtQuat pt-1'>{d1.email}</div>
                                     <div className='col-1 bg-ligtQuat pt-1'>{d1.mobileNo}</div>
                                     <div className='col-1 bg-ligtQuat pt-1 text-centr'><img width="40px" height="40px" src={d1.image.url} alt='' /></div>
-                                    <div className='col-2 bg-ligtQuat pt-1'>{d1.location}</div>
+                                    <div className='col-1 bg-ligtQuat pt-1'>{d1.location}</div>
                                     <div className='col-1 bg-ligtQuat pt-1'>{d1.city}</div>
+                                    <div className='col-1 bg-ligtQuat pt-1'>{d1.state}</div>
                                     <div className='col-1 bg-ligtQuat pt-1'>{getActionOption(d1)}</div>
                                     <div className='col-1 bg-ligtQuat pt-1'><Link to="/shoplogin" className='text-primary' state={d1.shopId}>Login</Link></div>
                                 </div>

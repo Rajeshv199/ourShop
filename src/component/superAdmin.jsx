@@ -319,12 +319,7 @@ const SuperAdmin = () => {
                         <Link to="#" onClick={() => { toggleMenu(); admin?setOption("shops"):LoginPop() }}>All Shops</Link>
                         <Link to="#" onClick={() => { toggleMenu(); admin?setOption("category"):LoginPop() }}>Category</Link>
                     </nav>
-
-                   
-
                 </div>
-
-
 
                 <div className='d-flex mt-1'>
                     <div style={{ marginTop: "6px" }} onClick={toggleMenu}>
@@ -372,6 +367,7 @@ const SuperAdmin = () => {
                                             ))}
                                         </div>
                                         <div>
+                                            {admin&&
                                             <div className="template-demo flex-nowrap cursor-pointer mr-2 w-100">
                                                 <span className="material-symbols-outlined text-dark" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">more_vert</span>
                                                 <div className="dropdown-menu branchDropdown p-0 mr-3" aria-labelledby="dropdownMenuButton">
@@ -379,6 +375,7 @@ const SuperAdmin = () => {
                                                         <span className="material-symbols-outlined text-dark px-1 py-1" >Delete</span>Delete</span>
                                                 </div>
                                             </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>

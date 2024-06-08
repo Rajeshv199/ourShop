@@ -1,37 +1,27 @@
 
-import './css/App.css';
+import './assets/styles/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './component/Home';
-import Login from './component/Login';
-import Signup from './component/Signup';
-import Footer from './component/Footer';
-import Logout from './component/Logout';
-import PrivateComponent from './component/PrivateComponent';
-import Profile from './component/Profile';
-import Mobile from './Items/Mobile';
-import Desktop from './Items/Desktop';
-import Laptop from './Items/Laptop';
-import Grocery from './Items/Grocery';
-import Tshirts from './Items/Tshirts';
-import Jeans from './Items/Jeans';
-import Kurta from './Items/Kurta';
-import Shops from './Items/Shops';
-import Singlepage from './RedirectPage/Singlepage';
-import Createshop from './component/Createshop';
-import AddProduct from './component/Addproduct';
-import Admin from './component/Admin';
-import Shoplogin from './component/shoplogin';
-import Productlist from './component/Productlist';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Footer from './components/Footer';
+import PrivateComponent from './components/PrivateComponent';
+import Profile from './pages/Profile';
+import Createshop from './pages/Createshop';
+import AddProduct from './pages/Addproduct';
+import Admin from './components/Admin';
+import Shoplogin from './pages/shoplogin';
+import Productlist from './pages/Productlist';
 // import Sidebar from './component/Sidebar';
-import DisplayProdList from './component/displayProdList';
-import DetailsProduct from './component/detailsProduct';
-import Shoplist from './component/shoplist';
-import Help from './component/help';
-import ChangePassword from './component/changePassword';
-import ForgotPassword from './component/forgotPassword';
-import Review from './component/Review';
-import ShopReview from './component/shopReview';
-import SuperAdmin from './component/superAdmin';
+import DisplayProdList from './pages/displayProdList';
+import DetailsProduct from './pages/detailsProduct';
+import Shoplist from './pages/shoplist';
+import Help from './pages/help';
+import ChangePassword from './pages/changePassword';
+import ForgotPassword from './pages/forgotPassword';
+import Review from './pages/Review';
+import ShopReview from './pages/shopReview';
+import SuperAdmin from './pages/superAdmin';
 
 
 
@@ -46,15 +36,6 @@ function App() {
           
             {/* <Route path="/" element={<Home />} /> */}
             <Route path="/profile" element={<Profile />} />
-            <Route path="/mobile" element={<Mobile />} />
-            <Route path="/desktop" element={<Desktop />} />
-            <Route path="/laptop" element={<Laptop />} />
-            <Route path="/grocery" element={<Grocery />} />
-            <Route path="/tshirts" element={<Tshirts />} />
-            <Route path="/jeans" element={<Jeans />} />
-            <Route path="/kurta" element={<Kurta />} />
-            <Route path="/singlepage" element={<Singlepage />} />
-            <Route path="/shops/:id" element={<Shops />} />
 
             <Route path="/createshop" element={<Createshop />} />
             <Route path="/shoplogin" element={<Shoplogin />} />

@@ -302,8 +302,7 @@ const SuperAdmin = () => {
         )
     }
 
-    // console.log(allCategory);
-
+ 
     let auth2 = JSON.parse(admin);
 
     const {childCategory} = category;

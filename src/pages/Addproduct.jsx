@@ -12,8 +12,6 @@ import axiosInstance from "../services/axoisSetup";
 let parentCategArr = [];
 let childCategArr = [];
 
-
-
 const Addproduct = () => {
     const auths = localStorage.getItem('admin');
 

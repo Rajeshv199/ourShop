@@ -38,8 +38,8 @@ const Nav = () => {
 
                 <nav className="menu-items">
                     <div className='text-dark fw-bold'>Category</div>
-                    <Link to="#" onClick={toggleMenu}>Parent Category</Link>
-                    <Link to="#" onClick={toggleMenu}>Child Category</Link>
+                    <Link to="/ParentCategory" onClick={toggleMenu}>Parent Category</Link>
+                    <Link to="/ChildCategory" onClick={toggleMenu}>Child Category</Link>
                 </nav>
                 <hr className='text-dark my-1' />
                 <nav className="menu-items">

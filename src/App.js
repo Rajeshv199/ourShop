@@ -22,6 +22,8 @@ import ForgotPassword from './pages/forgotPassword';
 import Review from './pages/Review';
 import ShopReview from './pages/shopReview';
 import SuperAdmin from './pages/superAdmin';
+import ParentCategory from './pages/ParentCategory';
+import ChildCategory from './pages/ChildCategory';
 
 
 
@@ -36,6 +38,8 @@ function App() {
           
             {/* <Route path="/" element={<Home />} /> */}
             <Route path="/profile" element={<Profile />} />
+            <Route path="/ChildCategory" element={<ChildCategory />} />
+            <Route path="/ParentCategory" element={<ParentCategory />} />
 
             <Route path="/createshop" element={<Createshop />} />
             <Route path="/shoplogin" element={<Shoplogin />} />
